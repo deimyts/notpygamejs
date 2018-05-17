@@ -2,7 +2,7 @@
   "name": "notpygamejs",
   "version": "1.0.0",
   "description": "Game making library for Javascript with the Canvas element. Andrej Karpathy 1 May 2012",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "jest"
   },
