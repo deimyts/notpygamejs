@@ -32,8 +32,35 @@ describe('when creating a food pellet', () => {
   })
 })
 
+describe('when calculating the distance from an agent to a food pellet', () => {
+  test('it should calculate the distance correctly', () => {
+    const agent = new Agent();
+    const food = app.createFoodPellet();
+
+    agent.pos.x = 0;
+    agent.pos.y = 0;
+    food.pos.x = 0;
+    food.pos.y = 0;
+
+    let distance;
+
+    distance = app.getDistanceToFood(agent, food);
+    
+    expect(distance).to.equal(0);
+
+    agent.pos.x = 0;
+    agent.pos.y = 0;
+    food.pos.x = 2;
+    food.pos.y = 0;
+
+    distance = app.getDistanceToFood(agent, food);
+    
+    expect(distance).to.equal(2);
+  })
+})
+
 describe.skip('when an agent senses food', () => {
   const agent = new Agent();
-  const d2 =  Math.sqrt(Math.pow(a.pos.x-f.pos.x,2) + Math.pow(a.pos.y-f.pos.y,2));
-  const food = '';
+  const food = app.createFoodPellet();
+  const d2 =  Math.sqrt(Math.pow(agent.pos.x-food.pos.x, 2) + Math.pow(agent.pos.y-food.pos.y, 2));
 })
