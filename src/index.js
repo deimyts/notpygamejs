@@ -1,8 +1,8 @@
 const Vector2D = require('./include/vector2D')
 const npg = require('./include/npgmain');
 
-const WIDTH = npg.WIDTH;
-const HEIGHT = npg.HEIGHT;
+const WIDTH = npg.WIDTH || 100;
+const HEIGHT = npg.HEIGHT || 100;
 const randf = npg.randf;
 const randi = npg.randi;
 
@@ -186,17 +186,7 @@ function update(){
                 killi= j;
             }
             
-            if(d2 < rad*10) { //for efficiency, don't even bother if it's too far
-                
-                //compute position of both eyes in world coordinates
-                var x1= a.pos.x + eyelen*Math.cos(a.dir - eyesep);
-                var y1= a.pos.y + eyelen*Math.sin(a.dir - eyesep);
-                var x2= a.pos.x + eyelen*Math.cos(a.dir + eyesep);
-                var y2= a.pos.y + eyelen*Math.sin(a.dir + eyesep);
-                
-                a.s1 += eyemult*Math.exp(-eyesens*(Math.pow(x1-f.pos.x,2) + Math.pow(y1-f.pos.y,2)));
-                a.s2 += eyemult*Math.exp(-eyesens*(Math.pow(x2-f.pos.x,2) + Math.pow(y2-f.pos.y,2)));
-            }
+            senseFood(d2, a, f);
         }
     }
     if(killi!=-1) food.splice(killi, 1);
@@ -224,9 +214,7 @@ function update(){
      
     //spawn more food, maybe
     if(counter%foodaddfreq==0 && food.length<foodlimit) {
-        var f = {
-            pos: new Vector2D(randf(0,WIDTH), randf(0,HEIGHT))
-        };
+        var f = createFoodPellet();
         food.push(f);
     }
     
@@ -255,6 +243,24 @@ function update(){
     if(agents.length<10) {
         var anew= new Agent();
         agents.push(anew);
+    }
+}
+
+function createFoodPellet() {
+    return {
+        pos: new Vector2D(randf(0, WIDTH), randf(0, HEIGHT))
+    };
+}
+
+function senseFood(d2, a, f) {
+    if (d2 < rad * 10) { //for efficiency, don't even bother if it's too far
+        //compute position of both eyes in world coordinates
+        var x1 = a.pos.x + eyelen * Math.cos(a.dir - eyesep);
+        var y1 = a.pos.y + eyelen * Math.sin(a.dir - eyesep);
+        var x2 = a.pos.x + eyelen * Math.cos(a.dir + eyesep);
+        var y2 = a.pos.y + eyelen * Math.sin(a.dir + eyesep);
+        a.s1 += eyemult * Math.exp(-eyesens * (Math.pow(x1 - f.pos.x, 2) + Math.pow(y1 - f.pos.y, 2)));
+        a.s2 += eyemult * Math.exp(-eyesens * (Math.pow(x2 - f.pos.x, 2) + Math.pow(y2 - f.pos.y, 2)));
     }
 }
 
@@ -371,5 +377,6 @@ function keyDown(key){
 }
 
 module.exports = {
-  Agent
+  Agent,
+  createFoodPellet
 }
