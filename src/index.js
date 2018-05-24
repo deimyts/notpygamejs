@@ -295,11 +295,11 @@ function getSenseInput(eye, food) {
     return eyemult * Math.exp(-eyesens * distanceSquared);
 }
 
-function computeEyePosition(a) {
-    var x1 = a.pos.x + eyelen * Math.cos(a.dir - eyesep);
-    var y1 = a.pos.y + eyelen * Math.sin(a.dir - eyesep);
-    var x2 = a.pos.x + eyelen * Math.cos(a.dir + eyesep);
-    var y2 = a.pos.y + eyelen * Math.sin(a.dir + eyesep);
+function computeEyePosition(agent) {
+    var x1 = agent.pos.x + eyelen * Math.cos(agent.dir - eyesep);
+    var y1 = agent.pos.y + eyelen * Math.sin(agent.dir - eyesep);
+    var x2 = agent.pos.x + eyelen * Math.cos(agent.dir + eyesep);
+    var y2 = agent.pos.y + eyelen * Math.sin(agent.dir + eyesep);
     return { x1, y1, x2, y2 };
 }
 
