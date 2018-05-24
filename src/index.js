@@ -264,12 +264,20 @@ function createFoodPellet() {
 }
 
 function senseFood(d2, a, f) {
+    if (!d2 < rad * 10) { //for efficiency, don't even bother if it's too far
+        return false;
+    }
     if (d2 < rad * 10) { //for efficiency, don't even bother if it's too far
         //compute position of both eyes in world coordinates
         var { x1, y1, x2, y2 } = computeEyePosition(a);
-        a.s1 += eyemult * Math.exp(-eyesens * (Math.pow(x1 - f.pos.x, 2) + Math.pow(y1 - f.pos.y, 2)));
-        a.s2 += eyemult * Math.exp(-eyesens * (Math.pow(x2 - f.pos.x, 2) + Math.pow(y2 - f.pos.y, 2)));
+
+        a.s1 += getSenseInput(x1, y1, f);
+        a.s2 += getSenseInput(x2, y2, f);
     }
+}
+
+function getSenseInput(x, y, food) {
+    return eyemult * Math.exp(-eyesens * (Math.pow(x - food.pos.x, 2) + Math.pow(y - food.pos.y, 2)));
 }
 
 function computeEyePosition(a) {
@@ -395,6 +403,8 @@ function keyDown(key){
 module.exports = {
   Agent,
   eatFood,
+  senseFood,
+  getSenseInput,
   computeEyePosition,
   createFoodPellet,
   getDistance

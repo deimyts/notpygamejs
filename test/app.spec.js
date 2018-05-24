@@ -77,10 +77,31 @@ describe('when computing the position of an agent\'s eyes', () => {
   })
 })
 
-describe.skip('when an agent senses food', () => {
+describe('when an agent senses food', () => {
   const agent = new Agent();
   const food = app.createFoodPellet();
   const distance =  app.getDistance(agent.pos, food.pos);
+
+  describe('when the food is too far away to sense', () => {
+  const agent = new Agent();
+  const food = app.createFoodPellet();
+
+  agent.pos.x = 0;
+  agent.pos.y = 0;
+  const distance =  15 * 10; // radius is 15 (for now)
+    test('the sense function should return false', () => {
+      const result = app.senseFood(distance, agent, food);
+      expect(result).to.be.false;
+    });
+  });
+
+  describe('when the food is close enough to be sensed', () => {
+    test('it should calculate the input values correctly', () => {
+      // eyemult: 0.5
+      // eyesens: 0.0005
+      // input: 0.5 * e^(-0.0005 * (eye.x - food.x)^2 + (eye.y - food.y)^2)
+    })
+  })
 })
 
 function testDistance(pointA, pointB, expectedDistance) {
