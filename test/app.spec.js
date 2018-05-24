@@ -97,6 +97,27 @@ describe('when an agent senses food', () => {
 
   describe('when the food is close enough to be sensed', () => {
     test('it should calculate the input values correctly', () => {
+      const agent = new Agent();
+      const food = app.createFoodPellet();
+      agent.pos.x = 0;
+      agent.pos.y = 0;
+      food.pos.x = 25;
+      food.pos.y = 25;
+
+
+      const xDist = agent.pos.x - food.pos.x;
+      const yDist = agent.pos.y - food.pos.y;
+      const distanceSquared = Math.pow(xDist,2) + Math.pow(yDist, 2)
+      const eyesens = 0.0005;
+      const eyemult = 0.5;
+      console.log('dist^2: ', distanceSquared)
+      const exponent = Math.exp(-eyesens * distanceSquared);
+      console.log('exp: ', exponent)
+
+      const expected = eyemult * exponent;
+
+      const result = app.getSenseInput(agent.pos.x, agent.pos.y, food);
+      expect(result).to.equal(expected);
       // eyemult: 0.5
       // eyesens: 0.0005
       // input: 0.5 * e^(-0.0005 * (eye.x - food.x)^2 + (eye.y - food.y)^2)
