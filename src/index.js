@@ -98,17 +98,19 @@ Brain.prototype = {
     }
 }
 
-function Agent(){
-    this.pos= new Vector2D(randf(0,WIDTH), randf(0,HEIGHT));
-    this.dir= randf(0, 2*Math.PI);
-    this.s1= 0;  //food sense eye 1
-    this.s2= 0;  //food sense eye 2
-    this.brain= new Brain();
-    this.speed= 4.0;
-    this.boost= 0.0; //boost, on top of speed
-    this.health= 1.0;
-    this.rep= 0.0; //replication counter
-    this.selected= false;
+class Agent {
+  constructor() {
+    this.pos = new Vector2D(randf(0,WIDTH), randf(0,HEIGHT));
+    this.dir = randf(0, 2*Math.PI);
+    this.s1 = 0;  //food sense eye 1
+    this.s2 = 0;  //food sense eye 2
+    this.brain = new Brain();
+    this.speed = 4.0;
+    this.boost = 0.0; //boost, on top of speed
+    this.health = 1.0;
+    this.rep = 0.0; //replication counter
+    this.selected = false;
+  }
 }
 
 function myinit(){
