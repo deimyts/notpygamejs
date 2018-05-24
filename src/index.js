@@ -264,16 +264,15 @@ function createFoodPellet() {
 }
 
 function senseFood(d2, a, f) {
-    if (!d2 < rad * 10) { //for efficiency, don't even bother if it's too far
+    const inRange = d2 < rad * 10;
+    //for efficiency, don't even bother if it's too far
+    if (!inRange) { 
         return false;
     }
-    if (d2 < rad * 10) { //for efficiency, don't even bother if it's too far
-        //compute position of both eyes in world coordinates
-        var { x1, y1, x2, y2 } = computeEyePosition(a);
-
-        a.s1 += getSenseInput(x1, y1, f);
-        a.s2 += getSenseInput(x2, y2, f);
-    }
+    //compute position of both eyes in world coordinates
+    var { x1, y1, x2, y2 } = computeEyePosition(a);
+    a.s1 += getSenseInput(x1, y1, f);
+    a.s2 += getSenseInput(x2, y2, f);
 }
 
 function getSenseInput(x, y, food) {
