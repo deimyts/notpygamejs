@@ -1,3 +1,11 @@
+const Vector2D = require('./include/vector2D')
+const npg = require('./include/npgmain');
+
+const WIDTH = npg.WIDTH;
+const HEIGHT = npg.HEIGHT;
+const randf = npg.randf;
+const randi = npg.randi;
+
 var agents = [];
 var food = [];
 
@@ -360,4 +368,6 @@ function keyUp(key){
 function keyDown(key){
 }
 
-
+module.exports = {
+  Agent
+}

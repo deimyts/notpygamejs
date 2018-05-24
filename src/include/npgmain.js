@@ -132,3 +132,10 @@ function NPGtick() {
     update();
     draw();
 }
+
+module.exports = {
+  WIDTH,
+  HEIGHT,
+  randf,
+  randi
+}

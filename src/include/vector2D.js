@@ -60,3 +60,4 @@ function Vector2D(xinit, yinit)
   }
 }
 
+module.exports = Vector2D;
