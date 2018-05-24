@@ -178,7 +178,7 @@ function update(){
         for(j in food) {
             var f = food[j];
             
-            var d2= getDistanceToFood(a, f);
+            var d2= getDistance(a.pos, f.pos);
             if(d2 < rad){
                 a.rep+= foodgain;
                 a.health+= foodgain;
@@ -244,10 +244,6 @@ function update(){
         var anew= new Agent();
         agents.push(anew);
     }
-}
-
-function getDistanceToFood(a, f) {
-    return getDistance(a.pos, f.pos);
 }
 
 function getDistance(a, b) {
@@ -389,5 +385,5 @@ function keyDown(key){
 module.exports = {
   Agent,
   createFoodPellet,
-  getDistanceToFood
+  getDistance
 }
