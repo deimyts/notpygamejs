@@ -56,7 +56,3 @@ function testDistance(agent, food, x1, y1, x2, y2, expected) {
   const distance = app.getDistanceToFood(agent, food);
   expect(distance).to.equal(expected);
 }
-
-function setPostion(obj, x, y) {
-  ob
-}

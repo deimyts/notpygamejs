@@ -247,7 +247,13 @@ function update(){
 }
 
 function getDistanceToFood(a, f) {
-    return Math.sqrt(Math.pow(a.pos.x - f.pos.x, 2) + Math.pow(a.pos.y - f.pos.y, 2));
+    return getDistance(a.pos, f.pos);
+}
+
+function getDistance(a, b) {
+    const xDistance = a.x - b.x;
+    const yDistance = a.y - b.y;
+    return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
 }
 
 function createFoodPellet() {
