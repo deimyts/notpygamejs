@@ -152,7 +152,7 @@ function update(){
         for(j in agents) {
             var a2 = agents[j];
             if(i==j) continue;
-            var d= Math.sqrt(Math.pow(a.pos.x-a2.pos.x,2) + Math.pow(a.pos.y-a2.pos.y,2));
+            var d= getDistance(a.pos, a2.pos);
             var overlap= rad*2-d;
             if(overlap>0 && d>1){
                 //one agent pushes on another proportional to his boost. Higher boost wins
