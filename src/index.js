@@ -271,12 +271,28 @@ function senseFood(d2, a, f) {
     }
     //compute position of both eyes in world coordinates
     var { x1, y1, x2, y2 } = computeEyePosition(a);
-    a.s1 += getSenseInput(x1, y1, f);
-    a.s2 += getSenseInput(x2, y2, f);
+
+    const eye1 = {
+        pos: {
+            x: x1,
+            y: y1
+        }
+    };
+    const eye2 = {
+        pos: {
+            x: x2,
+            y: y2
+        }
+    };
+    a.s1 += getSenseInput(eye1, f);
+    a.s2 += getSenseInput(eye2, f);
 }
 
-function getSenseInput(x, y, food) {
-    return eyemult * Math.exp(-eyesens * (Math.pow(x - food.pos.x, 2) + Math.pow(y - food.pos.y, 2)));
+function getSenseInput(eye, food) {
+    const xDist = eye.pos.x - food.pos.x;
+    const yDist = eye.pos.y - food.pos.y;
+    const distanceSquared = Math.pow(xDist, 2) + Math.pow(yDist, 2)
+    return eyemult * Math.exp(-eyesens * distanceSquared);
 }
 
 function computeEyePosition(a) {
