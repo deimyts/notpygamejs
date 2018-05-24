@@ -36,6 +36,7 @@ describe('when calculating the distance between two points', () => {
   test('it should calculate the distance correctly', () => {
     testDistance({ x: 0, y: 0 }, { x: 0, y: 0 }, 0);
     testDistance({ x: 0, y: 0 }, { x: 2, y: 0 }, 2);
+    testDistance({ x: 0, y: 0 }, { x: 0, y: 2 }, 2);
   })
 })
 
