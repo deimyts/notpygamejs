@@ -65,15 +65,13 @@ describe('when computing the position of an agent\'s eyes', () => {
     agent.pos.x = 0;
     agent.pos.y = 0;
     agent.dir = 0;
-    // x1: 0 + 30 * cos(0 - 0.6)
-    // y1: 0 + 30 * sin(0 - 0.6)
-    // y2: 0 + 30 * sin(0 + 0.6)
-    // y2: 0 + 30 * sin(0 + 0.6)
-    const { x1, y1, x2, y2 } = app.computeEyePosition(agent);
-    expect(x1).to.equal(24.76006844729035);
-    expect(y1).to.equal(-16.93927420185106);
-    expect(x2).to.equal(24.76006844729035);
-    expect(y2).to.equal(16.93927420185106);
+    // eye.pos.x: 0 + 30 * cos(0 - 0.6)
+    // eye.pos.y: 0 + 30 * sin(0 - 0.6)
+    const { eye1, eye2 } = app.computeEyePosition(agent);
+    expect(eye1.pos.x).to.equal(24.76006844729035);
+    expect(eye1.pos.y).to.equal(-16.93927420185106);
+    expect(eye2.pos.x).to.equal(24.76006844729035);
+    expect(eye2.pos.y).to.equal(16.93927420185106);
   })
 })
 
@@ -106,7 +104,7 @@ describe('when an agent senses food', () => {
       const food = app.createFoodPellet();
       food.pos.x = 25;
       food.pos.y = 25;
-      
+
       const result = app.getSenseInput(eye, food);
       expect(result).to.equal(0.2676307142594951);
     })

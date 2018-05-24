@@ -270,20 +270,7 @@ function senseFood(d2, a, f) {
         return false;
     }
     //compute position of both eyes in world coordinates
-    var { x1, y1, x2, y2 } = computeEyePosition(a);
-
-    const eye1 = {
-        pos: {
-            x: x1,
-            y: y1
-        }
-    };
-    const eye2 = {
-        pos: {
-            x: x2,
-            y: y2
-        }
-    };
+    var { eye1, eye2 } = computeEyePosition(a);
     a.s1 += getSenseInput(eye1, f);
     a.s2 += getSenseInput(eye2, f);
 }
@@ -296,11 +283,16 @@ function getSenseInput(eye, food) {
 }
 
 function computeEyePosition(agent) {
-    var x1 = agent.pos.x + eyelen * Math.cos(agent.dir - eyesep);
-    var y1 = agent.pos.y + eyelen * Math.sin(agent.dir - eyesep);
-    var x2 = agent.pos.x + eyelen * Math.cos(agent.dir + eyesep);
-    var y2 = agent.pos.y + eyelen * Math.sin(agent.dir + eyesep);
-    return { x1, y1, x2, y2 };
+    const eye1 = {};
+    const eye2 = {};
+    eye1.pos = {};
+    eye2.pos = {};
+    
+    eye1.pos.x = agent.pos.x + eyelen * Math.cos(agent.dir - eyesep);
+    eye1.pos.y  = agent.pos.y + eyelen * Math.sin(agent.dir - eyesep);
+    eye2.pos.x = agent.pos.x + eyelen * Math.cos(agent.dir + eyesep);
+    eye2.pos.y = agent.pos.y + eyelen * Math.sin(agent.dir + eyesep);
+    return { eye1, eye2 };
 }
 
 function draw(){
