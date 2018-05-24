@@ -40,10 +40,29 @@ describe('when calculating the distance between two points', () => {
   })
 })
 
-describe.skip('when an agent senses food', () => {
+describe('when an agent eats a piece of food', () => {
+  test('the agent\'s replication counter should increase by the foodgain amount (.5)', () => {
+    const agent = new Agent();
+    agent.rep = 0.25;
+    app.eatFood(agent)
+    expect(agent.rep).to.equal(0.75);
+    app.eatFood(agent)
+    expect(agent.rep).to.equal(1.25);
+  });
+  test('the agent\'s health should increase by the foodgain amount (.5), up to a max value of 1', () => {
+    const agent = new Agent();
+    agent.health = 0.25;
+    app.eatFood(agent);
+    expect(agent.health).to.equal(0.75);
+    app.eatFood(agent);
+    expect(agent.health).to.equal(1);
+  });
+});
+
+describe('when an agent senses food', () => {
   const agent = new Agent();
   const food = app.createFoodPellet();
-  const d2 =  Math.sqrt(Math.pow(agent.pos.x-food.pos.x, 2) + Math.pow(agent.pos.y-food.pos.y, 2));
+  const distance =  app.getDistance(agent.pos, food.pos);
 })
 
 function testDistance(pointA, pointB, expectedDistance) {
