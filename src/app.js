@@ -390,7 +390,8 @@ function mouseClick(x, y){
     var i;
     for(i in agents) {
         var a = agents[i];
-        var d= Math.sqrt(Math.pow(a.pos.x-x,2) + Math.pow(a.pos.y-y,2));
+        const clickPosition = { x, y }
+        var d= getDistance(a.pos, clickPosition);
         if(d<3*a.radius) {
         
             //that's a hit! Let's select this one and unselect all others
