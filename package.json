@@ -4,6 +4,8 @@
   "description": "Game making library for Javascript with the Canvas element. Andrej Karpathy 1 May 2012",
   "main": "src/index.js",
   "scripts": {
+    "serve": "webpack-dev-server",
+    "build": "webpack",
     "test": "jest"
   },
   "repository": {
@@ -18,6 +20,9 @@
   "homepage": "https://github.com/karpathy/notpygamejs#readme",
   "devDependencies": {
     "chai": "^4.1.2",
-    "jest": "^22.4.3"
+    "jest": "^22.4.3",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.4",
+    "webpack-dev-server": "^3.1.4"
   }
 }
