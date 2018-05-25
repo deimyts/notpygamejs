@@ -1,8 +1,8 @@
 const Vector2D = require('./include/vector2D')
 const npg = require('./include/npgmain');
 
-window.WIDTH = window.WIDTH || 100;
-window.HEIGHT = window.HEIGHT || 100;
+window.WIDTH = window.WIDTH || 800;
+window.HEIGHT = window.HEIGHT || 600;
 const randf = npg.randf;
 const randi = npg.randi;
 const randn = npg.randn;
