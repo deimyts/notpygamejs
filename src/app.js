@@ -11,8 +11,7 @@ const drawCircle = npg.drawCircle;
 var agents = [];
 var food = [];
 
-var rad= 15; //radius of agents
-var eyesep= 0.6; //separate of eyes in radians
+var eyesep= 0.6; //separate of eyes in a.radians
 var eyelen= 30; //how many pixels away from body eyes are
 var eyesens= 0.0005; //how sensitive is the eye? decrease for more sensitivity...
 var eyemult= 0.5; //linear multiplier on strength of eye.
@@ -112,6 +111,7 @@ class Agent {
     this.health = 1.0;
     this.rep = 0.0; //replication counter
     this.selected = false;
+    this.radius = 15;
   }
 }
 
@@ -155,7 +155,7 @@ function update(){
             var a2 = agents[j];
             if(i==j) continue;
             var d= getDistance(a.pos, a2.pos);
-            var overlap= rad*2-d;
+            var overlap= a.radius*2-d;
             if(overlap>0 && d>1){
                 //one agent pushes on another proportional to his boost. Higher boost wins
                 var aggression= a2.boost/(a.boost+a2.boost);
@@ -181,7 +181,7 @@ function update(){
             var f = food[j];
             
             var d2= getDistance(a.pos, f.pos);
-            if(d2 < rad){
+            if(d2 < a.radius){
                 eatFood(a);
                 killi = j;
             }
@@ -266,7 +266,7 @@ function createFoodPellet() {
 }
 
 function senseFood(d2, a, f) {
-    const inRange = d2 < rad * 10;
+    const inRange = d2 < a.radius * 10;
     //for efficiency, don't even bother if it's too far
     if (!inRange) { 
         return false;
@@ -346,7 +346,7 @@ function draw(){
         } else {
             ctx.fillStyle = 'rgb(0,'+Math.round(255.0*a.health)+','+Math.round(255.0*a.health)+')';
         }
-        drawCircle(0, 0, rad);
+        drawCircle(0, 0, a.radius);
         ctx.restore();
         
         //draw brain of this agent, if it is selected
@@ -391,7 +391,7 @@ function mouseClick(x, y){
     for(i in agents) {
         var a = agents[i];
         var d= Math.sqrt(Math.pow(a.pos.x-x,2) + Math.pow(a.pos.y-y,2));
-        if(d<3*rad) {
+        if(d<3*a.radius) {
         
             //that's a hit! Let's select this one and unselect all others
             var newset= !a.selected;
