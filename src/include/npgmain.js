@@ -112,9 +112,9 @@ function NPGinit(FPS){
   //takes frames per secont to run at
   
   canvas = document.getElementById('NPGcanvas');
-  ctx = canvas.getContext('2d');
-  WIDTH = canvas.width;
-  HEIGHT = canvas.height;
+  window.ctx = ctx = canvas.getContext('2d');
+  window.WIDTH = canvas.width;
+  window.HEIGHT = canvas.height;
   canvas.addEventListener('click', eventClick, false);
   
   //canvas element cannot get focus by default. Requires to either set 
@@ -134,8 +134,12 @@ function NPGtick() {
 }
 
 module.exports = {
+  NPGinit,
   WIDTH,
   HEIGHT,
   randf,
-  randi
+  randi,
+  randn,
+  drawCircle
+  // ctx
 }
