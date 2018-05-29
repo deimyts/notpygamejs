@@ -4,8 +4,6 @@ const npg = require('./include/npgmain');
 
 const randf = npg.randf;
 
-var boostcost=0.001;  //how much does use of boost cost in health
-
 class Agent {
   constructor() {
     this.pos = new Vector2D(randf(0,WIDTH), randf(0,HEIGHT));
@@ -20,6 +18,7 @@ class Agent {
     this.selected = false;
     this.radius = 15;
     this.foodloss= 0.002; //food loss per iteration
+    this.boostcost=0.001;  //how much does use of boost cost in health
   }
 
   calculateFoodLoss() {
@@ -28,7 +27,7 @@ class Agent {
 
   adjustHealth() {
     this.calculateFoodLoss();
-    this.health -= boostcost * this.boost; //boost costs health
+    this.health -= this.boostcost * this.boost; //boost costs health
   }
 }
 
