@@ -16,7 +16,16 @@ describe('when creating a food pellet', () => {
 })
 
 describe('when spawning food', () => {
-  
+  test('it should add food to the food array', () => {
+    const food = [];
+    app.spawnFood(food);
+    expect(food).to.have.lengthOf(1);
+    app.spawnFood(food);
+    expect(food).to.have.lengthOf(2);
+    app.spawnFood(food);
+    app.spawnFood(food);
+    expect(food).to.have.lengthOf(4);
+  })
 })
 
 describe('when calculating the distance between two points', () => {

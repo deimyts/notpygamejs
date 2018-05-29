@@ -115,7 +115,7 @@ function update(){
     const foodBelowLimit =  food.length < foodlimit;
     const counterIsTriggered = counter % foodaddfreq == 0;
     if(counterIsTriggered && foodBelowLimit) {
-      spawnFood();
+      spawnFood(food);
     }
     
     //handle births
@@ -146,9 +146,9 @@ function update(){
     }
 }
 
-function spawnFood() {
+function spawnFood(food) {
   var f = createFoodPellet();
-  food.push(f);
+  return food.push(f);
 }
 
 function getDistance(a, b) {
@@ -277,6 +277,7 @@ function keyDown(key){
 }
 
 module.exports = {
+  spawnFood,
   createFoodPellet,
   getDistance,
   myinit,
