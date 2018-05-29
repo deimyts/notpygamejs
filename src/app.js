@@ -63,7 +63,7 @@ function update(){
 }
 
 function handleDeaths() {
-    const killi=-1;
+    let killi=-1;
     for(i in agents) {
         var a = agents[i];
         
