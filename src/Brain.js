@@ -16,18 +16,8 @@ function Brain()
   
   //2D array of synapse weights and indexes of neurons they connect to
 //   this.weights = createSynapseWeights(this);
-  this.w= new Array(this.size);
-  this.ix= new Array(this.size);
-  for (var i=0;i<this.size;i++) {
-    this.w[i]= new Array(this.density);
-    this.ix[i]= new Array(this.density);
-    for (var j=0;j<this.density;j++) {
-        this.w[i][j]= 0;
-        this.ix[i][j]= 1;
-        // this.w[i][j]= randf(-1.2, 1.2);
-        // this.ix[i][j]= randi(0, this.size);
-    }
-  }
+    this.w = synapseWeights(this);
+    this.ix = neuronIndex(this);
 }
 
 //feeds forward the brain. s1 and s2 are the two senses, both in [0,1]
