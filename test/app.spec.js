@@ -15,6 +15,10 @@ describe('when creating a food pellet', () => {
   })
 })
 
+describe('when spawning food', () => {
+  
+})
+
 describe('when calculating the distance between two points', () => {
   test('it should calculate the distance correctly', () => {
     testDistance({ x: 0, y: 0 }, { x: 0, y: 0 }, 0);

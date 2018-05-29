@@ -112,7 +112,11 @@ function update(){
      }
      
     //spawn more food, maybe
-    spawnFood();
+    const foodBelowLimit =  food.length < foodlimit;
+    const counterIsTriggered = counter % foodaddfreq == 0;
+    if(counterIsTriggered && foodBelowLimit) {
+      spawnFood();
+    }
     
     //handle births
     var bi= -1;
@@ -143,10 +147,8 @@ function update(){
 }
 
 function spawnFood() {
-    if(counter%foodaddfreq==0 && food.length<foodlimit) {
-        var f = createFoodPellet();
-        food.push(f);
-    }
+  var f = createFoodPellet();
+  food.push(f);
 }
 
 function getDistance(a, b) {
