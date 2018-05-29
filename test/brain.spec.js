@@ -21,6 +21,8 @@ describe('an agent\'s brain', () => {
   })
 
   describe('creating the array of neuron activations', () => {
+
+
     test('the neuron activation should be an array of length "brain.size"', () => {
       expect(brain.act).to.be.an('array'); 
       expect(brain.act).to.have.length(brain.size);
@@ -30,6 +32,14 @@ describe('an agent\'s brain', () => {
       brain.act.forEach(activation => {
         expect(activation).to.equal(0);
       })
+    })
+  })
+
+  describe('creating the array of synapse weights', () => {
+    test('the new function should do the same as the old one', () => {
+      const currentResult = brain.w;
+      const newResult = brain.synapseWeights(brain);
+      expect(currentResult).to.deep.equal(newResult);
     })
   })
 
