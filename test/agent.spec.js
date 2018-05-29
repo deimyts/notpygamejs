@@ -87,7 +87,7 @@ describe('when an agent senses food', () => {
       food.pos.x = 25;
       food.pos.y = 25;
 
-      const result = app.getSenseInput(eye, food);
+      const result = agent.getSenseInput(eye, food);
       expect(result).to.equal(0.2676307142594951);
     })
   })

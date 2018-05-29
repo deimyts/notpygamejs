@@ -16,8 +16,6 @@ var food = [];
 
 var eyesep= 0.6; //separate of eyes in a.radians
 var eyelen= 30; //how many pixels away from body eyes are
-var eyesens= 0.0005; //how sensitive is the eye? decrease for more sensitivity...
-var eyemult= 0.5; //linear multiplier on strength of eye.
 var repthr= 3; //what is the replication threshold? in amount of food
 var mutrate= 0.1; //how common are mutations?
 var mutrate2= 0.3; //how severe are they when they do occur?
@@ -183,15 +181,8 @@ function senseFood(d2, a, f) {
     }
     //compute position of both eyes in world coordinates
     var { eye1, eye2 } = computeEyePosition(a);
-    a.s1 += getSenseInput(eye1, f);
-    a.s2 += getSenseInput(eye2, f);
-}
-
-function getSenseInput(eye, food) {
-    const xDist = eye.pos.x - food.pos.x;
-    const yDist = eye.pos.y - food.pos.y;
-    const distanceSquared = Math.pow(xDist, 2) + Math.pow(yDist, 2)
-    return eyemult * Math.exp(-eyesens * distanceSquared);
+    a.s1 += a.getSenseInput(eye1, f);
+    a.s2 += a.getSenseInput(eye2, f);
 }
 
 function computeEyePosition(agent) {
@@ -322,7 +313,6 @@ function keyDown(key){
 
 module.exports = {
   senseFood,
-  getSenseInput,
   computeEyePosition,
   createFoodPellet,
   getDistance,

@@ -20,6 +20,10 @@ class Agent {
     this.foodloss= 0.002; //food loss per iteration
     this.boostcost=0.001;  //how much does use of boost cost in health
     this.foodgain= 0.5; //how much food and replication is gained when agent eats?
+
+    this.eyemult= 0.5; //linear multiplier on strength of eye.
+
+    this.eyesens= 0.0005; //how sensitive is the eye? decrease for more sensitivity...
   }
 
   calculateFoodLoss() {
@@ -37,6 +41,14 @@ class Agent {
     if (this.health > 1)
         this.health = 1;
   }
+
+  getSenseInput(eye, food) {
+      const xDist = eye.pos.x - food.pos.x;
+      const yDist = eye.pos.y - food.pos.y;
+      const distanceSquared = Math.pow(xDist, 2) + Math.pow(yDist, 2)
+      return this.eyemult * Math.exp(-this.eyesens * distanceSquared);
+  }
+
 }
 
 module.exports = Agent;
