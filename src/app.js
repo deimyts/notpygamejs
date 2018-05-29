@@ -39,7 +39,7 @@ function update(){
         
         //agent gets more hungry
         a.adjustHealth();
-        if (this.health < 0) {
+        if (a.health < 0) {
           killi = i;
       }
     }
