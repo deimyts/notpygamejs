@@ -112,10 +112,7 @@ function update(){
      }
      
     //spawn more food, maybe
-    if(counter%foodaddfreq==0 && food.length<foodlimit) {
-        var f = createFoodPellet();
-        food.push(f);
-    }
+    spawnFood();
     
     //handle births
     var bi= -1;
@@ -142,6 +139,13 @@ function update(){
     if(agents.length<10) {
         var anew= new Agent();
         agents.push(anew);
+    }
+}
+
+function spawnFood() {
+    if(counter%foodaddfreq==0 && food.length<foodlimit) {
+        var f = createFoodPellet();
+        food.push(f);
     }
 }
 
