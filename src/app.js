@@ -8,7 +8,6 @@ window.WIDTH = window.WIDTH || 800;
 window.HEIGHT = window.HEIGHT || 600;
 const randf = npg.randf;
 const randi = npg.randi;
-const randn = npg.randn;
 const drawCircle = npg.drawCircle;
 
 var agents = [];
