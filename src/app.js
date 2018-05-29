@@ -38,24 +38,7 @@ function update(){
     
     //check if any agent ate food
     //and while we're at it, compute input to sense
-    killi=-1;
-    for(i in agents) {
-        var a = agents[i];
-        a.s1=0; a.s2=0;
-        
-        for(j in food) {
-            var f = food[j];
-            
-            var d2= getDistance(a.pos, f.pos);
-            if(d2 < a.radius){
-                a.eat();
-                killi = j;
-            }
-            
-            a.senseFood(d2, f);
-        }
-    }
-    if(killi!=-1) food.splice(killi, 1);
+    handleEating();
     
     //feed forward the brain from senses to output
     for(i in agents) {
@@ -93,6 +76,26 @@ function handleDeaths() {
     if(killi!=-1) agents.splice(killi, 1);
 }
 
+function handleEating() {
+    let killi=-1;
+    for(i in agents) {
+        var a = agents[i];
+        a.s1=0; a.s2=0;
+        
+        for(j in food) {
+            var f = food[j];
+            
+            var d2= getDistance(a.pos, f.pos);
+            if(d2 < a.radius){
+                a.eat();
+                killi = j;
+            }
+            
+            a.senseFood(d2, f);
+        }
+    }
+    if(killi!=-1) food.splice(killi, 1);
+}
 function handleCollisions() {
   for (i in agents) {
     var a = agents[i];
