@@ -28,6 +28,19 @@ describe('when spawning food', () => {
   })
 })
 
+describe('when spawning agents', () => {
+  test('it should add an agent to the agents array', () => {
+    const agents = [];
+    app.spawnAgent(agents);
+    expect(agents).to.have.lengthOf(1);
+    app.spawnAgent(agents);
+    expect(agents).to.have.lengthOf(2);
+    app.spawnAgent(agents);
+    app.spawnAgent(agents);
+    expect(agents).to.have.lengthOf(4);
+  })
+})
+
 describe('when calculating the distance between two points', () => {
   test('it should calculate the distance correctly', () => {
     testDistance({ x: 0, y: 0 }, { x: 0, y: 0 }, 0);

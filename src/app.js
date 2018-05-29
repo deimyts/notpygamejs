@@ -141,9 +141,12 @@ function update(){
     
     //spawn more agents if there are too few agents left
     if(agents.length<10) {
-        var anew= new Agent();
-        agents.push(anew);
+      spawnAgent(agents);
     }
+}
+
+function spawnAgent(agents) {
+  agents.push(new Agent());
 }
 
 function spawnFood(food) {
@@ -278,6 +281,7 @@ function keyDown(key){
 
 module.exports = {
   spawnFood,
+  spawnAgent,
   createFoodPellet,
   getDistance,
   myinit,
