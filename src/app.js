@@ -121,9 +121,6 @@ class Agent {
   adjustHealth() {
     this.calculateFoodLoss();
     this.health -= boostcost * this.boost; //boost costs health
-    if (this.health < 0) {
-      killi = i;
-    }
   }
 
 }
@@ -149,6 +146,9 @@ function update(){
         
         //agent gets more hungry
         a.adjustHealth();
+        if (this.health < 0) {
+          killi = i;
+        }
     }
     if(killi!=-1) agents.splice(killi, 1);
     
