@@ -34,9 +34,11 @@ Brain.prototype = {
         for (var i=7;i<this.size;i++) {
             var a=0;
             for (var j=0;j<this.density;j++) {
-                a+= this.w[i][j]*this.act[this.ix[i][j]]
+                const weight = this.w[i][j];
+                const neuronIndex = this.ix[i][j];
+                a+= weight * this.act[neuronIndex]
             }
-            this.act[i]= 1.0/(1.0 + Math.exp(-a));  //pass through sigmoid
+            this.act[i]= activate(a)  //pass through sigmoid
         }
         
         //assume last 2 neurons are the outputs
@@ -68,6 +70,10 @@ Brain.prototype = {
     neuronActivations: neuronActivations,
     synapseWeights: synapseWeights,
     neuronIndex: neuronIndex,
+}
+
+function activate(output) {
+  return 1.0/(1.0 + Math.exp(-output));
 }
 
 function neuronActivations(brain) {
