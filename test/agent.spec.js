@@ -127,11 +127,13 @@ describe('moving an agent', () => {
   describe('getting an agent\'s velocity', () => {
     describe('when the agent is not moving', () => {
       test('it should have a velocity of 0', () => {
-        const agent = new Agent();
-        agent.speed = 0;
-        const velocity = agent.getVelocity();
-        expect(velocity.x).to.equal(0);
-        expect(velocity.y).to.equal(0);
+        const speed = 0;
+        const direction = 0;
+        testVelocity(speed, direction, { x: 0, y: 0 })
+      })
+
+      test('it should not change positions', () => {
+
       })
     })
     describe('when the agent is moving', () => {
