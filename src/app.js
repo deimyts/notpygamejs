@@ -37,7 +37,7 @@ function update(){
         var a = agents[i];
         
         //move agent
-        a.moveAgent(WIDTH, HEIGHT);
+        a.move(WIDTH, HEIGHT);
         
         //agent gets more hungry
         a.adjustHealth();
@@ -81,7 +81,7 @@ function update(){
             
             var d2= getDistance(a.pos, f.pos);
             if(d2 < a.radius){
-                a.eatFood();
+                a.eat();
                 killi = j;
             }
             
@@ -191,10 +191,10 @@ function draw(){
         
         //draw its eyes
         //first compute their position
-        var a1= -eyesep + Math.PI/2;
-        var a2= eyesep + Math.PI/2;
-        var x1= Math.cos(a1)*eyelen; var y1= Math.sin(a1)*eyelen;
-        var x2= Math.cos(a2)*eyelen; var y2= Math.sin(a2)*eyelen;
+        var a1= -a.eyesep + Math.PI/2;
+        var a2= a.eyesep + Math.PI/2;
+        var x1= Math.cos(a1)*a.eyelen; var y1= Math.sin(a1)*a.eyelen;
+        var x2= Math.cos(a2)*a.eyelen; var y2= Math.sin(a2)*a.eyelen;
         
         //draw the lines to eyes
         ctx.fillStyle = 'rgb(0,0,0)';

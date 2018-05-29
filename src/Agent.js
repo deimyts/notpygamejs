@@ -77,7 +77,7 @@ class Agent {
   }
 
   move(WIDTH, HEIGHT) {
-    vel = new Vector2D((this.boost + this.speed) * Math.cos(this.dir), (this.boost + this.speed) * Math.sin(this.dir));
+    const vel = new Vector2D((this.boost + this.speed) * Math.cos(this.dir), (this.boost + this.speed) * Math.sin(this.dir));
     this.pos.plusEq(vel);
     // force boundary conditions: wrap around if necessary
     if (this.pos.x < 0)
