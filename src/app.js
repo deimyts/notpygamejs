@@ -329,7 +329,6 @@ function keyDown(key){
 }
 
 module.exports = {
-  Agent,
   eatFood,
   senseFood,
   getSenseInput,

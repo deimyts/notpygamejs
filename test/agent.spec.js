@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 
 const app = require('../src/app.js')
-const Agent = app.Agent;
+const Agent = require('../src/Agent');
 const senseFood = app.senseFood;
 
 describe('when creating an Agent', () => {
