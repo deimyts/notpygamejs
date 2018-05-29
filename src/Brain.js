@@ -80,6 +80,7 @@ Brain.prototype = {
 
     neuronActivations: neuronActivations,
     synapseWeights: synapseWeights,
+    neuronIndex: neuronIndex,
 }
 
 function neuronActivations(brain) {
@@ -92,21 +93,26 @@ function neuronActivations(brain) {
 
 function synapseWeights(brain) {
   const weights = new Array(brain.size);
-  const index = new Array(brain.size);
   for (var i=0;i<brain.size;i++) {
     weights[i]= new Array(brain.density);
-    index[i]= new Array(brain.density);
     for (var j=0;j<brain.density;j++) {
         // weights[i][j]= randf(-1.2, 1.2);
         weights[i][j]= 0;
+    }
+  }
+  return weights;
+}
+
+function neuronIndex(brain) {
+  const index = new Array(brain.size);
+  for (var i=0;i<brain.size;i++) {
+    index[i]= new Array(brain.density);
+    for (var j=0;j<brain.density;j++) {
         index[i][j]= 1;
         // index[i][j]= randi(0, this.size);
     }
   }
-
-  return { weights, index }
-
-
+  return index;
 }
 
 module.exports = Brain;
