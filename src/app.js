@@ -45,26 +45,7 @@ function update(){
     if(killi!=-1) agents.splice(killi, 1);
     
     //agent collision detection and resolution
-    for(i in agents) {
-        var a = agents[i];
-        for(j in agents) {
-            var a2 = agents[j];
-            if(i==j) continue;
-            var d= getDistance(a.pos, a2.pos);
-            var overlap= a.radius*2-d;
-            if(overlap>0 && d>1){
-                //one agent pushes on another proportional to his boost. Higher boost wins
-                var aggression= a2.boost/(a.boost+a2.boost);
-                if(a.boost<0.01 && a2.boost<0.01) aggression=0.5;
-                var ff2= (overlap*aggression)/d;
-                var ff1= (overlap*(1-aggression))/d;
-                a2.pos.x+= (a2.pos.x-a.pos.x)*ff2;
-                a2.pos.y+= (a2.pos.y-a.pos.y)*ff2;
-                a.pos.x-= (a2.pos.x-a.pos.x)*ff1;
-                a.pos.y-= (a2.pos.x-a.pos.x)*ff1;
-            }
-        }
-    }
+    handleCollisions();
     
     //check if any agent ate food
     //and while we're at it, compute input to sense
@@ -107,6 +88,29 @@ function update(){
     if(notEnoughAgents) {
       spawnAgent(agents);
     }
+}
+
+function handleCollisions() {
+  for (i in agents) {
+    var a = agents[i];
+    for (j in agents) {
+      var a2 = agents[j];
+      if (i == j) continue;
+      var d = getDistance(a.pos, a2.pos);
+      var overlap = a.radius * 2 - d;
+      if (overlap > 0 && d > 1) {
+        //one agent pushes on another proportional to his boost. Higher boost wins
+        var aggression = a2.boost / (a.boost + a2.boost);
+        if (a.boost < 0.01 && a2.boost < 0.01) aggression = 0.5;
+        var ff2 = (overlap * aggression) / d;
+        var ff1 = (overlap * (1 - aggression)) / d;
+        a2.pos.x += (a2.pos.x - a.pos.x) * ff2;
+        a2.pos.y += (a2.pos.y - a.pos.y) * ff2;
+        a.pos.x -= (a2.pos.x - a.pos.x) * ff1;
+        a.pos.y -= (a2.pos.x - a.pos.x) * ff1;
+      }
+    }
+  }
 }
 
 function handleBirths() {
