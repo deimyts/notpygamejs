@@ -10,7 +10,9 @@ var mutrate2= 0.3; //how severe are they when they do occur?
 
 function Brain()
 {
-  
+
+  this.size = 20;
+  this.density = 3;
   //1D array of neuron activations
   this.act= new Array(brainsize);
   for (var i=0;i<brainsize;i++) {

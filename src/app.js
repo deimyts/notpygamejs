@@ -242,23 +242,23 @@ function draw(){
             ctx.fillStyle = 'rgb(0,0,0)';
             ctx.beginPath();
             var SS=100;
-            for (var m=0;m<brainsize;m++) {
-                var r1= 2*Math.PI*m/brainsize;
-                for (var n=0;n<braindensity;n++) {
+            for (var m=0;m<a.brain.size;m++) {
+                var r1= 2*Math.PI*m/a.brain.size;
+                for (var n=0;n<a.brain.density;n++) {
                     //this.w[i][j]*this.act[this.ix[i][j]]
                     var act= Math.round(a.brain.w[i][j]*120+120);
-                    var r2= 2*Math.PI*a.brain.ix[m][n]/brainsize;
+                    var r2= 2*Math.PI*a.brain.ix[m][n]/a.brain.size;
                     ctx.moveTo(SS*Math.cos(r1)+WIDTH-SS*1.5, SS*Math.sin(r1)+HEIGHT-SS*1.5);
                     ctx.lineTo(SS*Math.cos(r2)+WIDTH-SS*1.5, SS*Math.sin(r2)+HEIGHT-SS*1.5);
                 }
             }
             ctx.stroke();
             
-            for (var m=0;m<brainsize;m++) {
+            for (var m=0;m<a.brain.size;m++) {
                 //var act= 1.0/(1.0 + Math.exp(-a));  //pass through sigmoid
                 var act= Math.round(a.brain.act[m]*255);
                 ctx.fillStyle = 'rgb('+act+','+act+','+act+')';
-                var r1= 2*Math.PI*m/brainsize;
+                var r1= 2*Math.PI*m/a.brain.size;
                 drawCircle(SS*Math.cos(r1)+WIDTH-SS*1.5, SS*Math.sin(r1)+HEIGHT-SS*1.5, 10);
             }
             
