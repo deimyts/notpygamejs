@@ -15,7 +15,6 @@ var eyesep= 0.6; //separate of eyes in a.radians
 var eyelen= 30; //how many pixels away from body eyes are
 var eyesens= 0.0005; //how sensitive is the eye? decrease for more sensitivity...
 var eyemult= 0.5; //linear multiplier on strength of eye.
-var foodloss= 0.002; //food loss per iteration
 var repthr= 3; //what is the replication threshold? in amount of food
 var foodgain= 0.5; //how much food and replication is gained when agent eats?
 var mutrate= 0.1; //how common are mutations?
@@ -112,7 +111,21 @@ class Agent {
     this.rep = 0.0; //replication counter
     this.selected = false;
     this.radius = 15;
+    this.foodloss= 0.002; //food loss per iteration
   }
+
+  calculateFoodLoss() {
+    this.health -= this.foodloss;
+  }
+
+  adjustHealth() {
+    this.calculateFoodLoss();
+    this.health -= boostcost * this.boost; //boost costs health
+    if (this.health < 0) {
+      killi = i;
+    }
+  }
+
 }
 
 function myinit(){
@@ -132,19 +145,10 @@ function update(){
         var a = agents[i];
         
         //move agent
-        var vel= new Vector2D((a.boost+a.speed)*Math.cos(a.dir), (a.boost+a.speed)*Math.sin(a.dir));
-        a.pos.plusEq(vel);
-        
-        //enforce boundary conditions: wrap around if necessary
-        if(a.pos.x<0) a.pos.x= WIDTH;
-        if(a.pos.x>WIDTH) a.pos.x= 0;
-        if(a.pos.y<0) a.pos.y= HEIGHT;
-        if(a.pos.y>HEIGHT) a.pos.y= 0;
+        moveAgent(a);
         
         //agent gets more hungry
-        a.health-= foodloss;
-        a.health-= boostcost*a.boost; //boost costs health
-        if(a.health<0) { killi= i; }
+        a.adjustHealth();
     }
     if(killi!=-1) agents.splice(killi, 1);
     
@@ -244,6 +248,20 @@ function update(){
         var anew= new Agent();
         agents.push(anew);
     }
+}
+
+function moveAgent(a) {
+    var vel = new Vector2D((a.boost + a.speed) * Math.cos(a.dir), (a.boost + a.speed) * Math.sin(a.dir));
+    a.pos.plusEq(vel);
+    //enforce boundary conditions: wrap around if necessary
+    if (a.pos.x < 0)
+        a.pos.x = WIDTH;
+    if (a.pos.x > WIDTH)
+        a.pos.x = 0;
+    if (a.pos.y < 0)
+        a.pos.y = HEIGHT;
+    if (a.pos.y > HEIGHT)
+        a.pos.y = 0;
 }
 
 function eatFood(a) {

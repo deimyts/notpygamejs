@@ -17,6 +17,7 @@ describe('when creating an Agent', () => {
     expect(agent.boost).to.equal(0);
     expect(agent.health).to.equal(1);
     expect(agent.rep).to.equal(0);
+    expect(agent.foodloss).to.equal(0.002);
     expect(agent.selected).to.be.false;
   })
 })
@@ -107,6 +108,24 @@ describe('when an agent senses food', () => {
 
       const result = app.getSenseInput(eye, food);
       expect(result).to.equal(0.2676307142594951);
+    })
+  })
+})
+
+describe('updating an agent\'s health', () => {
+  test('it should reduce the health by the foodloss amount', () => {
+    const agent = new Agent();
+    agent.adjustHealth();
+    expect(agent.health).to.equal(1 - 0.002);
+  })
+
+  describe('when the agent is boosted', () => {
+    test('it should reduce the health by the foodloss amount plus the boost amount', () => {
+      const agent = new Agent();
+      const boost = 0.5;
+      agent.boost = boost;
+      agent.adjustHealth();
+      expect(agent.health).to.equal(1 - 0.002 - (0.001 * boost));
     })
   })
 })
