@@ -164,22 +164,47 @@ describe('moving an agent', () => {
 
     describe('when the agent moves past the an edge', () => {
       test('the agent should move to the other side of the map', () => {
-        const agent = new Agent();
-        const WIDTH = 100;
-        const HEIGHT = 100;
+        let startPos = {}
+        let expectedPos = {}
 
-        agent.speed = 0;
-        agent.pos.x = -1;
-        agent.pos.y = 0;
-        agent.move(100, 100);
-        expect(agent.pos.x).to.equal(100);
+        startPos.x = 0;
+        startPos.y = -1;
+        expectedPos.x = 0;
+        expectedPos.y = 100;
+        testEdgeWrap(startPos, expectedPos)
 
+        startPos.x = -1;
+        startPos.y = 0;
+        expectedPos.x = 100;
+        expectedPos.y = 0;
+        testEdgeWrap(startPos, expectedPos)
 
+        startPos.x = 101;
+        startPos.y = 0;
+        expectedPos.x = 0;
+        expectedPos.y = 0;
+        testEdgeWrap(startPos, expectedPos)
 
+        startPos.x = 0;
+        startPos.y = 101;
+        testEdgeWrap(startPos, expectedPos)
       })
     })
   })
 })
+
+function testEdgeWrap(startPosition, expectedPosition) {
+  const agent = new Agent();
+  const WIDTH = 100;
+  const HEIGHT = 100;
+
+  agent.speed = 0;
+  agent.pos.x = startPosition.x;
+  agent.pos.y = startPosition.y;
+  agent.move(100, 100);
+  expect(agent.pos.x).to.equal(expectedPosition.x);
+  expect(agent.pos.y).to.equal(expectedPosition.y);
+}
 
 function testVelocity(speed, direction, expected) {
   const agent = new Agent();
