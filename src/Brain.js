@@ -86,8 +86,7 @@ function synapseWeights(brain) {
   for (var i=0;i<brain.size;i++) {
     weights[i]= new Array(brain.density);
     for (var j=0;j<brain.density;j++) {
-        // weights[i][j]= randf(-1.2, 1.2);
-        weights[i][j]= 0;
+        weights[i][j]= randf(-1.2, 1.2);
     }
   }
   return weights;
@@ -98,8 +97,7 @@ function neuronIndex(brain) {
   for (var i=0;i<brain.size;i++) {
     index[i]= new Array(brain.density);
     for (var j=0;j<brain.density;j++) {
-        index[i][j]= 1;
-        // index[i][j]= randi(0, this.size);
+        index[i][j]= randi(0, this.size);
     }
   }
   return index;
