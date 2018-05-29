@@ -44,7 +44,12 @@ function update(){
     processBrain();
      
     //spawn more food, maybe
-    spawnFood(food);
+
+    const foodBelowLimit = food.length < foodlimit;
+    const counterIsTriggered = foodCounter % foodaddfreq == 0;
+    if (counterIsTriggered && foodBelowLimit) {
+      spawnFood(food);
+    }
     
     //handle births
     handleBirths();
@@ -87,7 +92,6 @@ function handleEating() {
     }
     if(killi!=-1) food.splice(killi, 1);
 }
-
 function handleCollisions() {
   for (i in agents) {
     var a = agents[i];
@@ -163,12 +167,8 @@ function spawnAgent(agents) {
 }
 
 function spawnFood(food) {
-  const foodBelowLimit = food.length < foodlimit;
-  const counterIsTriggered = foodCounter % foodaddfreq == 0;
-  if (counterIsTriggered && foodBelowLimit) {
-    var f = createFoodPellet();
-    return food.push(f);
-  }
+  var f = createFoodPellet();
+  return food.push(f);
 }
 
 function getDistance(a, b) {
