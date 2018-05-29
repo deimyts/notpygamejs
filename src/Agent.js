@@ -64,8 +64,8 @@ class Agent {
       return { eye1, eye2 };
   }
 
-  senseFood(d2, f) {
-    const inRange = d2 < this.radius * 10;
+  senseFood(distance, f) {
+    const inRange = distance < this.radius * 10;
     //for efficiency, don't even bother if it's too far
     if (!inRange) {
       return false;
