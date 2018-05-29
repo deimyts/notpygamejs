@@ -2,6 +2,7 @@ const expect = require('chai').expect;
 
 const app = require('../src/app.js')
 const Agent = require('../src/Agent');
+const Vector2D = require('../src/include/vector2d');
 
 describe('when creating an Agent', () => {
   test('it should set the default properties', () => {
@@ -133,6 +134,12 @@ describe('moving an agent', () => {
       })
 
       test('it should not change positions', () => {
+        const agent = new Agent();
+        agent.dir = 0;
+        agent.pos = new Vector2D(0, 0);
+        agent.move(500, 500);
+        expect(agent.pos.x).to.equal(4);
+        expect(agent.pos.y).to.equal(0);
 
       })
     })
@@ -156,7 +163,6 @@ function testVelocity(speed, direction, expected) {
   agent.speed = speed;
   agent.dir = direction;
   const velocity = agent.getVelocity();
-  console.log('vel: ', velocity);
   expect(velocity.x).to.equal(expected.x);
   expect(velocity.y).to.equal(expected.y);
 }
