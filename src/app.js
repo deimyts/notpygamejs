@@ -100,25 +100,7 @@ function update(){
     }
     
     //handle births
-    var birthIndex = -1;
-    for(i in agents) {
-        var a = agents[i];
-        if(a.rep > a.repthr) {
-            //this agent reproduces!
-            birthIndex = i;
-        }
-    }
-    
-    if(birthIndex != -1) {
-        var a = agents[birthIndex];
-        a.rep= 0;
-        
-         var child= new Agent();
-         child.pos=  new Vector2D(a.pos.x + randf(-30,30), a.pos.y + randf(-30,30));
-         child.brain.mutateFrom(a.brain);
-        
-        agents.push(child);
-    }
+    handleBirths();
     
     //spawn more agents if there are too few agents left
     const notEnoughAgents = agents.length < 10
@@ -127,6 +109,27 @@ function update(){
     }
 }
 
+function handleBirths() {
+  var birthIndex = -1;
+  for (i in agents) {
+    var a = agents[i];
+    if (a.rep > a.repthr) {
+      //this agent reproduces!
+      birthIndex = i;
+    }
+  }
+
+  if (birthIndex != -1) {
+    var a = agents[birthIndex];
+    a.rep = 0;
+
+    var child = new Agent();
+    child.pos = new Vector2D(a.pos.x + randf(-30, 30), a.pos.y + randf(-30, 30));
+    child.brain.mutateFrom(a.brain);
+
+    agents.push(child);
+  }
+}
 function processBrain(i) {
   var a = agents[i];
   res = a.brain.tick(a.s1, a.s2);
