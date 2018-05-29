@@ -8,4 +8,13 @@ describe('an agent\'s brain', () => {
     expect(brain).to.not.be.undefined;
     expect(brain).to.be.an('object');
   })
+
+  test('it should set the default properties', () => {
+    const brain = new Brain();
+
+    expect(brain).to.have.property('size');
+    expect(brain).to.have.property('density');
+    expect(brain).to.have.property('mutationRate');
+    expect(brain).to.have.property('mutationSeverity');
+  })
 })

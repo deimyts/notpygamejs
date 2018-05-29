@@ -3,14 +3,14 @@ const randf = npg.randf;
 const randi = npg.randi;
 const randn = npg.randn;
 
-var mutrate= 0.1; //how common are mutations?
-var mutrate2= 0.3; //how severe are they when they do occur?
 
 function Brain()
 {
 
   this.size = 20;
   this.density = 3;
+  this.mutationRate = 0.1; //how common are mutations?
+  this.mutationSeverity = 0.3; //how severe are they when they do occur?
   //1D array of neuron activations
   this.act= new Array(this.size);
   for (var i=0;i<this.size;i++) {
@@ -68,11 +68,11 @@ Brain.prototype = {
           for (var j=0;j<this.density;j++) {
             
             var m= brain.w[i][j];
-            if(randf(0,1)<mutrate) m += randn(0,mutrate2);
+            if(randf(0,1)<this.mutationRate) m += randn(0,this.mutationSeverity);
             this.w[i][j]= m;
             
             m= brain.ix[i][j];
-            if(randf(0,1)<mutrate) m = randi(0,this.size);
+            if(randf(0,1)<this.mutationRate) m = randi(0,this.size);
             this.ix[i][j]= m;
           }
         }
