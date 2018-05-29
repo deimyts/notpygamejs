@@ -37,7 +37,7 @@ function update(){
         var a = agents[i];
         
         //move agent
-        moveAgent(a);
+        a.moveAgent(WIDTH, HEIGHT);
         
         //agent gets more hungry
         a.adjustHealth();
@@ -143,20 +143,6 @@ function update(){
         var anew= new Agent();
         agents.push(anew);
     }
-}
-
-function moveAgent(a) {
-    var vel = new Vector2D((a.boost + a.speed) * Math.cos(a.dir), (a.boost + a.speed) * Math.sin(a.dir));
-    a.pos.plusEq(vel);
-    //enforce boundary conditions: wrap around if necessary
-    if (a.pos.x < 0)
-        a.pos.x = WIDTH;
-    if (a.pos.x > WIDTH)
-        a.pos.x = 0;
-    if (a.pos.y < 0)
-        a.pos.y = HEIGHT;
-    if (a.pos.y > HEIGHT)
-        a.pos.y = 0;
 }
 
 function getDistance(a, b) {

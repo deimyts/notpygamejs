@@ -25,7 +25,7 @@ class Agent {
 
     this.eyesens= 0.0005; //how sensitive is the eye? decrease for more sensitivity...
     this.eyelen= 30; //how many pixels away from body eyes are
-    this.eyesep = 0.6; //separate of eyes in a.radians
+    this.eyesep = 0.6; //separate of eyes in this.radians
   }
 
   calculateFoodLoss() {
@@ -74,6 +74,20 @@ class Agent {
     var { eye1, eye2 } = this.computeEyePosition();
     this.s1 += this.getSenseInput(eye1, f);
     this.s2 += this.getSenseInput(eye2, f);
+  }
+
+  move(WIDTH, HEIGHT) {
+    vel = new Vector2D((this.boost + this.speed) * Math.cos(this.dir), (this.boost + this.speed) * Math.sin(this.dir));
+    this.pos.plusEq(vel);
+    // force boundary conditions: wrap around if necessary
+    if (this.pos.x < 0)
+        this.pos.x = WIDTH;
+    if (this.pos.x > WIDTH)
+        this.pos.x = 0;
+    if (this.pos.y < 0)
+        this.pos.y = HEIGHT;
+    if (this.pos.y > HEIGHT)
+        this.pos.y = 0;
   }
 }
 
