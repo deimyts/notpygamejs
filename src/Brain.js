@@ -79,10 +79,20 @@ function synapseWeights(brain) {
   return weights.map(() => createSynapses(brain.density));
 }
 
+function createSynapseIndices(density, size) {
+  return new Array(density)
+    .fill(0)
+    .map(() => assignIndex(size))
+}
+
 function createSynapses(density) {
   return new Array(density)
     .fill(0)
     .map(assignWeight)
+}
+
+function assignIndex(brainSize) {
+  return randi(0, brainSize);
 }
 
 function assignWeight() {
@@ -90,14 +100,9 @@ function assignWeight() {
 }
 
 function neuronIndex(brain) {
-  const index = new Array(brain.size);
-  for (var i=0;i<brain.size;i++) {
-    index[i]= new Array(brain.density);
-    for (var j=0;j<brain.density;j++) {
-        index[i][j]= randi(0, brain.size);
-    }
-  }
-  return index;
+  const index = new Array(brain.size).fill([]);
+  const filled = index.map(() => createSynapseIndices(brain.density, brain.size));
+  return filled;
 }
 
 module.exports = Brain;
