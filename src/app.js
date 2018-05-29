@@ -24,6 +24,7 @@ var mutrate= 0.1; //how common are mutations?
 var mutrate2= 0.3; //how severe are they when they do occur?
 var foodaddfreq= 10; //how often do we add food?
 var foodlimit= 30; //how much food can there be total?
+
 function myinit(){
     counter = 0;
     
