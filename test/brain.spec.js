@@ -4,13 +4,12 @@ const Brain = require('../src/Brain.js')
 
 describe('an agent\'s brain', () => {
   let brain;
-  
+
   beforeEach(() => {
     brain = new Brain();
   })
 
   test('it should exist', () => {
-    expect(brain).to.not.be.undefined;
     expect(brain).to.be.an('object');
   })
 
