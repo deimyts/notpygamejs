@@ -41,25 +41,16 @@ function update(){
     handleEating();
     
     //feed forward the brain from senses to output
-    for(i in agents) {
-      processBrain(i);
-    }
+    processBrain();
      
     //spawn more food, maybe
-    const foodBelowLimit =  food.length < foodlimit;
-    const counterIsTriggered = foodCounter % foodaddfreq == 0;
-    if(counterIsTriggered && foodBelowLimit) {
-      spawnFood(food);
-    }
+    spawnFood(food);
     
     //handle births
     handleBirths();
     
     //spawn more agents if there are too few agents left
-    const notEnoughAgents = agents.length < 10
-    if(notEnoughAgents) {
-      spawnAgent(agents);
-    }
+    spawnAgent(agents);
 }
 
 function handleDeaths() {
@@ -96,6 +87,7 @@ function handleEating() {
     }
     if(killi!=-1) food.splice(killi, 1);
 }
+
 function handleCollisions() {
   for (i in agents) {
     var a = agents[i];
@@ -141,33 +133,42 @@ function handleBirths() {
   }
 }
 
-function processBrain(i) {
-  var a = agents[i];
-  res = a.brain.tick(a.s1, a.s2);
+function processBrain() {
+  for (i in agents) {
+    var a = agents[i];
+    res = a.brain.tick(a.s1, a.s2);
 
-  //apply output neuron 0: controls turning. Also cap it to a max of 0.3 rotation
-  var des = res.out0;
-  if (des > 0.8) des = 0.8;
-  if (des < -0.8) des = -0.8;
-  a.dir += des;
+    //apply output neuron 0: controls turning. Also cap it to a max of 0.3 rotation
+    var des = res.out0;
+    if (des > 0.8) des = 0.8;
+    if (des < -0.8) des = -0.8;
+    a.dir += des;
 
-  //wrap direction around to keep it in range of [0, 2pi]
-  if (a.dir > 2 * Math.PI) a.dir = a.dir - 2 * Math.PI;
-  if (a.dir < 0) a.dir = 2 * Math.PI + a.dir;
+    //wrap direction around to keep it in range of [0, 2pi]
+    if (a.dir > 2 * Math.PI) a.dir = a.dir - 2 * Math.PI;
+    if (a.dir < 0) a.dir = 2 * Math.PI + a.dir;
 
-  //apply output neuron 1: controls boost
-  des = res.out1;
-  if (des > 0) { a.boost = des; }
-  else { a.boost = 0; }
+    //apply output neuron 1: controls boost
+    des = res.out1;
+    if (des > 0) { a.boost = des; }
+    else { a.boost = 0; }
+  }
 }
 
 function spawnAgent(agents) {
-  agents.push(new Agent());
+  const notEnoughAgents = agents.length < 10
+  if (notEnoughAgents) {
+    agents.push(new Agent());
+  }
 }
 
 function spawnFood(food) {
-  var f = createFoodPellet();
-  return food.push(f);
+  const foodBelowLimit = food.length < foodlimit;
+  const counterIsTriggered = foodCounter % foodaddfreq == 0;
+  if (counterIsTriggered && foodBelowLimit) {
+    var f = createFoodPellet();
+    return food.push(f);
+  }
 }
 
 function getDistance(a, b) {
