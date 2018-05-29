@@ -6,7 +6,6 @@ const randn = npg.randn;
 
 function Brain()
 {
-
   this.size = 20;
   this.density = 3;
   this.mutationRate = 0.1; //how common are mutations?
@@ -15,13 +14,11 @@ function Brain()
   this.act = neuronActivations(this);
   
   //2D array of synapse weights and indexes of neurons they connect to
-//   this.weights = createSynapseWeights(this);
-    this.w = synapseWeights(this);
-    this.ix = neuronIndex(this);
+  this.w = synapseWeights(this);
+  this.ix = neuronIndex(this);
 }
 
 //feeds forward the brain. s1 and s2 are the two senses, both in [0,1]
-//health is ... health
 Brain.prototype = {
     
     //brain takes inputs and sets its outputs
