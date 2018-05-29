@@ -28,7 +28,7 @@ function myinit(){
 function update(){
     foodCounter = foodCounter + 1;
     
-    agents.forEach(agent => agent.move());
+    agents.forEach(agent => agent.move(WIDTH, HEIGHT));
 
     handleDeaths()
     
