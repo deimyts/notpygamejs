@@ -71,11 +71,7 @@ Brain.prototype = {
 }
 
 function neuronActivations(brain) {
-    const activations = new Array(brain.size);
-    for (var i = 0; i < brain.size; i++) {
-        activations[i] = 0;
-    }
-    return activations;
+  return new Array(brain.size).fill(0);
 }
 
 function synapseWeights(brain) {
