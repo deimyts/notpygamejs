@@ -14,8 +14,6 @@ const drawCircle = npg.drawCircle;
 var agents = [];
 var food = [];
 
-var eyesep= 0.6; //separate of eyes in a.radians
-var eyelen= 30; //how many pixels away from body eyes are
 var repthr= 3; //what is the replication threshold? in amount of food
 var mutrate= 0.1; //how common are mutations?
 var mutrate2= 0.3; //how severe are they when they do occur?
@@ -173,19 +171,6 @@ function createFoodPellet() {
     };
 }
 
-function computeEyePosition(agent) {
-    const eye1 = {};
-    const eye2 = {};
-    eye1.pos = {};
-    eye2.pos = {};
-    
-    eye1.pos.x = agent.pos.x + eyelen * Math.cos(agent.dir - eyesep);
-    eye1.pos.y  = agent.pos.y + eyelen * Math.sin(agent.dir - eyesep);
-    eye2.pos.x = agent.pos.x + eyelen * Math.cos(agent.dir + eyesep);
-    eye2.pos.y = agent.pos.y + eyelen * Math.sin(agent.dir + eyesep);
-    return { eye1, eye2 };
-}
-
 function draw(){
     ctx.clearRect(0,0,WIDTH,HEIGHT);
     
@@ -300,7 +285,6 @@ function keyDown(key){
 }
 
 module.exports = {
-  computeEyePosition,
   createFoodPellet,
   getDistance,
   myinit,

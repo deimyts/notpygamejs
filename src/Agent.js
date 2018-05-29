@@ -24,6 +24,8 @@ class Agent {
     this.eyemult= 0.5; //linear multiplier on strength of eye.
 
     this.eyesens= 0.0005; //how sensitive is the eye? decrease for more sensitivity...
+    this.eyelen= 30; //how many pixels away from body eyes are
+    this.eyesep = 0.6; //separate of eyes in a.radians
   }
 
   calculateFoodLoss() {
@@ -49,6 +51,19 @@ class Agent {
       return this.eyemult * Math.exp(-this.eyesens * distanceSquared);
   }
 
+  computeEyePosition() {
+      const eye1 = {};
+      const eye2 = {};
+      eye1.pos = {};
+      eye2.pos = {};
+      
+      eye1.pos.x = this.pos.x + this.eyelen * Math.cos(this.dir - this.eyesep);
+      eye1.pos.y  = this.pos.y + this.eyelen * Math.sin(this.dir - this.eyesep);
+      eye2.pos.x = this.pos.x + this.eyelen * Math.cos(this.dir + this.eyesep);
+      eye2.pos.y = this.pos.y + this.eyelen * Math.sin(this.dir + this.eyesep);
+      return { eye1, eye2 };
+  }
+
   senseFood(d2, f) {
     const inRange = d2 < this.radius * 10;
     //for efficiency, don't even bother if it's too far
@@ -56,7 +71,7 @@ class Agent {
       return false;
     }
     //compute position of both eyes in world coordinates
-    var { eye1, eye2 } = computeEyePosition(a);
+    var { eye1, eye2 } = this.computeEyePosition();
     this.s1 += this.getSenseInput(eye1, f);
     this.s2 += this.getSenseInput(eye2, f);
   }
