@@ -140,7 +140,8 @@ function update(){
     }
     
     //spawn more agents if there are too few agents left
-    if(agents.length<10) {
+    const notEnoughAgents = agents.length < 10
+    if(notEnoughAgents) {
       spawnAgent(agents);
     }
 }
