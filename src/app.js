@@ -92,24 +92,8 @@ function update(){
     
     //feed forward the brain from senses to output
     for(i in agents) {
-        var a = agents[i];
-        res= a.brain.tick(a.s1, a.s2);
-        
-        //apply output neuron 0: controls turning. Also cap it to a max of 0.3 rotation
-        var des= res.out0;
-        if(des>0.8)des=0.8;
-        if(des<-0.8)des=-0.8;
-        a.dir += des;
-        
-        //wrap direction around to keep it in range of [0, 2pi]
-        if(a.dir>2*Math.PI) a.dir= a.dir-2*Math.PI;
-        if(a.dir<0)a.dir=2*Math.PI+a.dir;
-        
-        //apply output neuron 1: controls boost
-        des= res.out1;
-        if(des>0) {a.boost= des;}
-        else {a.boost= 0;}
-     }
+      processBrain(i);
+    }
      
     //spawn more food, maybe
     const foodBelowLimit =  food.length < foodlimit;
@@ -144,6 +128,26 @@ function update(){
     if(notEnoughAgents) {
       spawnAgent(agents);
     }
+}
+
+function processBrain(i) {
+  var a = agents[i];
+  res = a.brain.tick(a.s1, a.s2);
+
+  //apply output neuron 0: controls turning. Also cap it to a max of 0.3 rotation
+  var des = res.out0;
+  if (des > 0.8) des = 0.8;
+  if (des < -0.8) des = -0.8;
+  a.dir += des;
+
+  //wrap direction around to keep it in range of [0, 2pi]
+  if (a.dir > 2 * Math.PI) a.dir = a.dir - 2 * Math.PI;
+  if (a.dir < 0) a.dir = 2 * Math.PI + a.dir;
+
+  //apply output neuron 1: controls boost
+  des = res.out1;
+  if (des > 0) { a.boost = des; }
+  else { a.boost = 0; }
 }
 
 function spawnAgent(agents) {
