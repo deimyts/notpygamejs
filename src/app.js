@@ -173,18 +173,6 @@ function createFoodPellet() {
     };
 }
 
-function senseFood(d2, a, f) {
-    const inRange = d2 < a.radius * 10;
-    //for efficiency, don't even bother if it's too far
-    if (!inRange) { 
-        return false;
-    }
-    //compute position of both eyes in world coordinates
-    var { eye1, eye2 } = computeEyePosition(a);
-    a.s1 += a.getSenseInput(eye1, f);
-    a.s2 += a.getSenseInput(eye2, f);
-}
-
 function computeEyePosition(agent) {
     const eye1 = {};
     const eye2 = {};
@@ -312,7 +300,6 @@ function keyDown(key){
 }
 
 module.exports = {
-  senseFood,
   computeEyePosition,
   createFoodPellet,
   getDistance,

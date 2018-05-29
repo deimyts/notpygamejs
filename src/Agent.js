@@ -49,6 +49,17 @@ class Agent {
       return this.eyemult * Math.exp(-this.eyesens * distanceSquared);
   }
 
+  senseFood(d2, f) {
+    const inRange = d2 < this.radius * 10;
+    //for efficiency, don't even bother if it's too far
+    if (!inRange) {
+      return false;
+    }
+    //compute position of both eyes in world coordinates
+    var { eye1, eye2 } = computeEyePosition(a);
+    this.s1 += this.getSenseInput(eye1, f);
+    this.s2 += this.getSenseInput(eye2, f);
+  }
 }
 
 module.exports = Agent;

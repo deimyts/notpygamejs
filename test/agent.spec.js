@@ -2,7 +2,6 @@ const expect = require('chai').expect;
 
 const app = require('../src/app.js')
 const Agent = require('../src/Agent');
-const senseFood = app.senseFood;
 
 describe('when creating an Agent', () => {
   test('it should set the default properties', () => {
@@ -70,7 +69,7 @@ describe('when an agent senses food', () => {
   agent.pos.y = 0;
   const distance =  15 * 10; // radius is 15 (for now)
     test('the sense function should return false', () => {
-      const result = app.senseFood(distance, agent, food);
+      const result = agent.senseFood(distance, agent, food);
       expect(result).to.be.false;
     });
   });
