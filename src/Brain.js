@@ -74,34 +74,29 @@ function neuronActivations(brain) {
   return new Array(brain.size).fill(0);
 }
 
-function synapseWeights(brain) {
-  const weights = new Array(brain.size).fill([]);
-  return weights.map(() => createSynapses(brain.density));
-}
 
-function createSynapseIndices(density, size) {
-  return new Array(density)
+function fillSynapses(brain, cb) {
+  return new Array(brain.density)
     .fill(0)
-    .map(() => assignIndex(size))
+    .map(() => cb(brain))
 }
 
-function createSynapses(density) {
-  return new Array(density)
-    .fill(0)
-    .map(assignWeight)
-}
-
-function assignIndex(brainSize) {
-  return randi(0, brainSize);
+function assignIndex(brain) {
+  return randi(0, brain.size);
 }
 
 function assignWeight() {
   return randf(-1.2, 1.2);
 }
 
+function synapseWeights(brain) {
+  const weights = new Array(brain.size).fill([]);
+  return weights.map(() => fillSynapses(brain, assignWeight));
+}
+
 function neuronIndex(brain) {
   const index = new Array(brain.size).fill([]);
-  const filled = index.map(() => createSynapseIndices(brain.density, brain.size));
+  const filled = index.map(() => fillSynapses(brain, assignIndex));
   return filled;
 }
 
