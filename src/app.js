@@ -100,17 +100,17 @@ function update(){
     }
     
     //handle births
-    var bi= -1;
+    var birthIndex = -1;
     for(i in agents) {
         var a = agents[i];
-        if(a.rep>a.repthr) {
+        if(a.rep > a.repthr) {
             //this agent reproduces!
-            bi= i;
+            birthIndex = i;
         }
     }
     
-    if(bi!=-1) {
-        var a = agents[bi];
+    if(birthIndex != -1) {
+        var a = agents[birthIndex];
         a.rep= 0;
         
          var anew= new Agent();
