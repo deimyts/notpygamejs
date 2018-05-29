@@ -19,6 +19,7 @@ class Agent {
     this.radius = 15;
     this.foodloss= 0.002; //food loss per iteration
     this.boostcost=0.001;  //how much does use of boost cost in health
+    this.foodgain= 0.5; //how much food and replication is gained when agent eats?
   }
 
   calculateFoodLoss() {
@@ -29,7 +30,13 @@ class Agent {
     this.calculateFoodLoss();
     this.health -= this.boostcost * this.boost; //boost costs health
   }
+
+  eat() {
+    this.rep += this.foodgain;
+    this.health += this.foodgain;
+    if (this.health > 1)
+        this.health = 1;
+  }
 }
 
 module.exports = Agent;
-

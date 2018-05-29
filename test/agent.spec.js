@@ -26,17 +26,17 @@ describe('when an agent eats a piece of food', () => {
   test('the agent\'s replication counter should increase by the foodgain amount (.5)', () => {
     const agent = new Agent();
     agent.rep = 0.25;
-    app.eatFood(agent)
+    agent.eat()
     expect(agent.rep).to.equal(0.75);
-    app.eatFood(agent)
+    agent.eat()
     expect(agent.rep).to.equal(1.25);
   });
   test('the agent\'s health should increase by the foodgain amount (.5), up to a max value of 1', () => {
     const agent = new Agent();
     agent.health = 0.25;
-    app.eatFood(agent);
+    agent.eat();
     expect(agent.health).to.equal(0.75);
-    app.eatFood(agent);
+    agent.eat();
     expect(agent.health).to.equal(1);
   });
 });

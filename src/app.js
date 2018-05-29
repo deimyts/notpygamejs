@@ -19,7 +19,6 @@ var eyelen= 30; //how many pixels away from body eyes are
 var eyesens= 0.0005; //how sensitive is the eye? decrease for more sensitivity...
 var eyemult= 0.5; //linear multiplier on strength of eye.
 var repthr= 3; //what is the replication threshold? in amount of food
-var foodgain= 0.5; //how much food and replication is gained when agent eats?
 var mutrate= 0.1; //how common are mutations?
 var mutrate2= 0.3; //how severe are they when they do occur?
 var foodaddfreq= 10; //how often do we add food?
@@ -86,7 +85,7 @@ function update(){
             
             var d2= getDistance(a.pos, f.pos);
             if(d2 < a.radius){
-                eatFood(a);
+                a.eatFood();
                 killi = j;
             }
             
@@ -162,13 +161,6 @@ function moveAgent(a) {
         a.pos.y = HEIGHT;
     if (a.pos.y > HEIGHT)
         a.pos.y = 0;
-}
-
-function eatFood(a) {
-    a.rep += foodgain;
-    a.health += foodgain;
-    if (a.health > 1)
-        a.health = 1;
 }
 
 function getDistance(a, b) {
@@ -329,7 +321,6 @@ function keyDown(key){
 }
 
 module.exports = {
-  eatFood,
   senseFood,
   getSenseInput,
   computeEyePosition,
