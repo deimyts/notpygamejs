@@ -26,6 +26,7 @@ class Agent {
     this.eyesens= 0.0005; //how sensitive is the eye? decrease for more sensitivity...
     this.eyelen= 30; //how many pixels away from body eyes are
     this.eyesep = 0.6; //separate of eyes in this.radians
+    this.repthr= 3; //what is the replication threshold? in amount of food
   }
 
   calculateFoodLoss() {

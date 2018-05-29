@@ -14,7 +14,6 @@ const drawCircle = npg.drawCircle;
 var agents = [];
 var food = [];
 
-var repthr= 3; //what is the replication threshold? in amount of food
 var foodaddfreq= 10; //how often do we add food?
 var foodlimit= 30; //how much food can there be total?
 
@@ -104,7 +103,7 @@ function update(){
     var bi= -1;
     for(i in agents) {
         var a = agents[i];
-        if(a.rep>repthr) {
+        if(a.rep>a.repthr) {
             //this agent reproduces!
             bi= i;
         }
