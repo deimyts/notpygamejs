@@ -21,13 +21,6 @@ describe('an agent\'s brain', () => {
   })
 
   describe('creating the array of neuron activations', () => {
-
-    test('the new function should do the same as the old one', () => {
-      const currentResult = brain.act;
-      const newResult = brain.neuronActivations(brain);
-      expect(currentResult).to.deep.equal(newResult);
-    })
-
     test('the neuron activation should be an array of length "brain.size"', () => {
       expect(brain.act).to.be.an('array'); 
       expect(brain.act).to.have.length(brain.size);

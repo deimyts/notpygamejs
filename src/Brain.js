@@ -12,11 +12,7 @@ function Brain()
   this.mutationRate = 0.1; //how common are mutations?
   this.mutationSeverity = 0.3; //how severe are they when they do occur?
   //1D array of neuron activations
-//   this.act = createNeuronActivations(this);
-    this.act = new Array(this.size);
-    for (var i = 0; i < this.size; i++) {
-        this.act[i] = 0;
-    }
+  this.act = neuronActivations(this);
   
   //2D array of synapse weights and indexes of neurons they connect to
 //   this.weights = createSynapseWeights(this);
