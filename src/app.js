@@ -85,7 +85,7 @@ function update(){
                 killi = j;
             }
             
-            senseFood(d2, a, f);
+            a.senseFood(d2, f);
         }
     }
     if(killi!=-1) food.splice(killi, 1);
