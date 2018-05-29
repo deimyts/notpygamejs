@@ -29,20 +29,9 @@ function myinit(){
 function update(){
     foodCounter = foodCounter + 1;
     
-    killi=-1;
-    for(i in agents) {
-        var a = agents[i];
-        
-        //move agent
-        a.move(WIDTH, HEIGHT);
-        
-        //agent gets more hungry
-        a.adjustHealth();
-        if (a.health < 0) {
-          killi = i;
-      }
-    }
-    if(killi!=-1) agents.splice(killi, 1);
+    agents.forEach(agent => agent.move());
+
+    handleDeaths()
     
     //agent collision detection and resolution
     handleCollisions();
@@ -88,6 +77,20 @@ function update(){
     if(notEnoughAgents) {
       spawnAgent(agents);
     }
+}
+
+function handleDeaths() {
+    const killi=-1;
+    for(i in agents) {
+        var a = agents[i];
+        
+        //agent gets more hungry
+        a.adjustHealth();
+        if (a.health < 0) {
+          killi = i;
+      }
+    }
+    if(killi!=-1) agents.splice(killi, 1);
 }
 
 function handleCollisions() {
