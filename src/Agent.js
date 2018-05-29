@@ -78,7 +78,7 @@ class Agent {
   }
 
   move(WIDTH, HEIGHT) {
-    const vel = new Vector2D((this.boost + this.speed) * Math.cos(this.dir), (this.boost + this.speed) * Math.sin(this.dir));
+    const vel = this.getVelocity();
     this.pos.plusEq(vel);
     // force boundary conditions: wrap around if necessary
     if (this.pos.x < 0)
@@ -89,6 +89,12 @@ class Agent {
         this.pos.y = HEIGHT;
     if (this.pos.y > HEIGHT)
         this.pos.y = 0;
+  }
+
+  getVelocity() {
+    const xVelocity = (this.boost + this.speed) * Math.cos(this.dir);
+    const yVelocity = (this.boost + this.speed) * Math.sin(this.dir);
+    return new Vector2D(xVelocity, yVelocity);
   }
 }
 

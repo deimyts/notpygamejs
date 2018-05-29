@@ -122,3 +122,39 @@ describe('updating an agent\'s health', () => {
     })
   })
 })
+
+describe('moving an agent', () => {
+  describe('getting an agent\'s velocity', () => {
+    describe('when the agent is not moving', () => {
+      test('it should have a velocity of 0', () => {
+        const agent = new Agent();
+        agent.speed = 0;
+        const velocity = agent.getVelocity();
+        expect(velocity.x).to.equal(0);
+        expect(velocity.y).to.equal(0);
+      })
+    })
+    describe('when the agent is moving', () => {
+      test('it should calculate the velocity correctly', () => {
+        let direction = 0;
+        testVelocity(1, direction, { x: 1, y: 0 })
+        direction = Math.PI;
+        testVelocity(1, direction, { x: -1, y: 1.2246467991473532e-16 })
+        direction = Math.PI / 2;
+        testVelocity(1, direction, { x: 6.123233995736766e-17, y: 1 })
+        direction = Math.PI * 2;
+        testVelocity(1, direction, { x: 1, y: -2.4492935982947064e-16 })
+      })
+    })
+  })
+})
+
+function testVelocity(speed, direction, expected) {
+  const agent = new Agent();
+  agent.speed = speed;
+  agent.dir = direction;
+  const velocity = agent.getVelocity();
+  console.log('vel: ', velocity);
+  expect(velocity.x).to.equal(expected.x);
+  expect(velocity.y).to.equal(expected.y);
+}
