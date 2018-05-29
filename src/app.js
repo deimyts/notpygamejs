@@ -130,6 +130,7 @@ function handleBirths() {
     agents.push(child);
   }
 }
+
 function processBrain(i) {
   var a = agents[i];
   res = a.brain.tick(a.s1, a.s2);
