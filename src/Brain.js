@@ -12,12 +12,14 @@ function Brain()
   this.mutationRate = 0.1; //how common are mutations?
   this.mutationSeverity = 0.3; //how severe are they when they do occur?
   //1D array of neuron activations
-  this.act= new Array(this.size);
-  for (var i=0;i<this.size;i++) {
-    this.act[i]= 0;
-  }
+//   this.act = createNeuronActivations(this);
+    this.act = new Array(this.size);
+    for (var i = 0; i < this.size; i++) {
+        this.act[i] = 0;
+    }
   
   //2D array of synapse weights and indexes of neurons they connect to
+//   this.weights = createSynapseWeights(this);
   this.w= new Array(this.size);
   this.ix= new Array(this.size);
   for (var i=0;i<this.size;i++) {
@@ -76,7 +78,21 @@ Brain.prototype = {
             this.ix[i][j]= m;
           }
         }
+    },
+
+    neuronActivations: neuronActivations,
+}
+
+function neuronActivations(brain) {
+    const activations = new Array(brain.size);
+    for (var i = 0; i < brain.size; i++) {
+        activations[i] = 0;
     }
+    return activations;
+}
+
+function synapseWeights(brain) {
+
 }
 
 module.exports = Brain;
