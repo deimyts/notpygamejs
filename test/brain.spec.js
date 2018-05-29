@@ -45,6 +45,16 @@ describe('an agent\'s brain', () => {
         expect(weight).to.have.length(brain.density);
       })
     })
+
+    test('each weight should be a number between -1.2 and 1.2', () => {
+      brain.w.forEach(weightGroup => {
+        weightGroup.forEach(weight => {
+          expect(weight).to.be.a('number');
+          expect(weight).to.be.greaterThan(-1.2);
+          expect(weight).to.be.lessThan(1.2);
+        })
+      }) 
+    })
   })
 
   describe('creating the neuron index', () => {
