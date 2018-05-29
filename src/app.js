@@ -92,6 +92,7 @@ function handleEating() {
     }
     if(killi!=-1) food.splice(killi, 1);
 }
+
 function handleCollisions() {
   for (i in agents) {
     var a = agents[i];
