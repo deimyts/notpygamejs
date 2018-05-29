@@ -15,8 +15,6 @@ var agents = [];
 var food = [];
 
 var repthr= 3; //what is the replication threshold? in amount of food
-var mutrate= 0.1; //how common are mutations?
-var mutrate2= 0.3; //how severe are they when they do occur?
 var foodaddfreq= 10; //how often do we add food?
 var foodlimit= 30; //how much food can there be total?
 

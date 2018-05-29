@@ -1,9 +1,12 @@
 const npg = require('./include/npgmain');
 const randf = npg.randf;
 const randi = npg.randi;
+const randn = npg.randn;
 
 var brainsize= 20; //how many neurons does each brain have. Must be bigger than about 10
 var braindensity= 3; //how dense are the brains? (number of synapses per neuron)
+var mutrate= 0.1; //how common are mutations?
+var mutrate2= 0.3; //how severe are they when they do occur?
 
 function Brain()
 {
