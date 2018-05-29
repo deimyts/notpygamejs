@@ -113,11 +113,11 @@ function update(){
         var a = agents[birthIndex];
         a.rep= 0;
         
-         var anew= new Agent();
-         anew.pos=  new Vector2D(a.pos.x + randf(-30,30), a.pos.y + randf(-30,30));
-         anew.brain.mutateFrom(a.brain);
+         var child= new Agent();
+         child.pos=  new Vector2D(a.pos.x + randf(-30,30), a.pos.y + randf(-30,30));
+         child.brain.mutateFrom(a.brain);
         
-        agents.push(anew);
+        agents.push(child);
     }
     
     //spawn more agents if there are too few agents left
