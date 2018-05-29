@@ -37,9 +37,11 @@ describe('an agent\'s brain', () => {
 
   describe('creating the array of synapse weights', () => {
     test('the new function should do the same as the old one', () => {
-      const currentResult = brain.w;
-      const newResult = brain.synapseWeights(brain);
-      expect(currentResult).to.deep.equal(newResult);
+      const currentWeights = brain.w;
+      const currentIndex = brain.ix;
+      const  { weights, index } = brain.synapseWeights(brain);
+      expect(currentWeights).to.deep.equal(weights);
+      expect(currentIndex).to.deep.equal(index);
     })
   })
 

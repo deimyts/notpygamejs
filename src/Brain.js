@@ -22,8 +22,10 @@ function Brain()
     this.w[i]= new Array(this.density);
     this.ix[i]= new Array(this.density);
     for (var j=0;j<this.density;j++) {
-        this.w[i][j]= randf(-1.2, 1.2);
-        this.ix[i][j]= randi(0, this.size);
+        this.w[i][j]= 0;
+        this.ix[i][j]= 1;
+        // this.w[i][j]= randf(-1.2, 1.2);
+        // this.ix[i][j]= randi(0, this.size);
     }
   }
 }
@@ -77,6 +79,7 @@ Brain.prototype = {
     },
 
     neuronActivations: neuronActivations,
+    synapseWeights: synapseWeights,
 }
 
 function neuronActivations(brain) {
@@ -88,6 +91,21 @@ function neuronActivations(brain) {
 }
 
 function synapseWeights(brain) {
+  const weights = new Array(brain.size);
+  const index = new Array(brain.size);
+  for (var i=0;i<brain.size;i++) {
+    weights[i]= new Array(brain.density);
+    index[i]= new Array(brain.density);
+    for (var j=0;j<brain.density;j++) {
+        // weights[i][j]= randf(-1.2, 1.2);
+        weights[i][j]= 0;
+        index[i][j]= 1;
+        // index[i][j]= randi(0, this.size);
+    }
+  }
+
+  return { weights, index }
+
 
 }
 
