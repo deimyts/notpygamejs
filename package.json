@@ -4,7 +4,7 @@
   "description": "Game making library for Javascript with the Canvas element. Andrej Karpathy 1 May 2012",
   "main": "src/index.js",
   "scripts": {
-    "serve": "webpack-dev-server",
+    "start": "webpack-dev-server",
     "build": "webpack",
     "test": "jest"
   },
