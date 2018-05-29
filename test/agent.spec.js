@@ -126,6 +126,12 @@ describe('updating an agent\'s health', () => {
 
 describe('moving an agent', () => {
   describe('getting an agent\'s velocity', () => {
+    describe('if the move function is called without parameters', () => {
+      test('it should throw an error', () => {
+        const agent = new Agent;
+        expect(agent.move.bind(agent)).to.throw();
+      })
+    })
     describe('when the agent is not moving', () => {
       test('it should have a velocity of 0', () => {
         const speed = 0;
@@ -153,6 +159,23 @@ describe('moving an agent', () => {
         testVelocity(1, direction, { x: 6.123233995736766e-17, y: 1 })
         direction = Math.PI * 2;
         testVelocity(1, direction, { x: 1, y: -2.4492935982947064e-16 })
+      })
+    })
+
+    describe('when the agent moves past the an edge', () => {
+      test('the agent should move to the other side of the map', () => {
+        const agent = new Agent();
+        const WIDTH = 100;
+        const HEIGHT = 100;
+
+        agent.speed = 0;
+        agent.pos.x = -1;
+        agent.pos.y = 0;
+        agent.move(100, 100);
+        expect(agent.pos.x).to.equal(100);
+
+
+
       })
     })
   })

@@ -77,7 +77,14 @@ class Agent {
     this.s2 += this.getSenseInput(eye2, f);
   }
 
+  getVelocity() {
+    const xVelocity = (this.boost + this.speed) * Math.cos(this.dir);
+    const yVelocity = (this.boost + this.speed) * Math.sin(this.dir);
+    return new Vector2D(xVelocity, yVelocity);
+  }
+
   move(WIDTH, HEIGHT) {
+    if(!WIDTH || !HEIGHT) throw new Error('You must pass a width and height to agent.move()')
     const vel = this.getVelocity();
     this.pos.plusEq(vel);
     // force boundary conditions: wrap around if necessary
@@ -89,12 +96,6 @@ class Agent {
         this.pos.y = HEIGHT;
     if (this.pos.y > HEIGHT)
         this.pos.y = 0;
-  }
-
-  getVelocity() {
-    const xVelocity = (this.boost + this.speed) * Math.cos(this.dir);
-    const yVelocity = (this.boost + this.speed) * Math.sin(this.dir);
-    return new Vector2D(xVelocity, yVelocity);
   }
 }
 
