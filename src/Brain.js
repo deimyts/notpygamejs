@@ -94,7 +94,7 @@ function neuronIndex(brain) {
   for (var i=0;i<brain.size;i++) {
     index[i]= new Array(brain.density);
     for (var j=0;j<brain.density;j++) {
-        index[i][j]= randi(0, this.size);
+        index[i][j]= randi(0, brain.size);
     }
   }
   return index;
