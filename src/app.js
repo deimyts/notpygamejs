@@ -18,7 +18,7 @@ var foodaddfreq= 10; //how often do we add food?
 var foodlimit= 30; //how much food can there be total?
 
 function myinit(){
-    counter = 0;
+    foodCounter = 0;
     
     //cosmetics
     ctx.font = "12pt Arial";
@@ -27,7 +27,7 @@ function myinit(){
 }
 
 function update(){
-    counter=counter+1;
+    foodCounter = foodCounter + 1;
     
     killi=-1;
     for(i in agents) {
@@ -75,7 +75,7 @@ function update(){
      
     //spawn more food, maybe
     const foodBelowLimit =  food.length < foodlimit;
-    const counterIsTriggered = counter % foodaddfreq == 0;
+    const counterIsTriggered = foodCounter % foodaddfreq == 0;
     if(counterIsTriggered && foodBelowLimit) {
       spawnFood(food);
     }
