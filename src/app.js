@@ -242,12 +242,25 @@ function drawBrain(a) {
   }
 }
 
-function drawNeuron(neuron, agent, index, radius, drawingSize) {
+function drawNeuron(neuron, agent, index, r1, drawingSize) {
+  // convert neuron to an RGB color value: white is active, black is inactive
+  setNeuronColor(neuron, agent, index);
+  var r1 = 2 * Math.PI * index / agent.brain.size;
+  
+  const center = {
+    x: drawingSize * Math.cos(r1) + WIDTH - drawingSize * 1.5,
+    y: drawingSize * Math.sin(r1) + HEIGHT - drawingSize * 1.5
+  };
+  const radius = 10;
+
+  drawCircle(center.x, center.y, radius);
+  return { r1 };
+}
+
+function setNeuronColor(neuron, agent, index) {
   var neuron = Math.round(agent.brain.act[index] * 255);
   ctx.fillStyle = 'rgb(' + neuron + ',' + neuron + ',' + neuron + ')';
-  var radius = 2 * Math.PI * index / agent.brain.size;
-  drawCircle(drawingSize * Math.cos(radius) + WIDTH - drawingSize * 1.5, drawingSize * Math.sin(radius) + HEIGHT - drawingSize * 1.5, 10);
-  return { radius, neuron };
+  return neuron;
 }
 
 function drawSynapse(a, m, n, SS, r1) {
