@@ -213,65 +213,77 @@ function drawAgents() {
     ctx.rotate(a.dir - Math.PI / 2);
     //draw its eyes
     //first compute their position
-    var a1 = -a.eyesep + Math.PI / 2;
-    var a2 = a.eyesep + Math.PI / 2;
-    var x1 = Math.cos(a1) * a.eyelen;
-    var y1 = Math.sin(a1) * a.eyelen;
-    var x2 = Math.cos(a2) * a.eyelen;
-    var y2 = Math.sin(a2) * a.eyelen;
-    //draw the lines to eyes
-    ctx.fillStyle = 'rgb(0,0,0)';
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(x1, y1);
-    ctx.moveTo(0, 0);
-    ctx.lineTo(x2, y2);
-    ctx.closePath();
-    ctx.stroke();
-    //draw the eyes, colored by how much food they sense
-    var s = Math.round(a.s1 * 255.0);
-    ctx.fillStyle = 'rgb(' + s + ',0,0)';
-    drawCircle(x1, y1, 5);
-    var s = Math.round(a.s2 * 255.0);
-    if (s > 255)
-        s = 255;
-    ctx.fillStyle = 'rgb(' + s + ',0,0)';
-    drawCircle(x2, y2, 5);
+    drawEyes(a);
     //draw agent body and outline
-    if (!a.selected) {
-        ctx.fillStyle = 'rgb(' + Math.round(255.0 * a.health) + ',' + Math.round(255.0 * a.health) + ',0)';
-    }
-    else {
-        ctx.fillStyle = 'rgb(0,' + Math.round(255.0 * a.health) + ',' + Math.round(255.0 * a.health) + ')';
-    }
-    drawCircle(0, 0, a.radius);
-    ctx.restore();
+    drawBody(a);
     //draw brain of this agent, if it is selected
     if (a.selected) {
         //draw all the connections first
-        ctx.fillStyle = 'rgb(0,0,0)';
-        ctx.beginPath();
-        var SS = 100;
-        for (var m = 0; m < a.brain.size; m++) {
-            var r1 = 2 * Math.PI * m / a.brain.size;
-            for (var n = 0; n < a.brain.density; n++) {
-                //this.w[i][j]*this.act[this.ix[i][j]]
-                var act = Math.round(a.brain.w[i][j] * 120 + 120);
-                var r2 = 2 * Math.PI * a.brain.ix[m][n] / a.brain.size;
-                ctx.moveTo(SS * Math.cos(r1) + WIDTH - SS * 1.5, SS * Math.sin(r1) + HEIGHT - SS * 1.5);
-                ctx.lineTo(SS * Math.cos(r2) + WIDTH - SS * 1.5, SS * Math.sin(r2) + HEIGHT - SS * 1.5);
-            }
-        }
-        ctx.stroke();
-        for (var m = 0; m < a.brain.size; m++) {
-            //var act= 1.0/(1.0 + Math.exp(-a));  //pass through sigmoid
-            var act = Math.round(a.brain.act[m] * 255);
-            ctx.fillStyle = 'rgb(' + act + ',' + act + ',' + act + ')';
-            var r1 = 2 * Math.PI * m / a.brain.size;
-            drawCircle(SS * Math.cos(r1) + WIDTH - SS * 1.5, SS * Math.sin(r1) + HEIGHT - SS * 1.5, 10);
-        }
+        drawBrain(a);
     }
   }
+}
+
+function drawBrain(a) {
+  ctx.fillStyle = 'rgb(0,0,0)';
+  ctx.beginPath();
+  var SS = 100;
+  for (var m = 0; m < a.brain.size; m++) {
+    var r1 = 2 * Math.PI * m / a.brain.size;
+    for (var n = 0; n < a.brain.density; n++) {
+      //this.w[i][j]*this.act[this.ix[i][j]]
+      var act = Math.round(a.brain.w[i][j] * 120 + 120);
+      var r2 = 2 * Math.PI * a.brain.ix[m][n] / a.brain.size;
+      ctx.moveTo(SS * Math.cos(r1) + WIDTH - SS * 1.5, SS * Math.sin(r1) + HEIGHT - SS * 1.5);
+      ctx.lineTo(SS * Math.cos(r2) + WIDTH - SS * 1.5, SS * Math.sin(r2) + HEIGHT - SS * 1.5);
+    }
+  }
+  ctx.stroke();
+  for (var m = 0; m < a.brain.size; m++) {
+    //var act= 1.0/(1.0 + Math.exp(-a));  //pass through sigmoid
+    var act = Math.round(a.brain.act[m] * 255);
+    ctx.fillStyle = 'rgb(' + act + ',' + act + ',' + act + ')';
+    var r1 = 2 * Math.PI * m / a.brain.size;
+    drawCircle(SS * Math.cos(r1) + WIDTH - SS * 1.5, SS * Math.sin(r1) + HEIGHT - SS * 1.5, 10);
+  }
+}
+
+function drawBody(a) {
+  if (!a.selected) {
+    ctx.fillStyle = 'rgb(' + Math.round(255.0 * a.health) + ',' + Math.round(255.0 * a.health) + ',0)';
+  }
+  else {
+    ctx.fillStyle = 'rgb(0,' + Math.round(255.0 * a.health) + ',' + Math.round(255.0 * a.health) + ')';
+  }
+  drawCircle(0, 0, a.radius);
+  ctx.restore();
+}
+
+function drawEyes(a) {
+  var a1 = -a.eyesep + Math.PI / 2;
+  var a2 = a.eyesep + Math.PI / 2;
+  var x1 = Math.cos(a1) * a.eyelen;
+  var y1 = Math.sin(a1) * a.eyelen;
+  var x2 = Math.cos(a2) * a.eyelen;
+  var y2 = Math.sin(a2) * a.eyelen;
+  //draw the lines to eyes
+  ctx.fillStyle = 'rgb(0,0,0)';
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.lineTo(x1, y1);
+  ctx.moveTo(0, 0);
+  ctx.lineTo(x2, y2);
+  ctx.closePath();
+  ctx.stroke();
+  //draw the eyes, colored by how much food they sense
+  var s = Math.round(a.s1 * 255.0);
+  ctx.fillStyle = 'rgb(' + s + ',0,0)';
+  drawCircle(x1, y1, 5);
+  var s = Math.round(a.s2 * 255.0);
+  if (s > 255)
+    s = 255;
+  ctx.fillStyle = 'rgb(' + s + ',0,0)';
+  drawCircle(x2, y2, 5);
 }
 
 function drawFood() {
