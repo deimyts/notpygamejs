@@ -227,19 +227,17 @@ function drawAgents() {
 function drawBrain(a) {
   ctx.fillStyle = 'rgb(0,0,0)';
   ctx.beginPath();
-  var SS = 100;
-  for (var m = 0; m < a.brain.size; m++) {
-    var r1 = 2 * Math.PI * m / a.brain.size;
-    for (var n = 0; n < a.brain.density; n++) {
-      // this.w[i][j]*this.act[this.ix[i][j]]
-      var act = drawSynapse(a, m, n, SS, r1);
-    }
-  }
+  var drawingSize = 100;
+  a.brain.w.forEach((weightGroup, i) => {
+    var r1 = 2 * Math.PI * i / a.brain.size;
+    weightGroup.forEach((synapse, j) => {
+      drawSynapse(a, i, j, drawingSize, r1);
+    });
+  })
   ctx.stroke();
-  for (var m = 0; m < a.brain.size; m++) {
-    //var act= 1.0/(1.0 + Math.exp(-a));  //pass through sigmoid
-    drawNeuron(act, a, m, SS);
-  }
+  a.brain.act.forEach((neuron, m) => {
+    drawNeuron(neuron, a, m, drawingSize);
+  })
 }
 
 function drawNeuron(neuron, agent, index, drawingSize) {
