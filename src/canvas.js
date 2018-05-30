@@ -12,9 +12,12 @@ function clearCanvas() {
   ctx.clearRect(0, 0, WIDTH, HEIGHT);
 }
 
-function drawScore() {
-  ctx.fillStyle = 'rgb(0,0,0)';
-  ctx.fillText("Alive: " + agents.length, 10, 20);
+function drawFood() {
+  ctx.fillStyle = 'rgb(100,230,100)';
+  for (i in food) {
+    var f = food[i];
+    drawCircle(f.pos.x, f.pos.y, 10);
+  }
 }
 
 function drawAgents() {
@@ -34,6 +37,11 @@ function drawAgents() {
         drawBrain(a);
     }
   }
+}
+
+function drawScore() {
+  ctx.fillStyle = 'rgb(0,0,0)';
+  ctx.fillText("Alive: " + agents.length, 10, 20);
 }
 
 function drawBrain(a) {
@@ -137,14 +145,6 @@ function drawEyes(a) {
     s = 255;
   ctx.fillStyle = 'rgb(' + s + ',0,0)';
   drawCircle(x2, y2, 5);
-}
-
-function drawFood() {
-  ctx.fillStyle = 'rgb(100,230,100)';
-  for (i in food) {
-    var f = food[i];
-    drawCircle(f.pos.x, f.pos.y, 10);
-  }
 }
 
 module.exports = { draw }
