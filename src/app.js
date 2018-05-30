@@ -227,43 +227,50 @@ function drawAgents() {
 function drawBrain(a) {
   ctx.fillStyle = 'rgb(0,0,0)';
   ctx.beginPath();
-  var drawingSize = 100;
+  var radius = 100;
   const drawingCenter = {
-    x: WIDTH - drawingSize * 1.5,
-    y: HEIGHT - drawingSize * 1.5
+    x: WIDTH - radius * 1.5,
+    y: HEIGHT - radius * 1.5
   };
   a.brain.w.forEach((weightGroup, i) => {
     var r1 = 2 * Math.PI * i / a.brain.size;
     weightGroup.forEach((weight, j) => {
       const neuronIndex = a.brain.ix[i][j];
-      drawSynapse(a, drawingCenter, r1, weight, neuronIndex, drawingSize);
+      drawSynapse(a, drawingCenter, r1, weight, neuronIndex, radius);
     });
   })
   a.brain.act.forEach((neuron, index) => {
     // convert neuron to an RGB color value: white is active, black is inactive
     setColor(neuron);
-    drawNeuron(a, index, drawingCenter, drawingSize);
+    drawNeuron(a, index, drawingCenter, radius);
   })
 }
 
-function drawNeuron(agent, index, drawingCenter, drawingSize) {
+function drawNeuron(agent, index, drawingCenter, drawingRadius) {
   
-  const center = findNeuronCenter(index, agent, drawingSize, drawingCenter);
+  const center = findNeuronCenter(index, agent, drawingRadius, drawingCenter);
   const radius = 10;
 
   drawCircle(center.x, center.y, radius);
 }
 
-function findNeuronCenter(index, agent, drawingSize, drawingCenter) {
+function findNeuronCenter(index, agent, drawingRadius, drawingCenter) {
   // 2 * PI = 360deg (in radians) 
   // ( 360deg / number of items ) => the angle between any two equidistant points
   // multiply this angle by the index of the point you want
   // and you get...
   // the angle between your point, and the point at 0deg.
-  const angle = 2 * Math.PI * index / agent.brain.size;
+  const angleBetweenPoints = 2 * Math.PI / agent.brain.size;
+  const angle = angleBetweenPoints * index;
+
+  // then...
+  // the x & y coords for the neuron circle
+  // are found by:
+  // X = Cx + (r * cosine(angle))  
+  // Y = Cy + (r * sine(angle))
   return {
-    x: drawingSize * Math.cos(angle) + drawingCenter.x,
-    y: drawingSize * Math.sin(angle) + drawingCenter.y
+    x: drawingRadius * Math.cos(angle) + drawingCenter.x,
+    y: drawingRadius * Math.sin(angle) + drawingCenter.y
   };
 }
 
