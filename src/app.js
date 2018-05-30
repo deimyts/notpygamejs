@@ -266,10 +266,7 @@ function findNeuronCenter(index, agent, drawingRadius, drawingCenter) {
   // are found by:
   // X = Cx + (r * cosine(angle))  
   // Y = Cy + (r * sine(angle))
-  return {
-    x: drawingRadius * Math.cos(angle) + drawingCenter.x,
-    y: drawingRadius * Math.sin(angle) + drawingCenter.y
-  };
+  return findPointOnCircle(drawingRadius, angle, drawingCenter)
 }
 
 function setColor(neuron) {
