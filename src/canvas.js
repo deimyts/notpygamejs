@@ -26,14 +26,9 @@ function drawAgents() {
     ctx.save();
     ctx.translate(a.pos.x, a.pos.y);
     ctx.rotate(a.dir - Math.PI / 2);
-    //draw its eyes
-    //first compute their position
     drawEyes(a);
-    //draw agent body and outline
     drawBody(a);
-    //draw brain of this agent, if it is selected
     if (a.selected) {
-        //draw all the connections first
         drawBrain(a);
     }
   }
