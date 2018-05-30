@@ -279,7 +279,7 @@ function mouseClick(x, y){
         const clickPosition = { x, y }
         var d= getDistance(a.pos, clickPosition);
         if(d<3*a.radius) {
-        
+            console.log('Brain: ', a.brain)
             //that's a hit! Let's select this one and unselect all others
             var newset= !a.selected;
             var j;

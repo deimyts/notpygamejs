@@ -6,8 +6,8 @@ const randn = npg.randn;
 
 function Brain()
 {
-  this.size = 20;
-  this.density = 3;
+  this.size = 10;
+  this.density = 2;
   this.mutationRate = 0.1; //how common are mutations?
   this.mutationSeverity = 0.3; //how severe are they when they do occur?
   //1D array of neuron activations
@@ -32,13 +32,14 @@ Brain.prototype = {
         this.act[6]= 1;
         
         for (var i=7;i<this.size;i++) {
-            var a=0;
+            let output = 0;
             for (var j=0;j<this.density;j++) {
                 const weight = this.w[i][j];
                 const neuronIndex = this.ix[i][j];
-                a+= weight * this.act[neuronIndex]
+                const baseOutput = this.act[neuronIndex]
+                output += weight * baseOutput
             }
-            this.act[i]= activate(a)  //pass through sigmoid
+            this.act[i]= activate(output)  //pass through sigmoid
         }
         
         //assume last 2 neurons are the outputs
