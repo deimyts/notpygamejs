@@ -6,8 +6,8 @@ const randn = npg.randn;
 
 function Brain()
 {
-  this.size = 10;
-  this.density = 2;
+  this.size = 20;
+  this.density = 3;
   this.mutationRate = 0.1; //how common are mutations?
   this.mutationSeverity = 0.3; //how severe are they when they do occur?
   //1D array of neuron activations
