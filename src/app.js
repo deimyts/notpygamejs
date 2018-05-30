@@ -228,7 +228,7 @@ function drawBrain(a) {
   ctx.fillStyle = 'rgb(0,0,0)';
   ctx.beginPath();
   var drawingSize = 100;
-  const offset = {
+  const drawingCenter = {
     x: WIDTH - drawingSize * 1.5,
     y: HEIGHT - drawingSize * 1.5
   };
@@ -236,22 +236,22 @@ function drawBrain(a) {
     var r1 = 2 * Math.PI * i / a.brain.size;
     weightGroup.forEach((weight, j) => {
       const neuronIndex = a.brain.ix[i][j];
-      drawSynapse(a, offset, r1, weight, neuronIndex, drawingSize);
+      drawSynapse(a, drawingCenter, r1, weight, neuronIndex, drawingSize);
     });
   })
-  a.brain.act.forEach((neuron, m) => {
+  a.brain.act.forEach((neuron, index) => {
     // convert neuron to an RGB color value: white is active, black is inactive
     setColor(neuron);
-    drawNeuron(a, m, offset, drawingSize);
+    drawNeuron(a, index, drawingCenter, drawingSize);
   })
 }
 
-function drawNeuron(agent, index, offset, drawingSize) {
+function drawNeuron(agent, index, drawingCenter, drawingSize) {
   
   const angle = 2 * Math.PI * index / agent.brain.size;
   const center = {
-    x: drawingSize * Math.cos(angle) + offset.x,
-    y: drawingSize * Math.sin(angle) + offset.y
+    x: drawingSize * Math.cos(angle) + drawingCenter.x,
+    y: drawingSize * Math.sin(angle) + drawingCenter.y
   };
   const radius = 10;
 
