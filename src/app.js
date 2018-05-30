@@ -248,14 +248,18 @@ function drawBrain(a) {
 
 function drawNeuron(agent, index, drawingCenter, drawingSize) {
   
-  const angle = 2 * Math.PI * index / agent.brain.size;
-  const center = {
-    x: drawingSize * Math.cos(angle) + drawingCenter.x,
-    y: drawingSize * Math.sin(angle) + drawingCenter.y
-  };
+  const center = findNeuronCenter(index, agent, drawingSize, drawingCenter);
   const radius = 10;
 
   drawCircle(center.x, center.y, radius);
+}
+
+function findNeuronCenter(index, agent, drawingSize, drawingCenter) {
+  const angle = 2 * Math.PI * index / agent.brain.size;
+  return {
+    x: drawingSize * Math.cos(angle) + drawingCenter.x,
+    y: drawingSize * Math.sin(angle) + drawingCenter.y
+  };
 }
 
 function setColor(neuron) {
