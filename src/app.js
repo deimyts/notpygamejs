@@ -227,31 +227,29 @@ function drawAgents() {
 function drawBrain(a) {
   ctx.fillStyle = 'rgb(0,0,0)';
   ctx.beginPath();
-  var radius = 100;
-  const drawingCenter = {
-    x: WIDTH - radius * 1.5,
-    y: HEIGHT - radius * 1.5
-  };
+  const radius = 100;
+  const baseCircle = {
+    radius: radius,
+    center: {
+      x: WIDTH - radius * 1.5,
+      y: HEIGHT - radius * 1.5
+    }
+  }
   a.brain.w.forEach((weightGroup, i) => {
     var r1 = 2 * Math.PI * i / a.brain.size;
     weightGroup.forEach((weight, j) => {
       const neuronIndex = a.brain.ix[i][j];
-      drawSynapse(a, drawingCenter, r1, weight, neuronIndex, radius);
+      drawSynapse(a, baseCircle, r1, weight, neuronIndex);
     });
   })
   a.brain.act.forEach((neuron, index) => {
-    // convert neuron to an RGB color value: white is active, black is inactive
-    const circle = {
-      radius: radius,
-      center: drawingCenter
-    };
-    const center = findNeuronCenter(index, a.brain.size, circle);
+  setColor(neuron);
+    const center = findNeuronCenter(index, a.brain.size, baseCircle);
     drawNeuron(neuron, center);
   })
 }
 
 function drawNeuron(neuron, center) {
-  setColor(neuron);
   drawCircle(center.x, center.y, 10);
 }
 
@@ -271,12 +269,12 @@ function setColor(neuron) {
   ctx.fillStyle = 'rgb(' + fillColor + ',' + fillColor + ',' + fillColor + ')';
 }
 
-function drawSynapse(a, drawingCenter, r1, weight, neuronIndex, drawingRadius) {
+function drawSynapse(a, baseCircle, r1, weight, neuronIndex) {
   // var act = Math.round(weight * 120 + 120);
   var r2 = 2 * Math.PI * neuronIndex / a.brain.size;
 
-  const start = findPointOnCircle(drawingRadius, r1, drawingCenter);
-  const end = findPointOnCircle(drawingRadius, r2, drawingCenter);
+  const start = findPointOnCircle(baseCircle.radius, r1, baseCircle.center);
+  const end = findPointOnCircle(baseCircle.radius, r2, baseCircle.center);
   drawLine(start, end);
 }
 
