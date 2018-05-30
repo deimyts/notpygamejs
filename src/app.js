@@ -253,20 +253,14 @@ function drawNeuron(center) {
 }
 
 function findNeuronCenter(index, agent, drawingRadius, drawingCenter) {
-  // 2 * PI = 360deg (in radians) 
-  // ( 360deg / number of items ) => the angle between any two equidistant points
-  // multiply this angle by the index of the point you want
-  // and you get...
-  // the angle between your point, and the point at 0deg.
-  const angleBetweenPoints = 2 * Math.PI / agent.brain.size;
-  const angle = angleBetweenPoints * index;
-
-  // then...
-  // the x & y coords for the neuron circle
-  // are found by:
-  // X = Cx + (r * cosine(angle))  
-  // Y = Cy + (r * sine(angle))
+  const angle = pointAngle(agent.brain.size, index);
   return findPointOnCircle(drawingRadius, angle, drawingCenter)
+}
+
+function pointAngle(pointCount, pointIndex) {
+  // find the angle to one point in a group of equidistant points on a circle
+  const angleBetweenPoints = 2 * Math.PI / pointCount;
+  return angleBetweenPoints * pointIndex;
 }
 
 function setColor(neuron) {
