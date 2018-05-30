@@ -3,14 +3,8 @@ const drawCircle = npg.drawCircle;
 
 function draw(){
     clearCanvas();
-    
-    //draw food
     drawFood();
-    
-    //draw all agents
     drawAgents();
-    
-    //draw score
     drawScore(); 
 }
 
