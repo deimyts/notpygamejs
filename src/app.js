@@ -241,20 +241,23 @@ function drawBrain(a) {
   })
   a.brain.act.forEach((neuron, index) => {
     // convert neuron to an RGB color value: white is active, black is inactive
-    setColor(neuron);
-    const center = findNeuronCenter(index, a, radius, drawingCenter);
-    drawNeuron(center);
+    const circle = {
+      radius: radius,
+      center: drawingCenter
+    };
+    const center = findNeuronCenter(index, a.brain.size, circle);
+    drawNeuron(neuron, center);
   })
 }
 
-function drawNeuron(center) {
-  const radius = 10;
-  drawCircle(center.x, center.y, radius);
+function drawNeuron(neuron, center) {
+  setColor(neuron);
+  drawCircle(center.x, center.y, 10);
 }
 
-function findNeuronCenter(index, agent, drawingRadius, drawingCenter) {
-  const angle = pointAngle(agent.brain.size, index);
-  return findPointOnCircle(drawingRadius, angle, drawingCenter)
+function findNeuronCenter(index, pointCount, circle) {
+  const angle = pointAngle(pointCount, index);
+  return findPointOnCircle(circle.radius, angle, circle.center)
 }
 
 function pointAngle(pointCount, pointIndex) {
