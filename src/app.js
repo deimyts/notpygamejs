@@ -228,44 +228,65 @@ function drawBrain(a) {
   ctx.fillStyle = 'rgb(0,0,0)';
   ctx.beginPath();
   var drawingSize = 100;
+  const offset = {
+    x: WIDTH - drawingSize * 1.5,
+    y: HEIGHT - drawingSize * 1.5
+  };
   a.brain.w.forEach((weightGroup, i) => {
     var r1 = 2 * Math.PI * i / a.brain.size;
-    weightGroup.forEach((synapse, j) => {
-      drawSynapse(a, i, j, drawingSize, r1);
+    weightGroup.forEach((weight, j) => {
+      const neuronIndex = a.brain.ix[i][j];
+      drawSynapse(a, offset, r1, weight, neuronIndex, drawingSize);
     });
   })
-  ctx.stroke();
   a.brain.act.forEach((neuron, m) => {
-    drawNeuron(neuron, a, m, drawingSize);
+    // convert neuron to an RGB color value: white is active, black is inactive
+    setColor(neuron);
+    drawNeuron(a, m, offset, drawingSize);
   })
 }
 
-function drawNeuron(neuron, agent, index, drawingSize) {
-  // convert neuron to an RGB color value: white is active, black is inactive
-  const act = setNeuronColor(neuron, agent, index);
+function drawNeuron(agent, index, offset, drawingSize) {
   
-  const r1 = 2 * Math.PI * index / agent.brain.size;
+  const angle = 2 * Math.PI * index / agent.brain.size;
   const center = {
-    x: drawingSize * Math.cos(r1) + WIDTH - drawingSize * 1.5,
-    y: drawingSize * Math.sin(r1) + HEIGHT - drawingSize * 1.5
+    x: drawingSize * Math.cos(angle) + offset.x,
+    y: drawingSize * Math.sin(angle) + offset.y
   };
   const radius = 10;
 
   drawCircle(center.x, center.y, radius);
 }
 
-function setNeuronColor(neuron, agent, index) {
-  var neuron = Math.round(agent.brain.act[index] * 255);
-  ctx.fillStyle = 'rgb(' + neuron + ',' + neuron + ',' + neuron + ')';
-  return neuron;
+function setColor(neuron) {
+  var fillColor = Math.round(neuron * 255);
+  ctx.fillStyle = 'rgb(' + fillColor + ',' + fillColor + ',' + fillColor + ')';
 }
 
-function drawSynapse(a, m, n, SS, r1) {
-  var act = Math.round(a.brain.w[i][j] * 120 + 120);
-  var r2 = 2 * Math.PI * a.brain.ix[m][n] / a.brain.size;
-  ctx.moveTo(SS * Math.cos(r1) + WIDTH - SS * 1.5, SS * Math.sin(r1) + HEIGHT - SS * 1.5);
-  ctx.lineTo(SS * Math.cos(r2) + WIDTH - SS * 1.5, SS * Math.sin(r2) + HEIGHT - SS * 1.5);
-  return act;
+function drawSynapse(a, offset, r1, weight, neuronIndex, drawingSize) {
+  var act = Math.round(weight * 120 + 120);
+  var r2 = 2 * Math.PI * neuronIndex / a.brain.size;
+  // 2 * PI * 1/20
+  // PI/10
+
+  const start = {
+    // x2 = x1 + r sin(theta)
+    x: drawingSize * Math.cos(r1) + offset.x,
+    y: drawingSize * Math.sin(r1) + offset.y
+  };
+
+  const end = {
+    x: drawingSize * Math.cos(r2) + offset.x,
+    y: drawingSize * Math.sin(r2) + offset.y
+  };
+
+  drawLine(start, end);
+}
+
+function drawLine(start, end) {
+  ctx.moveTo(start.x, start.y);
+  ctx.lineTo(end.x, end.y);
+  ctx.stroke();
 }
 
 function drawBody(a) {
