@@ -255,6 +255,11 @@ function drawNeuron(agent, index, drawingCenter, drawingSize) {
 }
 
 function findNeuronCenter(index, agent, drawingSize, drawingCenter) {
+  // 2 * PI = 360deg (in radians) 
+  // ( 360deg / number of items ) => the angle between any two equidistant points
+  // multiply this angle by the index of the point you want
+  // and you get...
+  // the angle between your point, and the point at 0deg.
   const angle = 2 * Math.PI * index / agent.brain.size;
   return {
     x: drawingSize * Math.cos(angle) + drawingCenter.x,
