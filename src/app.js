@@ -279,24 +279,22 @@ function setColor(neuron) {
   ctx.fillStyle = 'rgb(' + fillColor + ',' + fillColor + ',' + fillColor + ')';
 }
 
-function drawSynapse(a, offset, r1, weight, neuronIndex, drawingSize) {
+function drawSynapse(a, offset, r1, weight, neuronIndex, drawingRadius) {
   var act = Math.round(weight * 120 + 120);
   var r2 = 2 * Math.PI * neuronIndex / a.brain.size;
   // 2 * PI * 1/20
   // PI/10
 
-  const start = {
-    // x2 = x1 + r sin(theta)
-    x: drawingSize * Math.cos(r1) + offset.x,
-    y: drawingSize * Math.sin(r1) + offset.y
-  };
-
-  const end = {
-    x: drawingSize * Math.cos(r2) + offset.x,
-    y: drawingSize * Math.sin(r2) + offset.y
-  };
-
+  const start = findPointOnCircle(drawingRadius, r1, offset);
+  const end = findPointOnCircle(drawingRadius, r2, offset);
   drawLine(start, end);
+}
+
+function findPointOnCircle(radius, angle, center) {
+ return {
+    x: radius * Math.cos(angle) + center.x,
+    y: radius * Math.sin(angle) + center.y
+  }
 }
 
 function drawLine(start, end) {
