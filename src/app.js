@@ -242,12 +242,12 @@ function drawBrain(a) {
   }
 }
 
-function drawNeuron(act, a, m, r1, SS) {
-  var act = Math.round(a.brain.act[m] * 255);
-  ctx.fillStyle = 'rgb(' + act + ',' + act + ',' + act + ')';
-  var r1 = 2 * Math.PI * m / a.brain.size;
-  drawCircle(SS * Math.cos(r1) + WIDTH - SS * 1.5, SS * Math.sin(r1) + HEIGHT - SS * 1.5, 10);
-  return { r1, act };
+function drawNeuron(neuron, agent, index, radius, drawingSize) {
+  var neuron = Math.round(agent.brain.act[index] * 255);
+  ctx.fillStyle = 'rgb(' + neuron + ',' + neuron + ',' + neuron + ')';
+  var radius = 2 * Math.PI * index / agent.brain.size;
+  drawCircle(drawingSize * Math.cos(radius) + WIDTH - drawingSize * 1.5, drawingSize * Math.sin(radius) + HEIGHT - drawingSize * 1.5, 10);
+  return { radius, neuron };
 }
 
 function drawSynapse(a, m, n, SS, r1) {
