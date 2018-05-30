@@ -238,15 +238,15 @@ function drawBrain(a) {
   ctx.stroke();
   for (var m = 0; m < a.brain.size; m++) {
     //var act= 1.0/(1.0 + Math.exp(-a));  //pass through sigmoid
-    var { r1, act } = drawNeuron(act, a, m, r1, SS);
+    drawNeuron(act, a, m, SS);
   }
 }
 
-function drawNeuron(neuron, agent, index, r1, drawingSize) {
+function drawNeuron(neuron, agent, index, drawingSize) {
   // convert neuron to an RGB color value: white is active, black is inactive
-  setNeuronColor(neuron, agent, index);
-  var r1 = 2 * Math.PI * index / agent.brain.size;
+  const act = setNeuronColor(neuron, agent, index);
   
+  const r1 = 2 * Math.PI * index / agent.brain.size;
   const center = {
     x: drawingSize * Math.cos(r1) + WIDTH - drawingSize * 1.5,
     y: drawingSize * Math.sin(r1) + HEIGHT - drawingSize * 1.5
@@ -254,7 +254,6 @@ function drawNeuron(neuron, agent, index, r1, drawingSize) {
   const radius = 10;
 
   drawCircle(center.x, center.y, radius);
-  return { r1 };
 }
 
 function setNeuronColor(neuron, agent, index) {
