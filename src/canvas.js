@@ -23,9 +23,7 @@ function drawFood() {
 function drawAgents() {
   for(i in agents) {
     var a = agents[i];
-    ctx.save();
-    ctx.translate(a.pos.x, a.pos.y);
-    ctx.rotate(a.dir - Math.PI / 2);
+    prepCanvas(a);
     drawEyes(a);
     drawBody(a);
     if (a.selected) {
@@ -37,6 +35,12 @@ function drawAgents() {
 function drawScore() {
   ctx.fillStyle = 'rgb(0,0,0)';
   ctx.fillText("Alive: " + agents.length, 10, 20);
+}
+
+function prepCanvas(a) {
+    ctx.save();
+    ctx.translate(a.pos.x, a.pos.y);
+    ctx.rotate(a.dir - Math.PI / 2);
 }
 
 function drawBrain(a) {
