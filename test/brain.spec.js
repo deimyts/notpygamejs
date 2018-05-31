@@ -35,19 +35,19 @@ describe('an agent\'s brain', () => {
 
   describe('creating the array of synapse weights', () => {
     test('the synapse weights should be an array of length "brain.size"', () => {
-      expect(brain.w).to.be.an('array'); 
-      expect(brain.w).to.have.length(brain.size);
+      expect(brain.weights).to.be.an('array'); 
+      expect(brain.weights).to.have.length(brain.size);
     })
 
     test('each element in the synapse array should be an array of length "brain.density"', () => {
-      brain.w.forEach(weight => {
+      brain.weights.forEach(weight => {
         expect(weight).to.be.an('array');
         expect(weight).to.have.length(brain.density);
       })
     })
 
     test('each weight should be a number between -1.2 and 1.2', () => {
-      brain.w.forEach(weightGroup => {
+      brain.weights.forEach(weightGroup => {
         weightGroup.forEach(weight => {
           expect(weight).to.be.a('number');
           expect(weight).to.be.greaterThan(-1.2);

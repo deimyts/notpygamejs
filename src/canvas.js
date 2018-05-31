@@ -54,7 +54,7 @@ function drawBrain(a) {
       y: HEIGHT - radius * 1.5
     }
   }
-  a.brain.w.forEach((weightGroup, i) => {
+  a.brain.weights.forEach((weightGroup, i) => {
     weightGroup.forEach((weight, j) => {
       const neuronIndex = a.brain.ix[i][j];
       const angle1 = pointAngle(a.brain.size, i)

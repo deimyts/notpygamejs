@@ -14,7 +14,7 @@ function Brain()
   this.neurons = neuronActivations(this);
   
   //2D array of synapse weights and indexes of neurons they connect to
-  this.w = synapseWeights(this);
+  this.weights = synapseWeights(this);
   this.ix = neuronIndex(this);
 }
 
@@ -34,7 +34,7 @@ Brain.prototype = {
         for (var i=7;i<this.size;i++) {
             let output = 0;
             for (var j=0;j<this.density;j++) {
-                const weight = this.w[i][j];
+                const weight = this.weights[i][j];
                 const neuronIndex = this.ix[i][j];
                 const baseOutput = this.neurons[neuronIndex]
                 output += weight * baseOutput
@@ -57,9 +57,9 @@ Brain.prototype = {
         for (var i=0;i<this.size;i++) {
           for (var j=0;j<this.density;j++) {
             
-            var m= brain.w[i][j];
+            var m= this.weights[i][j];
             if(randf(0,1)<this.mutationRate) m += randn(0,this.mutationSeverity);
-            this.w[i][j]= m;
+            this.weightseights[i][j]= m;
             
             m= brain.ix[i][j];
             if(randf(0,1)<this.mutationRate) m = randi(0,this.size);
