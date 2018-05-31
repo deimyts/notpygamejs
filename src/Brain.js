@@ -51,17 +51,17 @@ Brain.prototype = {
     
     //used during reproduction
     //copy over the brain with some mutation. crude. for now
-    mutateFrom : function(brain) {
+    mutateFrom : function(parentBrain) {
         
         //lossy copy of brain structure
         for (var i=0;i<this.size;i++) {
           for (var j=0;j<this.density;j++) {
             
-            var m= brain.weights[i][j];
+            var m= parentBrain.weights[i][j];
             if(randf(0,1)<this.mutationRate) m += randn(0,this.mutationSeverity);
             this.weights[i][j]= m;
             
-            m= brain.ix[i][j];
+            m= parentBrain.ix[i][j];
             if(randf(0,1)<this.mutationRate) m = randi(0,this.size);
             this.index[i][j]= m;
           }
