@@ -15,7 +15,7 @@ function Brain()
   
   //2D array of synapse weights and indexes of neurons they connect to
   this.weights = synapseWeights(this);
-  this.ix = neuronIndex(this);
+  this.index = neuronIndex(this);
 }
 
 //feeds forward the brain. s1 and s2 are the two senses, both in [0,1]
@@ -35,7 +35,7 @@ Brain.prototype = {
             let output = 0;
             for (var j=0;j<this.density;j++) {
                 const weight = this.weights[i][j];
-                const neuronIndex = this.ix[i][j];
+                const neuronIndex = this.index[i][j];
                 const baseOutput = this.neurons[neuronIndex]
                 output += weight * baseOutput
             }
@@ -63,7 +63,7 @@ Brain.prototype = {
             
             m= brain.ix[i][j];
             if(randf(0,1)<this.mutationRate) m = randi(0,this.size);
-            this.ix[i][j]= m;
+            this.index[i][j]= m;
           }
         }
     },

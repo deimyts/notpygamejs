@@ -59,12 +59,12 @@ describe('an agent\'s brain', () => {
 
   describe('creating the neuron index', () => {
     test('the neuron index should be an array of length "brain.size"', () => {
-      expect(brain.ix).to.be.an('array'); 
-      expect(brain.ix).to.have.length(brain.size);
+      expect(brain.index).to.be.an('array'); 
+      expect(brain.index).to.have.length(brain.size);
     })
 
     test('each element in the synapse array should be an array of length "brain.density"', () => {
-      brain.ix.forEach(index => {
+      brain.index.forEach(index => {
         expect(index).to.be.an('array');
         expect(index).to.have.length(brain.density);
       })

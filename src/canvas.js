@@ -56,7 +56,7 @@ function drawBrain(a) {
   }
   a.brain.weights.forEach((weightGroup, i) => {
     weightGroup.forEach((weight, j) => {
-      const neuronIndex = a.brain.ix[i][j];
+      const neuronIndex = a.brain.index[i][j];
       const angle1 = pointAngle(a.brain.size, i)
       const angle2 = pointAngle(a.brain.size, neuronIndex);
       drawSynapse(baseCircle, angle1, angle2);
