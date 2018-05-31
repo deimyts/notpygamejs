@@ -56,14 +56,9 @@ Brain.prototype = {
         //lossy copy of brain structure
         for (var i=0;i<this.size;i++) {
           for (var j=0;j<this.density;j++) {
-            
-            var m= parentBrain.weights[i][j];
-            if(randf(0,1)<this.mutationRate) m += randn(0,this.mutationSeverity);
-            this.weights[i][j]= m;
-            
-            m= parentBrain.index[i][j];
-            if(randf(0,1)<this.mutationRate) m = randi(0,this.size);
-            this.index[i][j]= m;
+
+            this.mutateWeights(parentBrain, i, j);
+            this.mutateIndices(parentBrain, i, j);
           }
         }
     },
@@ -71,6 +66,21 @@ Brain.prototype = {
     neuronActivations: neuronActivations,
     synapseWeights: synapseWeights,
     neuronIndex: neuronIndex,
+    mutateWeights: function (parentBrain, i, j) {
+      var m = parentBrain.weights[i][j];
+      if (randf(0, 1) < this.mutationRate)
+        m += randn(0, this.mutationSeverity);
+      this.weights[i][j] = m;
+      return m;
+    },
+
+    mutateIndices: function (parentBrain, i, j) {
+      var m = parentBrain.index[i][j];
+      if (randf(0, 1) < this.mutationRate)
+        m = randi(0, this.size);
+      this.index[i][j] = m;
+      return m;
+    }
 }
 
 function activate(output) {
