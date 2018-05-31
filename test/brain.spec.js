@@ -22,12 +22,12 @@ describe('an agent\'s brain', () => {
 
   describe('creating the array of neuron activations', () => {
     test('the neuron activation should be an array of length "brain.size"', () => {
-      expect(brain.act).to.be.an('array'); 
-      expect(brain.act).to.have.length(brain.size);
+      expect(brain.neurons).to.be.an('array'); 
+      expect(brain.neurons).to.have.length(brain.size);
     })
 
     test('the neuron activations should all be set to 0', () => {
-      brain.act.forEach(activation => {
+      brain.neurons.forEach(activation => {
         expect(activation).to.equal(0);
       })
     })

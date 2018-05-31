@@ -62,7 +62,7 @@ function drawBrain(a) {
       drawSynapse(baseCircle, angle1, angle2);
     });
   })
-  a.brain.act.forEach((neuron, index) => {
+  a.brain.neurons.forEach((neuron, index) => {
   setColor(neuron);
     const center = findNeuronCenter(index, a.brain.size, baseCircle);
     drawNeuron(neuron, center);
