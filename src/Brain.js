@@ -59,7 +59,7 @@ Brain.prototype = {
             
             var m= this.weights[i][j];
             if(randf(0,1)<this.mutationRate) m += randn(0,this.mutationSeverity);
-            this.weightseights[i][j]= m;
+            this.weights[i][j]= m;
             
             m= brain.ix[i][j];
             if(randf(0,1)<this.mutationRate) m = randi(0,this.size);
