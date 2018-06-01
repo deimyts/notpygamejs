@@ -8,9 +8,7 @@ describe('when creating a food pellet', () => {
     const foodPellet = app.createFoodPellet();
     expect(foodPellet).to.have.property('pos');
     expect(foodPellet.pos.x).to.be.a('number');
-    expect(foodPellet.pos.x).not.to.be.NaN;
     expect(foodPellet.pos.y).to.be.a('number');
-    expect(foodPellet.pos.y).not.to.be.NaN;
   })
 })
 
@@ -29,14 +27,14 @@ describe('when spawning food', () => {
 
 describe('when spawning agents', () => {
   test('it should add an agent to the agents array', () => {
-    // const agents = [];
-    // app.spawnAgent(agents);
-    // expect(agents).to.have.lengthOf(1);
-    // app.spawnAgent(agents);
-    // expect(agents).to.have.lengthOf(2);
-    // app.spawnAgent(agents);
-    // app.spawnAgent(agents);
-    // expect(agents).to.have.lengthOf(4);
+    const agents = [];
+    app.spawnAgent(agents);
+    expect(agents).to.have.lengthOf(1);
+    app.spawnAgent(agents);
+    expect(agents).to.have.lengthOf(2);
+    app.spawnAgent(agents);
+    app.spawnAgent(agents);
+    expect(agents).to.have.lengthOf(4);
   })
 })
 
