@@ -52,10 +52,7 @@ describe('when checking if any agent should reproduce', () => {
   describe('when no agents are above the reproduction threshold', () => {
     
     test('the number of agents should remain the same', () => {
-        global.agents = [];
-        app.spawnAgent(agents);
-        app.spawnAgent(agents);
-        app.spawnAgent(agents);
+        createAgents();
         
         app.handleBirths();
         expect(agents.length).to.equal(3);
@@ -65,10 +62,7 @@ describe('when checking if any agent should reproduce', () => {
   describe('when one or more agents are above the reproduction threshold', () => {
     
     test('the number of agents should increase by one each time handleBirths() is called', () => {
-        global.agents = [];
-        app.spawnAgent(agents);
-        app.spawnAgent(agents);
-        app.spawnAgent(agents);
+        createAgents();
         agents[0].rep = 3.1;
         agents[1].rep = 3.1;
         agents[2].rep = 3.1;
@@ -83,6 +77,13 @@ describe('when checking if any agent should reproduce', () => {
     })
   })
 })
+
+function createAgents() {
+  global.agents = [];
+  app.spawnAgent(agents);
+  app.spawnAgent(agents);
+  app.spawnAgent(agents);
+}
 
 function testDistance(pointA, pointB, expectedDistance) {
   const distance = app.getDistance(pointA, pointB);
