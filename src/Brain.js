@@ -52,7 +52,7 @@ Brain.prototype = {
     //used during reproduction
     //copy over the brain with some mutation. crude. for now
     mutateFrom : function(parentBrain) {
-        
+        if(!parentBrain) throw new Error('Must have a parent brain to mutate from'); 
         //lossy copy of brain structure
         for (var i=0;i<this.size;i++) {
           for (var j=0;j<this.density;j++) {

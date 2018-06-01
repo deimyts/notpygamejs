@@ -70,4 +70,20 @@ describe('an agent\'s brain', () => {
       })
     })
   })
+
+  describe('when mutating a brain', () => {
+    describe('when no brain is given to mutate from', () => {
+      it('the brain should mutate itself', () => {
+        const brain = new Brain();
+        expect(brain.mutateFrom).to.throw();
+        expect(mutateBrainWithParent).not.to.throw();
+      })
+    })
+  })
 })
+
+function mutateBrainWithParent() {
+  const childBrain = new Brain();
+  const parentBrain = new Brain();
+  childBrain.mutateFrom(parentBrain);
+}
