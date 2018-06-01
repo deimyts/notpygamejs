@@ -213,6 +213,7 @@ module.exports = {
   spawnAgent,
   createFoodPellet,
   getDistance,
+  handleBirths,
   myinit,
   update,
   keyUp,
