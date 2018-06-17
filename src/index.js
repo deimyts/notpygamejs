@@ -3,7 +3,6 @@ const npg = require('./include/npgmain');
 const app = require('./app');
 const canvas = require('./canvas');
 
-window.NPGinit = npg.NPGinit;
 window.myinit = app.myinit;
 window.update = app.update;
 window.draw = canvas.draw;
