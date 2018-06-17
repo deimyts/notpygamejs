@@ -15,13 +15,8 @@ window.food = [];
 var foodaddfreq= 10; //how often do we add food?
 var foodlimit= 30; //how much food can there be total?
 
-function myinit(){
+function init(){
     foodCounter = 0;
-    
-    //cosmetics
-    ctx.font = "12pt Arial";
-    ctx.strokeStyle="black";
-    ctx.lineWidth="1.5";
 }
 
 function update(){
@@ -214,7 +209,7 @@ module.exports = {
   createFoodPellet,
   getDistance,
   handleBirths,
-  myinit,
+  init,
   update,
   keyUp,
   keyDown,

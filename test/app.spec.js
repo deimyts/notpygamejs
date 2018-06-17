@@ -1,7 +1,12 @@
 const expect = require('chai').expect;
 
 const app = require('../src/app.js')
-const senseFood = app.senseFood;
+
+describe('when initializing the app', () => {
+  test('it should start without errors', () => {
+    expect(app.init).not.to.throw();
+  })
+})
 
 describe('when creating a food pellet', () => {
   test('it should be an object with an x and y position', () => {
