@@ -8,6 +8,12 @@ describe('when initializing the app', () => {
   })
 })
 
+describe('when updating the world', () => {
+  test('it should work', () => {
+    app.update();
+  })
+})
+
 describe('when creating a food pellet', () => {
   test('it should be an object with an x and y position', () => {
     const foodPellet = app.createFoodPellet();
