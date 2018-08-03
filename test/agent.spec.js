@@ -100,8 +100,8 @@ describe('when an agent senses food', () => {
       const distance = 15 * 10 - 1; // radius is 15 (for now)
 
       const result = agent.senseFood(distance, agent, food);
-      expect(agent.s1).to.equal(0.3188140758108866);
-      expect(agent.s2).to.equal(0.3188140758108866);
+      expect(agent.s1).to.be.closeTo(0.3188140758108866, 0.000000000000001);
+      expect(agent.s2).to.be.closeTo(0.3188140758108866, 0.000000000000001);
     })
   })
 })
