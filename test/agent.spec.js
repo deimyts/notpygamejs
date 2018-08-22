@@ -193,6 +193,24 @@ describe('moving an agent', () => {
   })
 })
 
+describe('when an agent reproduces', () => {
+  it('should create a copy of itself', () => {
+    const agent = new Agent();
+    const child = agent.reproduce(); 
+
+    expect(child).to.eql(agent);
+  })
+
+  test('the child and the parent should be independent', () => {
+    const agent = new Agent();
+    const child = agent.reproduce(); 
+
+    agent.testProp = 'parent';
+    child.testProp = 'child';
+    expect(child.testProp).not.to.eql(agent.testProp);
+  })
+})
+
 function testEdgeWrap(startPosition, expectedPosition) {
   const agent = new Agent();
   const WIDTH = 100;

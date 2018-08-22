@@ -97,6 +97,10 @@ class Agent {
     if (this.pos.y > HEIGHT)
         this.pos.y = 0;
   }
+
+  reproduce() {
+    return Object.assign({}, this) 
+  }
 }
 
 module.exports = Agent;
