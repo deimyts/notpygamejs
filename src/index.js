@@ -12,15 +12,20 @@ function init() {
   ctx.lineWidth="1.5";
 };
 
-window.myinit = init;
-window.update = app.update;
-window.draw = canvas.draw;
-window.keyUp = app.keyUp
-window.keyDown = app.keyDown
-window.mouseClick = app.mouseClick
+const npgOpts = {
+  fps: 50,
+  myinit: init,
+  update: app.update,
+  draw: canvas.draw,
+  keyUp: app.keyUp,
+  keyDown: app.keyDown,
+  mouseClick: app.mouseClick,
+  canvasId: 'NPGcanvas'
+}
 
 function start() {
-    npg.NPGinit(50);
+  console.log('starting...')
+    npg.NPGinit(npgOpts);
 }
 
 window.onload = start;

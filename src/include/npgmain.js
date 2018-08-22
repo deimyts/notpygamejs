@@ -77,60 +77,72 @@ function randn(mean, variance) {
   return X;
 }
 
-function eventClick(e) {
-    
-  //get position of cursor relative to top left of canvas
-  var x;
-  var y;
-  if (e.pageX || e.pageY) { 
-    x = e.pageX;
-    y = e.pageY;
-  } else { 
-    x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft; 
-    y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop; 
-  } 
-  x -= canvas.offsetLeft;
-  y -= canvas.offsetTop;
-  
-  //call user-defined callback
-  mouseClick(x, y);
+function eventClick(clickFn) {
+  return function(e) {
+    //get position of cursor relative to top left of canvas
+    var x;
+    var y;
+    if (e.pageX || e.pageY) { 
+      x = e.pageX;
+      y = e.pageY;
+    } else { 
+      x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft; 
+      y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop; 
+    } 
+    x -= canvas.offsetLeft;
+    y -= canvas.offsetTop;
+
+    clickFn(x, y)
+  }
 }
 
 //event codes can be found here:
 //http://www.aspdotnetfaq.com/Faq/What-is-the-list-of-KeyCodes-for-JavaScript-KeyDown-KeyPress-and-KeyUp-events.aspx
-function eventKeyUp(e) {
-  var keycode = ('which' in e) ? e.which : e.keyCode;
-  keyUp(keycode);
+function eventKeyUp(cb) {
+  return function(e) {
+    var keycode = ('which' in e) ? e.which : e.keyCode;
+    cb(keycode);
+  }
 }
 
-function eventKeyDown(e) {
-  var keycode = ('which' in e) ? e.which : e.keyCode;
-  keyDown(keycode);
+function eventKeyDown(cb) {
+  return function(e) {
+    var keycode = ('which' in e) ? e.which : e.keyCode;
+    cb(keycode);
+  }
 }
 
-function NPGinit(FPS){
+function NPGinit(options){
+  console.log('NPGinit')
   //takes frames per secont to run at
   
-  canvas = document.getElementById('NPGcanvas');
+  canvas = document.getElementById(options.canvasId);
   window.ctx = ctx = canvas.getContext('2d');
   window.WIDTH = canvas.width;
   window.HEIGHT = canvas.height;
-  canvas.addEventListener('click', eventClick, false);
+  const click = eventClick(options.mouseClick);
+  const keyUp = eventKeyUp(options.keyUp);
+  const keyDown = eventKeyDown(options.keyDown);
+  canvas.addEventListener('click', click, false);
   
   //canvas element cannot get focus by default. Requires to either set 
   //tabindex to 1 so that it's focusable, or we need to attach listeners
   //to the document. Here we do the latter
   document.addEventListener('keyup', eventKeyUp, true);
   document.addEventListener('keydown', eventKeyDown, true);
+
+  const tick = NPGtick(options.update, options.draw);
   
-  setInterval(NPGtick, 1000/FPS);
+  setInterval(tick, 1000/options.fps);
   
-  myinit();
+  options.myinit();
 }
 
-function NPGtick() {
+function NPGtick(update, draw) {
+  return function() {
     update();
     draw();
+  }
 }
 
 module.exports = {
