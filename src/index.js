@@ -3,7 +3,7 @@ const npg = require('./include/npgmain');
 const app = require('./app');
 const canvas = require('./canvas');
 
-window.myinit = function() {
+function init() {
   app.init();
     
   //cosmetics
@@ -12,6 +12,7 @@ window.myinit = function() {
   ctx.lineWidth="1.5";
 };
 
+window.myinit = init;
 window.update = app.update;
 window.draw = canvas.draw;
 window.keyUp = app.keyUp
