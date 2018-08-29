@@ -5,7 +5,7 @@ const canvas = require('./canvas');
 
 function init() {
   app.init();
-    
+
   //cosmetics
   ctx.font = "12pt Arial";
   ctx.strokeStyle="black";
@@ -25,7 +25,7 @@ const npgOpts = {
 
 function start() {
   console.log('starting...')
-    npg.NPGinit(npgOpts);
+  npg.NPGinit(npgOpts);
 }
 
 window.onload = start;
