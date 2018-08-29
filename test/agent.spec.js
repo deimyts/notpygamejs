@@ -2,7 +2,7 @@ const expect = require('chai').expect;
 
 const app = require('../src/app.js')
 const Agent = require('../src/Agent');
-const Vector2D = require('../src/include/vector2d');
+const Vector2D = require('../src/include/vector2D');
 
 describe('when creating an Agent', () => {
   test('it should set the default properties', () => {
