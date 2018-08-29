@@ -1,51 +1,46 @@
 const npg = require('./include/npgmain');
-const drawCircle = npg.drawCircle;
 
-function draw(){
-    clearCanvas();
-    drawFood();
-    drawAgents();
-    drawScore(); 
+function draw(canvas){
+    canvas.clear();
+    drawFood(canvas);
+    drawAgents(canvas);
+    drawScore(canvas); 
 }
 
-function clearCanvas() {
-  ctx.clearRect(0, 0, WIDTH, HEIGHT);
-}
-
-function drawFood() {
-  ctx.fillStyle = 'rgb(100,230,100)';
+function drawFood(canvas) {
+  canvas.ctx.fillStyle = 'rgb(100,230,100)';
   for (i in food) {
     var f = food[i];
-    drawCircle(f.pos.x, f.pos.y, 10);
+    canvas.drawCircle(f.pos.x, f.pos.y, 10);
   }
 }
 
-function drawAgents() {
+function drawAgents(canvas) {
   for(i in agents) {
     var a = agents[i];
-    prepCanvas(a);
-    drawEyes(a);
-    drawBody(a);
+    prepCanvas(a, canvas);
+    drawEyes(a, canvas);
+    drawBody(a, canvas);
     if (a.selected) {
-        drawBrain(a);
+        drawBrain(a, canvas);
     }
   }
 }
 
-function drawScore() {
-  ctx.fillStyle = 'rgb(0,0,0)';
-  ctx.fillText("Alive: " + agents.length, 10, 20);
+function drawScore(canvas) {
+  canvas.ctx.fillStyle = 'rgb(0,0,0)';
+  canvas.ctx.fillText("Alive: " + agents.length, 10, 20);
 }
 
-function prepCanvas(a) {
-    ctx.save();
-    ctx.translate(a.pos.x, a.pos.y);
-    ctx.rotate(a.dir - Math.PI / 2);
+function prepCanvas(a, canvas) {
+    canvas.ctx.save();
+    canvas.ctx.translate(a.pos.x, a.pos.y);
+    canvas.ctx.rotate(a.dir - Math.PI / 2);
 }
 
-function drawBrain(a) {
-  ctx.fillStyle = 'rgb(0,0,0)';
-  ctx.beginPath();
+function drawBrain(a, canvas) {
+  canvas.ctx.fillStyle = 'rgb(0,0,0)';
+  canvas.ctx.beginPath();
   const radius = 100;
   const baseCircle = {
     radius: radius,
@@ -70,7 +65,7 @@ function drawBrain(a) {
 }
 
 function drawNeuron(neuron, center) {
-  drawCircle(center.x, center.y, 10);
+  canvas.drawCircle(center.x, center.y, 10);
 }
 
 function findNeuronCenter(index, pointCount, circle) {
@@ -84,9 +79,9 @@ function pointAngle(pointCount, pointIndex) {
   return angleBetweenPoints * pointIndex;
 }
 
-function setColor(neuron) {
+function setColor(neuron, canvas) {
   var fillColor = Math.round(neuron * 255);
-  ctx.fillStyle = 'rgb(' + fillColor + ',' + fillColor + ',' + fillColor + ')';
+  canvas.ctx.fillStyle = 'rgb(' + fillColor + ',' + fillColor + ',' + fillColor + ')';
 }
 
 function drawSynapse(baseCircle, angle1, angle2) {
@@ -102,24 +97,24 @@ function findPointOnCircle(radius, angle, center) {
   }
 }
 
-function drawLine(start, end) {
-  ctx.moveTo(start.x, start.y);
-  ctx.lineTo(end.x, end.y);
-  ctx.stroke();
+function drawLine(start, end, canvas) {
+  canvas.ctx.moveTo(start.x, start.y);
+  canvas.ctx.lineTo(end.x, end.y);
+  canvas.ctx.stroke();
 }
 
-function drawBody(a) {
+function drawBody(a, canvas) {
   if (!a.selected) {
-    ctx.fillStyle = 'rgb(' + Math.round(255.0 * a.health) + ',' + Math.round(255.0 * a.health) + ',0)';
+    canvas.ctx.fillStyle = 'rgb(' + Math.round(255.0 * a.health) + ',' + Math.round(255.0 * a.health) + ',0)';
   }
   else {
-    ctx.fillStyle = 'rgb(0,' + Math.round(255.0 * a.health) + ',' + Math.round(255.0 * a.health) + ')';
+    canvas.ctx.fillStyle = 'rgb(0,' + Math.round(255.0 * a.health) + ',' + Math.round(255.0 * a.health) + ')';
   }
-  drawCircle(0, 0, a.radius);
-  ctx.restore();
+  canvas.drawCircle(0, 0, a.radius);
+  canvas.ctx.restore();
 }
 
-function drawEyes(a) {
+function drawEyes(a, canvas) {
   var a1 = -a.eyesep + Math.PI / 2;
   var a2 = a.eyesep + Math.PI / 2;
   var x1 = Math.cos(a1) * a.eyelen;
@@ -127,23 +122,23 @@ function drawEyes(a) {
   var x2 = Math.cos(a2) * a.eyelen;
   var y2 = Math.sin(a2) * a.eyelen;
   //draw the lines to eyes
-  ctx.fillStyle = 'rgb(0,0,0)';
-  ctx.beginPath();
-  ctx.moveTo(0, 0);
-  ctx.lineTo(x1, y1);
-  ctx.moveTo(0, 0);
-  ctx.lineTo(x2, y2);
-  ctx.closePath();
-  ctx.stroke();
+  canvas.ctx.fillStyle = 'rgb(0,0,0)';
+  canvas.ctx.beginPath();
+  canvas.ctx.moveTo(0, 0);
+  canvas.ctx.lineTo(x1, y1);
+  canvas.ctx.moveTo(0, 0);
+  canvas.ctx.lineTo(x2, y2);
+  canvas.ctx.closePath();
+  canvas.ctx.stroke();
   //draw the eyes, colored by how much food they sense
   var s = Math.round(a.s1 * 255.0);
-  ctx.fillStyle = 'rgb(' + s + ',0,0)';
-  drawCircle(x1, y1, 5);
+  canvas.ctx.fillStyle = 'rgb(' + s + ',0,0)';
+  canvas.drawCircle(x1, y1, 5);
   var s = Math.round(a.s2 * 255.0);
   if (s > 255)
     s = 255;
-  ctx.fillStyle = 'rgb(' + s + ',0,0)';
-  drawCircle(x2, y2, 5);
+  canvas.ctx.fillStyle = 'rgb(' + s + ',0,0)';
+  canvas.drawCircle(x2, y2, 5);
 }
 
 module.exports = { draw }

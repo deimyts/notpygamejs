@@ -9,48 +9,11 @@
 //keyUp(keycode)    gets called when key is released
 //keyDown(keycode)  gets called when key is pushed
 
-var canvas;
+const createCanvas = require('./npg-canvas.js');
 var ctx;
 var WIDTH;
 var HEIGHT; 
 var FPS;
-
-function drawBubble(x, y, w, h, radius)
-{
-  var r = x + w;
-  var b = y + h;
-  ctx.beginPath();
-  ctx.strokeStyle="black";
-  ctx.lineWidth="2";
-  ctx.moveTo(x+radius, y);
-  ctx.lineTo(x+radius/2, y-10);
-  ctx.lineTo(x+radius * 2, y);
-  ctx.lineTo(r-radius, y);
-  ctx.quadraticCurveTo(r, y, r, y+radius);
-  ctx.lineTo(r, y+h-radius);
-  ctx.quadraticCurveTo(r, b, r-radius, b);
-  ctx.lineTo(x+radius, b);
-  ctx.quadraticCurveTo(x, b, x, b-radius);
-  ctx.lineTo(x, y+radius);
-  ctx.quadraticCurveTo(x, y, x+radius, y);
-  ctx.stroke();
-}
-
-function drawRect(x, y, w, h){
-  ctx.beginPath();
-  ctx.rect(x,y,w,h);
-  ctx.closePath();
-  ctx.fill();
-  ctx.stroke();
-}
-
-function drawCircle(x, y, r){
-  ctx.beginPath();
-  ctx.arc(x, y, r, 0, Math.PI*2, true); 
-  ctx.closePath();
-  ctx.stroke();
-  ctx.fill();
-}
 
 //uniform distribution integer
 function randi(s, e) {
@@ -77,7 +40,7 @@ function randn(mean, variance) {
   return X;
 }
 
-function eventClick(clickFn) {
+function eventClick(clickFn, canvas) {
   return function(e) {
     //get position of cursor relative to top left of canvas
     var x;
@@ -115,15 +78,11 @@ function eventKeyDown(cb) {
 function NPGinit(options){
   console.log('NPGinit')
   //takes frames per secont to run at
-  
-  canvas = document.getElementById(options.canvasId);
-  window.ctx = ctx = canvas.getContext('2d');
-  window.WIDTH = canvas.width;
-  window.HEIGHT = canvas.height;
-  const click = eventClick(options.mouseClick);
+  const canvas = createCanvas(options.canvas);  
+  const click = eventClick(options.mouseClick, canvas);
   const keyUp = eventKeyUp(options.keyUp);
   const keyDown = eventKeyDown(options.keyDown);
-  canvas.addEventListener('click', click, false);
+  canvas.element.addEventListener('click', click, false);
   
   //canvas element cannot get focus by default. Requires to either set 
   //tabindex to 1 so that it's focusable, or we need to attach listeners
@@ -131,27 +90,23 @@ function NPGinit(options){
   document.addEventListener('keyup', eventKeyUp, true);
   document.addEventListener('keydown', eventKeyDown, true);
 
-  const tick = NPGtick(options.update, options.draw);
+  const tick = NPGtick(options.update, options.draw, canvas);
   
   setInterval(tick, 1000/options.fps);
   
   options.myinit();
 }
 
-function NPGtick(update, draw) {
+function NPGtick(update, draw, canvas) {
   return function() {
     update();
-    draw();
+    draw(canvas);
   }
 }
 
 module.exports = {
   NPGinit,
-  WIDTH,
-  HEIGHT,
   randf,
   randi,
-  randn,
-  drawCircle
-  // ctx
+  randn
 }
