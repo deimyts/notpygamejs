@@ -76,25 +76,23 @@ class Game {
     this.agents.splice(index, 1)
   }
 
+  removeFood(index) {
+    this.food.splice(index, 1)
+  }
+
   handleEating() {
-    let killi=-1;
-    for(let i in this.agents) {
-      var a = this.agents[i];
+    this.agents.forEach(a => {
       a.s1=0; a.s2=0;
-
-      for(let j in this.food) {
-        var f = this.food[j];
-
+      this.food.forEach((f, j) => {
         var d2= getDistance(a.pos, f.pos);
         if(d2 < a.radius){
           a.eat();
-          killi = j;
+          this.removeFood(j)
         }
 
         a.senseFood(d2, f);
-      }
-    }
-    if(killi!=-1) this.food.splice(killi, 1);
+      })
+    })
   }
 
   mouseClick(x, y) {
