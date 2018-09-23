@@ -60,7 +60,7 @@ class Game {
 
   handleDeaths() {
     let killi=-1;
-    for(i in this.agents) {
+    for(let i in this.agents) {
       var a = this.agents[i];
 
       //agent gets more hungry
@@ -74,12 +74,12 @@ class Game {
 
   handleEating() {
     let killi=-1;
-    for(i in this.agents) {
+    for(let i in this.agents) {
       var a = this.agents[i];
       a.s1=0; a.s2=0;
 
-      for(j in food) {
-        var f = food[j];
+      for(let j in this.food) {
+        var f = this.food[j];
 
         var d2= getDistance(a.pos, f.pos);
         if(d2 < a.radius){
@@ -115,9 +115,9 @@ class Game {
   }
 
   handleCollisions() {
-    for (i in this.agents) {
+    for (let i in this.agents) {
       var a = this.agents[i];
-      for (j in this.agents) {
+      for (let j in this.agents) {
         var a2 = this.agents[j];
         if (i == j) continue;
         var d = getDistance(a.pos, a2.pos);
@@ -160,9 +160,9 @@ class Game {
   }
 
   processBrain() {
-    for (i in this.agents) {
+    for (let i in this.agents) {
       var a = this.agents[i];
-      res = a.brain.tick(a.s1, a.s2);
+      let res = a.brain.tick(a.s1, a.s2);
 
       //apply output neuron 0: controls turning. Also cap it to a max of 0.3 rotation
       var des = res.out0;
