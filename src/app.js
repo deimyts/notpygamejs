@@ -83,14 +83,14 @@ class Game {
   handleEating() {
     this.agents.forEach(agent => {
       agent.s1=0; agent.s2=0;
-      this.food.forEach((f, j) => {
-        var d2 = getDistance(agent.pos, f.pos);
-        if(d2 < agent.radius){
+      this.food.forEach((foodPellet, index) => {
+        var distanceToFood = getDistance(agent.pos, foodPellet.pos);
+        if(distanceToFood < agent.radius){
           agent.eat();
-          this.removeFood(j)
+          this.removeFood(index)
         }
 
-        agent.senseFood(d2, f);
+        agent.senseFood(distanceToFood, foodPellet);
       })
     })
   }
