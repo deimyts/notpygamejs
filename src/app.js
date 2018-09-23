@@ -63,17 +63,13 @@ class Game {
   }
 
   handleDeaths() {
-    let killi=-1;
-    for(let i in this.agents) {
-      var a = this.agents[i];
-
+    this.agents.forEach((agent, index) => {
       //agent gets more hungry
-      a.adjustHealth();
-      if (a.health < 0) {
-        killi = i;
+      agent.adjustHealth();
+      if (agent.health < 0) {
+        this.removeAgent(index);
       }
-    }
-    if(killi!=-1) this.removeAgent(killi);
+    })
   }
 
   removeAgent(index) {
