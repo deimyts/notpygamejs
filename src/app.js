@@ -10,14 +10,13 @@ const randf = npg.randf;
 const randi = npg.randi;
 
 window.agents = [];
-window.food = [];
-
-var foodaddfreq= 10; //how often do we add food?
-var foodlimit= 30; //how much food can there be total?
 
 class Game {
   constructor() {
+    this.food = [];
     this.foodCounter = 0;
+    this.foodLimit= 30; //how much food can there be total?
+    this.foodAddFrequency= 10; //how often do we add food?
   }
 
   update() {
@@ -39,10 +38,10 @@ class Game {
      
     //spawn more food, maybe
 
-    const foodBelowLimit = food.length < foodlimit;
-    const counterIsTriggered = this.foodCounter % foodaddfreq == 0;
+    const foodBelowLimit = this.food.length < this.foodLimit;
+    const counterIsTriggered = this.foodCounter % this.foodAddFrequency == 0;
     if (counterIsTriggered && foodBelowLimit) {
-      spawnFood(food);
+      spawnFood(this.food);
     }
     
     //handle births
