@@ -73,7 +73,11 @@ class Game {
         killi = i;
       }
     }
-    if(killi!=-1) this.agents.splice(killi, 1);
+    if(killi!=-1) this.removeAgent(killi);
+  }
+
+  removeAgent(index) {
+    this.agents.splice(index, 1)
   }
 
   handleEating() {
