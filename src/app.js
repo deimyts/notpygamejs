@@ -84,7 +84,7 @@ class Game {
     this.agents.forEach(agent => {
       agent.s1=0; agent.s2=0;
       this.food.forEach((f, j) => {
-        var d2= getDistance(agent.pos, f.pos);
+        var d2 = getDistance(agent.pos, f.pos);
         if(d2 < agent.radius){
           agent.eat();
           this.removeFood(j)
