@@ -89,7 +89,6 @@ class Game {
           agent.eat();
           this.removeFood(index)
         }
-
         agent.senseFood(distanceToFood, foodPellet);
       })
     })
