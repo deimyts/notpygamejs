@@ -20,7 +20,7 @@ class Game {
   }
 
   update() {
-    this.foodCounter = this.foodCounter + 1;
+    this.incrementFoodCounter();
 
     this.agents.forEach(agent => agent.move(WIDTH, HEIGHT));
 
@@ -52,6 +52,10 @@ class Game {
     if (notEnoughAgents) {
       this.spawnAgent(this.agents);
     }
+  }
+  
+  incrementFoodCounter() {
+    this.foodCounter = this.foodCounter + 1;
   }
 
   spawnAgent() {
