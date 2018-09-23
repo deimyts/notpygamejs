@@ -48,14 +48,14 @@ class Game {
     this.handleBirths();
 
     //spawn more agents if there are too few agents left
-    this.spawnAgent(this.agents);
+    const notEnoughAgents = this.agents.length < 10
+    if (notEnoughAgents) {
+      this.spawnAgent(this.agents);
+    }
   }
 
   spawnAgent() {
-    const notEnoughAgents = this.agents.length < 10
-    if (notEnoughAgents) {
-      this.agents.push(new Agent());
-    }
+    this.agents.push(new Agent());
   }
 
   handleDeaths() {
