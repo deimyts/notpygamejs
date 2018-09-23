@@ -90,7 +90,7 @@ class Game {
         a.senseFood(d2, f);
       }
     }
-    if(killi!=-1) food.splice(killi, 1);
+    if(killi!=-1) this.food.splice(killi, 1);
   }
 
   mouseClick(x, y) {

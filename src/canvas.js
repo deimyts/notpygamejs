@@ -9,15 +9,15 @@ function draw(canvas){
 
 function drawFood(canvas) {
   canvas.ctx.fillStyle = 'rgb(100,230,100)';
-  for (i in food) {
-    var f = food[i];
+  for (let i in game.food) {
+    var f = game.food[i];
     canvas.drawCircle(f.pos.x, f.pos.y, 10);
   }
 }
 
 function drawAgents(canvas) {
-  for(i in agents) {
-    var a = agents[i];
+  for(let i in game.agents) {
+    var a = game.agents[i];
     prepCanvas(a, canvas);
     drawEyes(a, canvas);
     drawBody(a, canvas);
@@ -29,7 +29,7 @@ function drawAgents(canvas) {
 
 function drawScore(canvas) {
   canvas.ctx.fillStyle = 'rgb(0,0,0)';
-  canvas.ctx.fillText("Alive: " + agents.length, 10, 20);
+  canvas.ctx.fillText("Alive: " + game.agents.length, 10, 20);
 }
 
 function prepCanvas(a, canvas) {
