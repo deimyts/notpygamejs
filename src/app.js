@@ -15,12 +15,13 @@ window.food = [];
 var foodaddfreq= 10; //how often do we add food?
 var foodlimit= 30; //how much food can there be total?
 
-function init(){
-    foodCounter = 0;
-}
+class Game {
+  constructor() {
+    this.foodCounter = 0;
+  }
 
-function update(){
-    foodCounter = foodCounter + 1;
+  update() {
+    this.foodCounter = this.foodCounter + 1;
     
     agents.forEach(agent => agent.move(WIDTH, HEIGHT));
 
@@ -39,7 +40,7 @@ function update(){
     //spawn more food, maybe
 
     const foodBelowLimit = food.length < foodlimit;
-    const counterIsTriggered = foodCounter % foodaddfreq == 0;
+    const counterIsTriggered = this.foodCounter % foodaddfreq == 0;
     if (counterIsTriggered && foodBelowLimit) {
       spawnFood(food);
     }
@@ -49,6 +50,19 @@ function update(){
     
     //spawn more agents if there are too few agents left
     spawnAgent(agents);
+  }
+
+  static create() {
+    return new Game();
+  }
+}
+
+function init(){
+  window.game = Game.create()
+}
+
+function update(){
+  window.game.update();
 }
 
 function handleDeaths() {
