@@ -38,14 +38,16 @@ describe('when spawning food', () => {
 
 describe('when spawning agents', () => {
   test('it should add an agent to the agents array', () => {
-    const agents = [];
-    app.spawnAgent(agents);
-    expect(agents).to.have.lengthOf(1);
-    app.spawnAgent(agents);
-    expect(agents).to.have.lengthOf(2);
-    app.spawnAgent(agents);
-    app.spawnAgent(agents);
-    expect(agents).to.have.lengthOf(4);
+    const game = app.createGame();
+    // const agents = [];
+    expect(game.agents).to.have.lengthOf(0);
+    game.spawnAgent();
+    expect(game.agents).to.have.lengthOf(1);
+    game.spawnAgent();
+    expect(game.agents).to.have.lengthOf(2);
+    game.spawnAgent();
+    game.spawnAgent();
+    expect(game.agents).to.have.lengthOf(4);
   })
 })
 
@@ -61,37 +63,39 @@ describe('when checking if any agent should reproduce', () => {
   describe('when no agents are above the reproduction threshold', () => {
     
     test('the number of agents should remain the same', () => {
-        createAgents();
+        const game = createAgents();
         
-        app.handleBirths();
-        expect(agents.length).to.equal(3);
+        game.handleBirths();
+        expect(game.agents.length).to.equal(3);
     })
   })
   
   describe('when one or more agents are above the reproduction threshold', () => {
     
     test('the number of agents should increase by one each time handleBirths() is called', () => {
-        createAgents();
-        agents[0].rep = 3.1;
-        agents[1].rep = 3.1;
-        agents[2].rep = 3.1;
-        app.handleBirths();
-        expect(agents.length).to.equal(4);
-        app.handleBirths();
-        expect(agents.length).to.equal(5);
-        app.handleBirths();
-        expect(agents.length).to.equal(6);
-        app.handleBirths();
-        expect(agents.length).to.equal(6);
+        const game = createAgents();
+        game.agents[0].rep = 3.1;
+        game.agents[1].rep = 3.1;
+        game.agents[2].rep = 3.1;
+        game.handleBirths();
+        expect(game.agents.length).to.equal(4);
+        game.handleBirths();
+        expect(game.agents.length).to.equal(5);
+        game.handleBirths();
+        expect(game.agents.length).to.equal(6);
+        game.handleBirths();
+        expect(game.agents.length).to.equal(6);
     })
   })
 })
 
 function createAgents() {
-  global.agents = [];
-  app.spawnAgent(agents);
-  app.spawnAgent(agents);
-  app.spawnAgent(agents);
+  const game = app.createGame();
+  game.spawnAgent();
+  game.spawnAgent();
+  game.spawnAgent();
+
+  return game;
 }
 
 function testDistance(pointA, pointB, expectedDistance) {

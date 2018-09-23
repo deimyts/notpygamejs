@@ -9,10 +9,10 @@ window.HEIGHT = window.HEIGHT || 600;
 const randf = npg.randf;
 const randi = npg.randi;
 
-window.agents = [];
 
 class Game {
   constructor() {
+    this.agents = [];
     this.food = [];
     this.foodCounter = 0;
     this.foodLimit= 30; //how much food can there be total?
@@ -21,21 +21,21 @@ class Game {
 
   update() {
     this.foodCounter = this.foodCounter + 1;
-    
-    agents.forEach(agent => agent.move(WIDTH, HEIGHT));
 
-    handleDeaths()
-    
+    this.agents.forEach(agent => agent.move(WIDTH, HEIGHT));
+
+    this.handleDeaths()
+
     //agent collision detection and resolution
-    handleCollisions();
-    
+    this.handleCollisions();
+
     //check if any agent ate food
     //and while we're at it, compute input to sense
-    handleEating();
-    
+    this.handleEating();
+
     //feed forward the brain from senses to output
-    processBrain();
-     
+    this.processBrain();
+
     //spawn more food, maybe
 
     const foodBelowLimit = this.food.length < this.foodLimit;
@@ -43,13 +43,144 @@ class Game {
     if (counterIsTriggered && foodBelowLimit) {
       spawnFood(this.food);
     }
-    
+
     //handle births
-    handleBirths();
-    
+    this.handleBirths();
+
     //spawn more agents if there are too few agents left
-    spawnAgent(agents);
+    this.spawnAgent(this.agents);
   }
+
+  spawnAgent() {
+    const notEnoughAgents = this.agents.length < 10
+    if (notEnoughAgents) {
+      this.agents.push(new Agent());
+    }
+  }
+
+  handleDeaths() {
+    let killi=-1;
+    for(i in this.agents) {
+      var a = this.agents[i];
+
+      //agent gets more hungry
+      a.adjustHealth();
+      if (a.health < 0) {
+        killi = i;
+      }
+    }
+    if(killi!=-1) this.agents.splice(killi, 1);
+  }
+
+  handleEating() {
+    let killi=-1;
+    for(i in this.agents) {
+      var a = this.agents[i];
+      a.s1=0; a.s2=0;
+
+      for(j in food) {
+        var f = food[j];
+
+        var d2= getDistance(a.pos, f.pos);
+        if(d2 < a.radius){
+          a.eat();
+          killi = j;
+        }
+
+        a.senseFood(d2, f);
+      }
+    }
+    if(killi!=-1) food.splice(killi, 1);
+  }
+
+  mouseClick(x, y) {
+
+    //select an agent with mouseclick
+    var i;
+    for(i in this.agents) {
+      var a = this.agents[i];
+      const clickPosition = { x, y }
+      var d= getDistance(a.pos, clickPosition);
+      if(d<3*a.radius) {
+        console.log('Brain: ', a.brain)
+        //that's a hit! Let's select this one and unselect all others
+        var newset= !a.selected;
+        var j;
+        for(j in this.agents) { this.agents[j].selected= false; }
+        a.selected= newset;
+
+        return;
+      }
+    }
+  }
+
+  handleCollisions() {
+    for (i in this.agents) {
+      var a = this.agents[i];
+      for (j in this.agents) {
+        var a2 = this.agents[j];
+        if (i == j) continue;
+        var d = getDistance(a.pos, a2.pos);
+        var overlap = a.radius * 2 - d;
+        if (overlap > 0 && d > 1) {
+          //one agent pushes on another proportional to his boost. Higher boost wins
+          var aggression = a2.boost / (a.boost + a2.boost);
+          if (a.boost < 0.01 && a2.boost < 0.01) aggression = 0.5;
+          var ff2 = (overlap * aggression) / d;
+          var ff1 = (overlap * (1 - aggression)) / d;
+          a2.pos.x += (a2.pos.x - a.pos.x) * ff2;
+          a2.pos.y += (a2.pos.y - a.pos.y) * ff2;
+          a.pos.x -= (a2.pos.x - a.pos.x) * ff1;
+          a.pos.y -= (a2.pos.x - a.pos.x) * ff1;
+        }
+      }
+    }
+  }
+
+  handleBirths() {
+    var birthIndex = -1;
+    for (let i in this.agents) {
+      var a = this.agents[i];
+      if (a.rep > a.repthr) {
+        //this agent reproduces!
+        birthIndex = i;
+      }
+    }
+
+    if (birthIndex != -1) {
+      var a = this.agents[birthIndex];
+      a.rep = 0;
+
+      var child = new Agent();
+      child.pos = new Vector2D(a.pos.x + randf(-30, 30), a.pos.y + randf(-30, 30));
+      child.brain.mutateFrom(a.brain);
+
+      this.agents.push(child);
+    }
+  }
+
+  processBrain() {
+    for (i in this.agents) {
+      var a = this.agents[i];
+      res = a.brain.tick(a.s1, a.s2);
+
+      //apply output neuron 0: controls turning. Also cap it to a max of 0.3 rotation
+      var des = res.out0;
+      if (des > 0.8) des = 0.8;
+      if (des < -0.8) des = -0.8;
+      a.dir += des;
+
+      //wrap direction around to keep it in range of [0, 2pi]
+      if (a.dir > 2 * Math.PI) a.dir = a.dir - 2 * Math.PI;
+      if (a.dir < 0) a.dir = 2 * Math.PI + a.dir;
+
+      //apply output neuron 1: controls boost
+      des = res.out1;
+      if (des > 0) { a.boost = des; }
+      else { a.boost = 0; }
+    }
+  }
+
 
   static create() {
     return new Game();
@@ -63,153 +194,23 @@ function init(){
 function update(){
   window.game.update();
 }
-
-function handleDeaths() {
-    let killi=-1;
-    for(i in agents) {
-        var a = agents[i];
-        
-        //agent gets more hungry
-        a.adjustHealth();
-        if (a.health < 0) {
-          killi = i;
-      }
-    }
-    if(killi!=-1) agents.splice(killi, 1);
-}
-
-function handleEating() {
-    let killi=-1;
-    for(i in agents) {
-        var a = agents[i];
-        a.s1=0; a.s2=0;
-        
-        for(j in food) {
-            var f = food[j];
-            
-            var d2= getDistance(a.pos, f.pos);
-            if(d2 < a.radius){
-                a.eat();
-                killi = j;
-            }
-            
-            a.senseFood(d2, f);
-        }
-    }
-    if(killi!=-1) food.splice(killi, 1);
-}
-
-function handleCollisions() {
-  for (i in agents) {
-    var a = agents[i];
-    for (j in agents) {
-      var a2 = agents[j];
-      if (i == j) continue;
-      var d = getDistance(a.pos, a2.pos);
-      var overlap = a.radius * 2 - d;
-      if (overlap > 0 && d > 1) {
-        //one agent pushes on another proportional to his boost. Higher boost wins
-        var aggression = a2.boost / (a.boost + a2.boost);
-        if (a.boost < 0.01 && a2.boost < 0.01) aggression = 0.5;
-        var ff2 = (overlap * aggression) / d;
-        var ff1 = (overlap * (1 - aggression)) / d;
-        a2.pos.x += (a2.pos.x - a.pos.x) * ff2;
-        a2.pos.y += (a2.pos.y - a.pos.y) * ff2;
-        a.pos.x -= (a2.pos.x - a.pos.x) * ff1;
-        a.pos.y -= (a2.pos.x - a.pos.x) * ff1;
-      }
-    }
-  }
-}
-
-function handleBirths() {
-  var birthIndex = -1;
-  for (i in agents) {
-    var a = agents[i];
-    if (a.rep > a.repthr) {
-      //this agent reproduces!
-      birthIndex = i;
-    }
-  }
-
-  if (birthIndex != -1) {
-    var a = agents[birthIndex];
-    a.rep = 0;
-
-    var child = new Agent();
-    child.pos = new Vector2D(a.pos.x + randf(-30, 30), a.pos.y + randf(-30, 30));
-    child.brain.mutateFrom(a.brain);
-
-    agents.push(child);
-  }
-}
-
-function processBrain() {
-  for (i in agents) {
-    var a = agents[i];
-    res = a.brain.tick(a.s1, a.s2);
-
-    //apply output neuron 0: controls turning. Also cap it to a max of 0.3 rotation
-    var des = res.out0;
-    if (des > 0.8) des = 0.8;
-    if (des < -0.8) des = -0.8;
-    a.dir += des;
-
-    //wrap direction around to keep it in range of [0, 2pi]
-    if (a.dir > 2 * Math.PI) a.dir = a.dir - 2 * Math.PI;
-    if (a.dir < 0) a.dir = 2 * Math.PI + a.dir;
-
-    //apply output neuron 1: controls boost
-    des = res.out1;
-    if (des > 0) { a.boost = des; }
-    else { a.boost = 0; }
-  }
-}
-
-function spawnAgent(agents) {
-  const notEnoughAgents = agents.length < 10
-  if (notEnoughAgents) {
-    agents.push(new Agent());
-  }
-}
-
 function spawnFood(food) {
   var f = createFoodPellet();
   return food.push(f);
 }
 
 function getDistance(a, b) {
-    const xDistance = a.x - b.x;
-    const yDistance = a.y - b.y;
-    return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+  const xDistance = a.x - b.x;
+  const yDistance = a.y - b.y;
+  return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
 }
 
 function createFoodPellet() {
-    return {
-        pos: new Vector2D(randf(0, WIDTH), randf(0, HEIGHT))
-    };
+  return {
+    pos: new Vector2D(randf(0, WIDTH), randf(0, HEIGHT))
+  };
 }
 
-function mouseClick(x, y){
-    
-    //select an agent with mouseclick
-    var i;
-    for(i in agents) {
-        var a = agents[i];
-        const clickPosition = { x, y }
-        var d= getDistance(a.pos, clickPosition);
-        if(d<3*a.radius) {
-            console.log('Brain: ', a.brain)
-            //that's a hit! Let's select this one and unselect all others
-            var newset= !a.selected;
-            var j;
-            for(j in agents) { agents[j].selected= false; }
-            a.selected= newset;
-            
-            return;
-        }
-    }
-}
 
 function keyUp(key){
 }
@@ -217,14 +218,15 @@ function keyDown(key){
 }
 
 module.exports = {
+  createGame: Game.create,
   spawnFood,
-  spawnAgent,
+  // spawnAgent,
   createFoodPellet,
   getDistance,
-  handleBirths,
+  // handleBirths,
   init,
   update,
   keyUp,
   keyDown,
-  mouseClick
+  // mouseClick
 }
