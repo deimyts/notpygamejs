@@ -94,25 +94,17 @@ class Game {
     })
   }
 
+  //select an agent with mouseclick
   mouseClick(x, y) {
-
-    //select an agent with mouseclick
-    var i;
-    for(i in this.agents) {
-      var a = this.agents[i];
+    this.agents.forEach(a => {
       const clickPosition = { x, y }
-      var d= getDistance(a.pos, clickPosition);
-      if(d<3*a.radius) {
-        console.log('Brain: ', a.brain)
+      var d = getDistance(a.pos, clickPosition);
+      if(d < 3 * a.radius) {
         //that's a hit! Let's select this one and unselect all others
-        var newset= !a.selected;
-        var j;
-        for(j in this.agents) { this.agents[j].selected= false; }
-        a.selected= newset;
-
-        return;
+        this.agents.forEach( agent => agent.selected = false)
+        a.selected = true;
       }
-    }
+    })
   }
 
   handleCollisions() {
@@ -229,5 +221,5 @@ module.exports = {
   update,
   keyUp,
   keyDown,
-  // mouseClick
+  mouseClick: Game.mouseClick
 }
