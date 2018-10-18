@@ -79,22 +79,6 @@ describe('an agent\'s brain', () => {
       })
     })
 
-    describe.skip('equal objects', () => {
-      function Thing() {
-        this.foo = 'bar';
-      }
-      const obj1 = new Thing();
-      Thing.prototype.test = function() {
-        console.log('this is only a test');
-      }
-      Thing.prototype.test1 = function() {
-        console.log('this is only a test');
-      }
-      const obj2 = Object.assign({}, obj1);
-      expect(obj1).to.eql(obj2);
-      expect(obj1).not.to.equal(obj2);
-    })
-
     describe('when the mutation rate is zero', () => {
       it('should create an identical copy', () => {
         const parent = new Brain();

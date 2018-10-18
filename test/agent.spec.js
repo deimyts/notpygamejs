@@ -203,23 +203,22 @@ describe('when an agent reproduces', () => {
 
   describe('when the mutation rate is zero', () => {
     it('should create an identical copy', () => {
-      const agent = new Agent();
-      const child = agent.reproduce(0); 
+      const parent = new Agent();
+      const child = parent.reproduce(0); 
 
-      expect(child).to.eql(agent).but.not.equal(agent);
-      expect(child.brain).to.eql(agent.brain).but.not.equal(agent.brain);
+      expect(child).to.eql(parent).but.not.equal(parent);
+      expect(child.brain).to.eql(parent.brain).but.not.equal(parent.brain);
     })
   })
 
   describe('when the mutation rate is 1', () => {
     it('should create a mutated copy', () => {
-      const agent = new Agent();
-      const child = agent.reproduce(0.9); 
+      const parent = new Agent();
+      const child = parent.reproduce(0.9); 
 
-      expect(child).not.to.eql(agent);
-      expect(child.brain).not.to.eql(agent.brain);
-      // console.log('chld: ', child.brain);
-      expect(child.brain.index[0]).not.to.eql(agent.brain.index[0]);
+      expect(child).not.to.eql(parent);
+      expect(child.brain).not.to.eql(parent.brain);
+      expect(child.brain.index[0]).not.to.eql(parent.brain.index[0]);
     })
   })
 })
