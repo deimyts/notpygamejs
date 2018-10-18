@@ -144,9 +144,8 @@ class Game {
       var a = this.agents[birthIndex];
       a.rep = 0;
 
-      var child = new Agent();
+      const child = this.agents[birthIndex].reproduce(this.agents[birthIndex].brain.mutationRate);
       child.pos = new Vector2D(a.pos.x + randf(-30, 30), a.pos.y + randf(-30, 30));
-      // child.brain.mutateFrom(a.brain);
       child.brain = Brain.mutateFrom(a.brain);
 
       this.agents.push(child);
