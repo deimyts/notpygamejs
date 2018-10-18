@@ -4,50 +4,51 @@ const randi = npg.randi;
 const randn = npg.randn;
 
 
-function Brain()
-{
-  this.size = 20;
-  this.density = 3;
-  this.mutationRate = 0.1; //how common are mutations?
-  this.mutationSeverity = 1.3; //how severe are they when they do occur?
-  //1D array of neuron activations
-  this.neurons = neuronActivations(this);
-  
-  //2D array of synapse weights and indexes of neurons they connect to
-  this.weights = synapseWeights(this);
-  this.index = neuronIndex(this);
+class Brain {
+  constructor() {
+    this.size = 20;
+    this.density = 3;
+    this.mutationRate = 0.1; //how common are mutations?
+    this.mutationSeverity = 1.3; //how severe are they when they do occur?
+    //1D array of neuron activations
+    this.neurons = neuronActivations(this);
+    
+    //2D array of synapse weights and indexes of neurons they connect to
+    this.weights = synapseWeights(this);
+    this.index = neuronIndex(this);
+  }
+    //brain takes inputs and sets its outputs
+  tick(s1, s2) {
+
+    this.neurons[0]= s1; //set inputs
+    this.neurons[1]= s2;
+    this.neurons[3]= 1; //some bias neurons are always on
+    this.neurons[4]= 1;
+    this.neurons[5]= 1;
+    this.neurons[6]= 1;
+
+    for (var i=7;i<this.size;i++) {
+      let output = 0;
+      for (var j=0;j<this.density;j++) {
+        const weight = this.weights[i][j];
+        const neuronIndex = this.index[i][j];
+        const baseOutput = this.neurons[neuronIndex]
+        output += weight * baseOutput
+      }
+      this.neurons[i]= activate(output)  //pass through sigmoid
+    }
+
+    //assume last 2 neurons are the outputs
+    return {
+      out0: this.neurons[this.size-1] - 0.5, 
+      out1: this.neurons[this.size-2]
+    };
+  }
 }
 
 //feeds forward the brain. s1 and s2 are the two senses, both in [0,1]
 Brain.prototype = {
     
-    //brain takes inputs and sets its outputs
-    tick : function(s1, s2) {
-
-        this.neurons[0]= s1; //set inputs
-        this.neurons[1]= s2;
-        this.neurons[3]= 1; //some bias neurons are always on
-        this.neurons[4]= 1;
-        this.neurons[5]= 1;
-        this.neurons[6]= 1;
-        
-        for (var i=7;i<this.size;i++) {
-            let output = 0;
-            for (var j=0;j<this.density;j++) {
-                const weight = this.weights[i][j];
-                const neuronIndex = this.index[i][j];
-                const baseOutput = this.neurons[neuronIndex]
-                output += weight * baseOutput
-            }
-            this.neurons[i]= activate(output)  //pass through sigmoid
-        }
-        
-        //assume last 2 neurons are the outputs
-        return {
-            out0: this.neurons[this.size-1] - 0.5, 
-            out1: this.neurons[this.size-2]
-        };
-    },
     
 
     neuronActivations: neuronActivations,
