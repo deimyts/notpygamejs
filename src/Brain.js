@@ -80,19 +80,21 @@ Brain.mutateFrom = function(parent, mutationRate) {
   child.neurons = parent.neurons.map(n => n);
   child.weights = parent.weights.map(weightGroup => {
     return weightGroup.map(weight => {
-      const shouldMutate = randf(0, 1) < mutationRate;
-      if (shouldMutate) return weight + randn(0, child.mutationSeverity);
-      return weight
+      return mutateValue(weight, mutationRate, child.mutationSeverity);
     })
   });
   child.index = parent.index.map(indexGroup => {
     return indexGroup.map(index => {
-      const shouldMutate = randf(0, 1) < mutationRate;
-      if (shouldMutate) return index + randn(0, child.mutationSeverity);
-      return index;
+      return mutateValue(index, mutationRate, child.mutationSeverity);
     })
   });
   return child;
+}
+
+function mutateValue(val, rate, severity) {
+  const shouldMutate = randf(0, 1) < rate;
+  if (shouldMutate) return val + randn(0, severity);
+  return val;
 }
 
 function activate(output) {

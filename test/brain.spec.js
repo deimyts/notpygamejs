@@ -124,6 +124,7 @@ describe('an agent\'s brain', () => {
         expect(child.weights[0]).not.to.eql(parent.weights[0]);
         expect(child.weights[0]).to.be.an('array');
         expect(child.weights[0][0]).not.to.equal(parent.weights[0][0]);
+        expect(child.weights[0][0]).to.be.finite;
         expect(child.index[0]).not.to.eql(parent.index[0]);
         expect(child.index[0]).to.be.an('array');
         expect(child.index[0][0]).not.to.equal(parent.index[0][0]);
