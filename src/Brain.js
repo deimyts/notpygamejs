@@ -48,12 +48,9 @@ class Brain {
 
 //feeds forward the brain. s1 and s2 are the two senses, both in [0,1]
 Brain.prototype = {
-    
-    
-
-    neuronActivations: neuronActivations,
-    synapseWeights: synapseWeights,
-    neuronIndex: neuronIndex,
+    neuronActivations,
+    synapseWeights,
+    neuronIndex,
     mutateWeights: function (parentBrain, i, j, mutationRate) {
       var m = parentBrain.weights[i][j];
       if (randf(0, 1) < mutationRate)
