@@ -54,7 +54,6 @@ Brain.prototype = {
     synapseWeights: synapseWeights,
     neuronIndex: neuronIndex,
     mutateWeights: function (parentBrain, i, j, mutationRate) {
-      // console.log('mutate weights')
       var m = parentBrain.weights[i][j];
       if (randf(0, 1) < mutationRate)
         m += randn(0, this.mutationSeverity);
@@ -63,7 +62,6 @@ Brain.prototype = {
     },
 
     mutateIndices: function (parentBrain, i, j, mutationRate) {
-      // console.log('mutate indices')
       var m = parentBrain.index[i][j];
       if (randf(0, 1) < mutationRate)
         m = randi(0, this.size);

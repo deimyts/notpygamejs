@@ -99,7 +99,9 @@ class Agent {
   }
 
   reproduce(mutationRate) {
-    const child = Object.assign({}, this);
+    const child = new Agent();
+    child.pos = this.pos;
+    child.dir = this.dir;
     child.brain = Brain.mutateFrom(this.brain, mutationRate);
     return child;
   }
