@@ -117,11 +117,14 @@ describe('an agent\'s brain', () => {
     describe('when the mutation rate is 1', () => {
       it('should create a mutated copy', () => {
         const parent = new Brain();
-        const child = Brain.mutateFrom(parent, 0); 
+        const child = Brain.mutateFrom(parent, 1); 
 
         expect(child).not.to.eql(parent);
-        expect(child.brain).not.to.eql(parent.brain);
-        expect(child.brain.index[0]).not.to.eql(parent.brain.index[0]);
+
+        expect(child.weights[0]).not.to.eql(parent.weights[0]);
+        expect(child.weights[0]).to.be.an('array');
+        expect(child.weights[0][0]).not.to.equal(parent.weights[0][0]);
+        // expect(child.index[0]).not.to.eql(parent.index[0]);
       })
     })
   })

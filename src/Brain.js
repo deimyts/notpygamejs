@@ -77,7 +77,18 @@ Brain.prototype = {
       if(!parent) throw new Error('Must have a parent brain to mutate from'); 
       const child = new Brain();
       child.neurons = parent.neurons.map(n => n);
-      child.weights = parent.weights.map(w => w);
+      child.weights = parent.weights.map(w => {
+        return w.map(w => {
+          const shouldMutate = randf(0, 1) < mutationRate;
+          if (shouldMutate) {
+            const newWeight =  w + randn(0, child.mutationSeverity);
+            // console.log('Old Weight: ', w, '\nNew Weight: ', newWeight )
+            return newWeight;
+          }
+        return w
+
+        })
+      });
       child.index = parent.index.map(i => i);
       return child;
         // //lossy copy of brain structure
