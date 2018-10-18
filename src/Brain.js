@@ -75,9 +75,7 @@ Brain.mutateFrom = function(parent, mutationRate) {
   const child = new Brain();
   child.neurons = parent.neurons.map(n => n);
   child.weights = parent.weights.map(weightGroup => {
-    return weightGroup.map(weight => {
-      return mutateValue(weight, mutationRate, child.mutationSeverity);
-    })
+    return mutateArray(weightGroup, mutationRate, child.mutationSeverity)
   });
   child.index = parent.index.map(indexGroup => {
     return mutateArray(indexGroup, mutationRate, child.mutationSeverity);
