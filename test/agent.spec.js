@@ -193,7 +193,7 @@ describe('moving an agent', () => {
   })
 })
 
-describe.skip('when an agent reproduces', () => {
+describe('when an agent reproduces', () => {
   it('should create an independent copy of itself', () => {
     const agent = new Agent();
     const child = agent.reproduce(); 
@@ -207,6 +207,7 @@ describe.skip('when an agent reproduces', () => {
       const child = agent.reproduce(0); 
 
       expect(child).to.eql(agent).but.not.equal(agent);
+      expect(child.brain).to.eql(agent.brain).but.not.equal(agent.brain);
     })
   })
 
@@ -215,10 +216,10 @@ describe.skip('when an agent reproduces', () => {
       const agent = new Agent();
       const child = agent.reproduce(0.9); 
 
-      // expect(child).not.to.eql(agent);
-      // expect(child.brain).not.to.eql(agent.brain);
+      expect(child).not.to.eql(agent);
+      expect(child.brain).not.to.eql(agent.brain);
+      // console.log('chld: ', child.brain);
       expect(child.brain.index[0]).not.to.eql(agent.brain.index[0]);
-
     })
   })
 })

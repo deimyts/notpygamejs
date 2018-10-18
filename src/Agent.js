@@ -100,10 +100,7 @@ class Agent {
 
   reproduce(mutationRate) {
     const child = Object.assign({}, this);
-    console.log('parent: ', this.brain.index[0]);
-    child.brain.mutateFrom(this.brain, mutationRate);
-    console.log('child: ', child.brain.index[0]);
-    console.log('parent again: ', this.brain.index[0]);
+    child.brain = Brain.mutateFrom(this.brain, mutationRate);
     return child;
   }
 }
