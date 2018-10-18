@@ -85,11 +85,11 @@ Brain.mutateFrom = function(parent, mutationRate) {
       return weight
     })
   });
-  child.index = parent.index.map(i => {
-    return i.map(i => {
+  child.index = parent.index.map(indexGroup => {
+    return indexGroup.map(index => {
       const shouldMutate = randf(0, 1) < mutationRate;
-      if (shouldMutate) return i + randn(0, child.mutationSeverity);
-      return i;
+      if (shouldMutate) return index + randn(0, child.mutationSeverity);
+      return index;
     })
   });
   return child;
