@@ -84,11 +84,15 @@ Brain.mutateFrom = function(parent, mutationRate) {
     })
   });
   child.index = parent.index.map(indexGroup => {
-    return indexGroup.map(index => {
-      return mutateValue(index, mutationRate, child.mutationSeverity);
-    })
+    return mutateArray(indexGroup, mutationRate, child.mutationSeverity);
   });
   return child;
+}
+
+function mutateArray(arr, rate, severity) {
+  return arr.map(value => {
+    return mutateValue(value, rate, severity);
+  })
 }
 
 function mutateValue(val, rate, severity) {
