@@ -74,16 +74,60 @@ describe('an agent\'s brain', () => {
   describe('when mutating a brain', () => {
     describe('when no brain is given to mutate from', () => {
       it('the brain should throw an error', () => {
-        const brain = new Brain();
-        expect(brain.mutateFrom).to.throw();
+        expect(Brain.mutateFrom).to.throw();
         expect(mutateBrainWithParent).not.to.throw();
+      })
+    })
+
+    describe.skip('equal objects', () => {
+      function Thing() {
+        this.foo = 'bar';
+      }
+      const obj1 = new Thing();
+      Thing.prototype.test = function() {
+        console.log('this is only a test');
+      }
+      Thing.prototype.test1 = function() {
+        console.log('this is only a test');
+      }
+      const obj2 = Object.assign({}, obj1);
+      expect(obj1).to.eql(obj2);
+      expect(obj1).not.to.equal(obj2);
+    })
+
+    describe('when the mutation rate is zero', () => {
+      it('should create an identical copy', () => {
+        const parent = new Brain();
+        const child = Brain.mutateFrom(parent, 0); 
+
+        expect(child).to.eql(parent);
+        expect(child).not.to.equal(parent);
+
+        expect(child.neurons).to.eql(parent.neurons);
+        expect(child.neurons).not.to.equal(parent.neurons);
+
+        expect(child.weights).to.eql(parent.weights);
+        expect(child.weights).not.to.equal(parent.weights);
+
+        expect(child.index).to.eql(parent.index);
+        expect(child.index).not.to.equal(parent.index);
+      })
+    })
+
+    describe('when the mutation rate is 1', () => {
+      it('should create a mutated copy', () => {
+        const parent = new Brain();
+        const child = Brain.mutateFrom(parent, 0); 
+
+        expect(child).not.to.eql(parent);
+        expect(child.brain).not.to.eql(parent.brain);
+        expect(child.brain.index[0]).not.to.eql(parent.brain.index[0]);
       })
     })
   })
 })
 
 function mutateBrainWithParent() {
-  const childBrain = new Brain();
   const parentBrain = new Brain();
-  childBrain.mutateFrom(parentBrain);
+  const childBrain = Brain.mutateFrom(parentBrain);
 }

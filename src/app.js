@@ -146,7 +146,8 @@ class Game {
 
       var child = new Agent();
       child.pos = new Vector2D(a.pos.x + randf(-30, 30), a.pos.y + randf(-30, 30));
-      child.brain.mutateFrom(a.brain);
+      // child.brain.mutateFrom(a.brain);
+      child.brain = Brain.mutateFrom(a.brain);
 
       this.agents.push(child);
     }

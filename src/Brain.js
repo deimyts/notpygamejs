@@ -9,7 +9,7 @@ function Brain()
   this.size = 20;
   this.density = 3;
   this.mutationRate = 0.1; //how common are mutations?
-  this.mutationSeverity = 0.3; //how severe are they when they do occur?
+  this.mutationSeverity = 1.3; //how severe are they when they do occur?
   //1D array of neuron activations
   this.neurons = neuronActivations(this);
   
@@ -49,39 +49,46 @@ Brain.prototype = {
         };
     },
     
-    //used during reproduction
-    //copy over the brain with some mutation. crude. for now
-    mutateFrom : function(parentBrain) {
-        if(!parentBrain) throw new Error('Must have a parent brain to mutate from'); 
-        //lossy copy of brain structure
-        for (var i=0;i<this.size;i++) {
-          for (var j=0;j<this.density;j++) {
-
-            this.mutateWeights(parentBrain, i, j);
-            this.mutateIndices(parentBrain, i, j);
-          }
-        }
-    },
 
     neuronActivations: neuronActivations,
     synapseWeights: synapseWeights,
     neuronIndex: neuronIndex,
-    mutateWeights: function (parentBrain, i, j) {
+    mutateWeights: function (parentBrain, i, j, mutationRate) {
+      // console.log('mutate weights')
       var m = parentBrain.weights[i][j];
-      if (randf(0, 1) < this.mutationRate)
+      if (randf(0, 1) < mutationRate)
         m += randn(0, this.mutationSeverity);
       this.weights[i][j] = m;
       return m;
     },
 
-    mutateIndices: function (parentBrain, i, j) {
+    mutateIndices: function (parentBrain, i, j, mutationRate) {
+      // console.log('mutate indices')
       var m = parentBrain.index[i][j];
-      if (randf(0, 1) < this.mutationRate)
+      if (randf(0, 1) < mutationRate)
         m = randi(0, this.size);
       this.index[i][j] = m;
       return m;
     }
 }
+    //used during reproduction
+    //copy over the brain with some mutation. crude. for now
+    Brain.mutateFrom = function(parent, mutationRate) {
+      if(!parent) throw new Error('Must have a parent brain to mutate from'); 
+      const child = new Brain();
+      child.neurons = parent.neurons.map(n => n);
+      child.weights = parent.weights.map(w => w);
+      child.index = parent.index.map(i => i);
+      return child;
+        // //lossy copy of brain structure
+        // for (var i=0;i<this.size;i++) {
+        //   for (var j=0;j<this.density;j++) {
+
+        //     this.mutateWeights(parentBrain, i, j, mutationRate);
+        //     this.mutateIndices(parentBrain, i, j, mutationRate);
+        //   }
+        // }
+    },
 
 function activate(output) {
   return 1.0/(1.0 + Math.exp(-output));

@@ -98,8 +98,13 @@ class Agent {
         this.pos.y = 0;
   }
 
-  reproduce() {
-    return Object.assign({}, this) 
+  reproduce(mutationRate) {
+    const child = Object.assign({}, this);
+    console.log('parent: ', this.brain.index[0]);
+    child.brain.mutateFrom(this.brain, mutationRate);
+    console.log('child: ', child.brain.index[0]);
+    console.log('parent again: ', this.brain.index[0]);
+    return child;
   }
 }
 
