@@ -71,24 +71,23 @@ Brain.prototype = {
       return m;
     }
 }
-    //used during reproduction
-    //copy over the brain with some mutation. crude. for now
-    Brain.mutateFrom = function(parent, mutationRate) {
-      if(!parent) throw new Error('Must have a parent brain to mutate from'); 
-      const child = new Brain();
-      child.neurons = parent.neurons.map(n => n);
-      child.weights = parent.weights.map(weightGroup => {
-        return weightGroup.map(weight => {
-          const shouldMutate = randf(0, 1) < mutationRate;
-          if (shouldMutate) {
-            return weight + randn(0, child.mutationSeverity);
-          }
-          return weight
-        })
-      });
-      child.index = parent.index.map(i => i);
-      return child;
-    },
+
+//used during reproduction
+//copy over the brain with some mutation. crude. for now
+Brain.mutateFrom = function(parent, mutationRate) {
+  if(!parent) throw new Error('Must have a parent brain to mutate from'); 
+  const child = new Brain();
+  child.neurons = parent.neurons.map(n => n);
+  child.weights = parent.weights.map(weightGroup => {
+    return weightGroup.map(weight => {
+      const shouldMutate = randf(0, 1) < mutationRate;
+      if (shouldMutate) return weight + randn(0, child.mutationSeverity);
+      return weight
+    })
+  });
+  child.index = parent.index.map(i => i);
+  return child;
+}
 
 function activate(output) {
   return 1.0/(1.0 + Math.exp(-output));
