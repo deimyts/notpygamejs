@@ -50,22 +50,7 @@ class Brain {
 Brain.prototype = {
     neuronActivations,
     synapseWeights,
-    neuronIndex,
-    mutateWeights: function (parentBrain, i, j, mutationRate) {
-      var m = parentBrain.weights[i][j];
-      if (randf(0, 1) < mutationRate)
-        m += randn(0, this.mutationSeverity);
-      this.weights[i][j] = m;
-      return m;
-    },
-
-    mutateIndices: function (parentBrain, i, j, mutationRate) {
-      var m = parentBrain.index[i][j];
-      if (randf(0, 1) < mutationRate)
-        m = randi(0, this.size);
-      this.index[i][j] = m;
-      return m;
-    }
+    neuronIndex
 }
 
 //used during reproduction
