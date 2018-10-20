@@ -47,11 +47,6 @@ class Brain {
 }
 
 //feeds forward the brain. s1 and s2 are the two senses, both in [0,1]
-Brain.prototype = {
-    neuronActivations,
-    synapseWeights,
-    neuronIndex
-}
 
 //used during reproduction
 //copy over the brain with some mutation. crude. for now
