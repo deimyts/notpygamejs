@@ -10,8 +10,8 @@ class Brain {
     this.neurons = new Array(this.size).fill(0);
     
     //2D array of synapse weights and indexes of neurons they connect to
-    this.weights = assignWeights(this);
-    this.index = assignIndices(this);
+    this.weights = this.assignWeights();
+    this.index = this.assignIndices();
   }
 
   setOptions(customOptions) {
@@ -27,7 +27,28 @@ class Brain {
     this.mutationRate =  options.mutationRate; //how common are mutations?
     this.mutationSeverity =  options.mutationSeverity; //how severe are they when they do occur?
   }
-    //brain takes inputs and sets its outputs
+
+  createSynapses() {
+    return new Array(this.size).fill([]);
+  }
+
+  assignWeights() {
+    const synapses = this.createSynapses();
+    return synapses.map(() => this.fillSynapses(randomWeight));
+  }
+
+  assignIndices(brain) {
+    const synapses = this.createSynapses();
+    return synapses.map(() => this.fillSynapses(randomIndex));
+  }
+
+  fillSynapses(cb) {
+    return new Array(this.density)
+      .fill(0)
+      .map(() => cb(this))
+  }
+
+  //brain takes inputs and sets its outputs
   tick(s1, s2) {
 
     this.neurons[0]= s1; //set inputs
@@ -100,30 +121,12 @@ function activate(output) {
   return 1.0/(1.0 + Math.exp(-output));
 }
 
-function createSynapses(brain) {
-  return new Array(brain.size).fill([]);
-}
-
-function fillSynapses(brain, cb) {
-  return new Array(brain.density)
-    .fill(0)
-    .map(() => cb(brain))
-}
-
 function randomIndex(brain) {
   return randi(0, brain.size);
 }
 
 function randomWeight() {
   return randf(-1.2, 1.2);
-}
-
-function assignWeights(brain) {
-  return createSynapses(brain).map(() => fillSynapses(brain, randomWeight));
-}
-
-function assignIndices(brain) {
-  return createSynapses(brain).map(() => fillSynapses(brain, randomIndex));
 }
 
 module.exports = Brain;
