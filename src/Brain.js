@@ -3,7 +3,6 @@ const randf = npg.randf;
 const randi = npg.randi;
 const randn = npg.randn;
 
-
 class Brain {
   constructor() {
     this.size = 20;
@@ -22,17 +21,19 @@ class Brain {
 
     this.neurons[0]= s1; //set inputs
     this.neurons[1]= s2;
-    this.neurons[3]= 1; //some bias neurons are always on
+    this.neurons[2]= 1; //some bias neurons are always on
+    this.neurons[3]= 1; 
     this.neurons[4]= 1;
     this.neurons[5]= 1;
     this.neurons[6]= 1;
 
+    // for each neuron in the brain, starting at index 7;
     for (var i=7;i<this.size;i++) {
       let output = 0;
+      // for each weight in the weights array;
       for (var j=0;j<this.density;j++) {
         const weight = this.weights[i][j];
-        const neuronIndex = this.index[i][j];
-        const baseOutput = this.neurons[neuronIndex]
+        const baseOutput = this.getBaseOutput(i, j);
         Brain.applyWeight(baseOutput, weight);
       }
       this.neurons[i]= activate(output)  //pass through sigmoid
@@ -45,13 +46,14 @@ class Brain {
     };
   }
 
+  getBaseOutput(i, j) {
+    const neuronIndex = this.index[i][j];
+    return this.neurons[neuronIndex]
+  }
+
   static applyWeight(baseOutput, weight) {
     return baseOutput * weight;
   }
-}
-
-function getNeuronOutput(baseOutput, weight) {
-        output += weight * baseOutput
 }
 
 //feeds forward the brain. s1 and s2 are the two senses, both in [0,1]

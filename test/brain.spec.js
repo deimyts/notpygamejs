@@ -122,7 +122,35 @@ describe('an agent\'s brain', () => {
       const weight = 2;
       expect(Brain.applyWeight(baseOutput, weight)).to.equal(2);
     })
+  })
 
+  describe('when calculating the brain\'s output', () => {
+    it('should produce two output values', () => {
+      const brain = new Brain();
+      const output = brain.tick();
+      
+      expect(output).to.be.an('object');
+      expect(output).to.have.property('out0');
+      expect(output).to.have.property('out1');
+    })
+
+    it('should set the first two neurons to the input values', () => {
+      const brain = new Brain();
+      expect(brain.neurons[0]).to.equal(0);
+      const output = brain.tick(0.25, 0.75);
+      expect(brain.neurons[0]).to.equal(0.25);
+      expect(brain.neurons[1]).to.equal(0.75);
+    })
+
+    it('should set neurons 3—7 to 1, as a bias', () => {
+      const brain = new Brain();
+      const output = brain.tick(0.25, 0.75);
+      expect(brain.neurons[2]).to.equal(1);
+      expect(brain.neurons[3]).to.equal(1);
+      expect(brain.neurons[4]).to.equal(1);
+      expect(brain.neurons[5]).to.equal(1);
+      expect(brain.neurons[6]).to.equal(1);
+    })
   })
 })
 
