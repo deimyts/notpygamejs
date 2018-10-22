@@ -5,6 +5,16 @@ const randn = npg.randn;
 
 class Brain {
   constructor(customOptions) {
+    this.setOptions(customOptions);
+    //1D array of neuron activations
+    this.neurons = neuronActivations(this);
+    
+    //2D array of synapse weights and indexes of neurons they connect to
+    this.weights = synapseWeights(this);
+    this.index = neuronIndex(this);
+  }
+
+  setOptions(customOptions) {
     const defaultOptions = {
       size: 20,
       density: 3,
@@ -12,18 +22,10 @@ class Brain {
       mutationSeverity: 1.3
     }
     const options = Object.assign({}, defaultOptions, customOptions);
-
     this.size =  options.size;
     this.density =  options.density;
     this.mutationRate =  options.mutationRate; //how common are mutations?
     this.mutationSeverity =  options.mutationSeverity; //how severe are they when they do occur?
- 
-    //1D array of neuron activations
-    this.neurons = neuronActivations(this);
-    
-    //2D array of synapse weights and indexes of neurons they connect to
-    this.weights = synapseWeights(this);
-    this.index = neuronIndex(this);
   }
     //brain takes inputs and sets its outputs
   tick(s1, s2) {
