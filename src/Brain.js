@@ -28,18 +28,20 @@ class Brain {
     this.mutationSeverity =  options.mutationSeverity; //how severe are they when they do occur?
   }
 
+  assignWeights() {
+    return this.assignSynapseValues(randomWeight)
+  }
+
+  assignIndices(brain) {
+    return this.assignSynapseValues(randomIndex)
+  }
+
   createSynapses() {
     return new Array(this.size).fill([]);
   }
 
-  assignWeights() {
-    const synapses = this.createSynapses();
-    return synapses.map(() => this.fillSynapses(randomWeight));
-  }
-
-  assignIndices(brain) {
-    const synapses = this.createSynapses();
-    return synapses.map(() => this.fillSynapses(randomIndex));
+  assignSynapseValues(cb) {
+    return this.createSynapses().map(() => this.fillSynapses(cb))
   }
 
   fillSynapses(cb) {
