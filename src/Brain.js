@@ -7,7 +7,7 @@ class Brain {
   constructor(customOptions) {
     this.setOptions(customOptions);
     //1D array of neuron activations
-    this.neurons = neuronActivations(this);
+    this.neurons = new Array(this.size).fill(0);
     
     //2D array of synapse weights and indexes of neurons they connect to
     this.weights = synapseWeights(this);
@@ -98,10 +98,6 @@ function mutateValue(val, rate, severity) {
 
 function activate(output) {
   return 1.0/(1.0 + Math.exp(-output));
-}
-
-function neuronActivations(brain) {
-  return new Array(brain.size).fill(0);
 }
 
 function synapses(brain) {
