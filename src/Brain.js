@@ -10,8 +10,8 @@ class Brain {
     this.neurons = new Array(this.size).fill(0);
     
     //2D array of synapse weights and indexes of neurons they connect to
-    this.weights = synapseWeights(this);
-    this.index = neuronIndex(this);
+    this.weights = assignWeights(this);
+    this.index = assignIndices(this);
   }
 
   setOptions(customOptions) {
@@ -100,7 +100,7 @@ function activate(output) {
   return 1.0/(1.0 + Math.exp(-output));
 }
 
-function synapses(brain) {
+function createSynapses(brain) {
   return new Array(brain.size).fill([]);
 }
 
@@ -110,20 +110,20 @@ function fillSynapses(brain, cb) {
     .map(() => cb(brain))
 }
 
-function assignIndex(brain) {
+function randomIndex(brain) {
   return randi(0, brain.size);
 }
 
-function assignWeight() {
+function randomWeight() {
   return randf(-1.2, 1.2);
 }
 
-function synapseWeights(brain) {
-  return synapses(brain).map(() => fillSynapses(brain, assignWeight));
+function assignWeights(brain) {
+  return createSynapses(brain).map(() => fillSynapses(brain, randomWeight));
 }
 
-function neuronIndex(brain) {
-  return synapses(brain).map(() => fillSynapses(brain, assignIndex));
+function assignIndices(brain) {
+  return createSynapses(brain).map(() => fillSynapses(brain, randomIndex));
 }
 
 module.exports = Brain;
