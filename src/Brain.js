@@ -33,7 +33,7 @@ class Brain {
         const weight = this.weights[i][j];
         const neuronIndex = this.index[i][j];
         const baseOutput = this.neurons[neuronIndex]
-        output += weight * baseOutput
+        Brain.applyWeight(baseOutput, weight);
       }
       this.neurons[i]= activate(output)  //pass through sigmoid
     }
@@ -44,6 +44,14 @@ class Brain {
       out1: this.neurons[this.size-2]
     };
   }
+
+  static applyWeight(baseOutput, weight) {
+    return baseOutput * weight;
+  }
+}
+
+function getNeuronOutput(baseOutput, weight) {
+        output += weight * baseOutput
 }
 
 //feeds forward the brain. s1 and s2 are the two senses, both in [0,1]

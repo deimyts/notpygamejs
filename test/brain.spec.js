@@ -115,6 +115,15 @@ describe('an agent\'s brain', () => {
       })
     })
   })
+
+  describe('when calculating a neuron\'s output', () => {
+    it('should multiply the base output by the weight', () => {
+      const baseOutput = 1;
+      const weight = 2;
+      expect(Brain.applyWeight(baseOutput, weight)).to.equal(2);
+    })
+
+  })
 })
 
 function mutateBrainWithParent() {
