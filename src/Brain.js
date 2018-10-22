@@ -4,11 +4,20 @@ const randi = npg.randi;
 const randn = npg.randn;
 
 class Brain {
-  constructor(options) {
-    this.size = options ? options.size : 20;
-    this.density = options ? options.density : 3;
-    this.mutationRate = options ? options.mutationRate : 0.1; //how common are mutations?
-    this.mutationSeverity = options ? options.mutationSeverity : 1.3; //how severe are they when they do occur?
+  constructor(customOptions) {
+    const defaultOptions = {
+      size: 20,
+      density: 3,
+      mutationRate: 0.1,
+      mutationSeverity: 1.3
+    }
+    const options = Object.assign({}, defaultOptions, customOptions);
+
+    this.size =  options.size;
+    this.density =  options.density;
+    this.mutationRate =  options.mutationRate; //how common are mutations?
+    this.mutationSeverity =  options.mutationSeverity; //how severe are they when they do occur?
+ 
     //1D array of neuron activations
     this.neurons = neuronActivations(this);
     
