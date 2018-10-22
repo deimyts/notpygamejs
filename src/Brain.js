@@ -67,8 +67,9 @@ class Brain {
       // for each weight in the weights array;
       for (var j=0;j<this.density;j++) {
         const weight = this.weights[i][j];
-        const baseOutput = this.getBaseOutput(i, j);
-        Brain.applyWeight(baseOutput, weight);
+        output = this.getBaseOutput(i, j);
+        // Brain.applyWeight(baseOutput, weight);
+        output += Brain.applyWeight(output, weight);
       }
       this.neurons[i]= activate(output)  //pass through sigmoid
     }
@@ -78,6 +79,7 @@ class Brain {
       out0: this.neurons[this.size-1] - 0.5, 
       out1: this.neurons[this.size-2]
     };
+
   }
 
   getBaseOutput(i, j) {
