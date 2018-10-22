@@ -14,10 +14,30 @@ describe('an agent\'s brain', () => {
   })
 
   test('it should set the default properties', () => {
-    expect(brain).to.have.property('size');
-    expect(brain).to.have.property('density');
-    expect(brain).to.have.property('mutationRate');
-    expect(brain).to.have.property('mutationSeverity');
+    expect(brain).to.have.property('size')
+    expect(brain.size).to.equal(20);
+    expect(brain).to.have.property('density')
+    expect(brain.density).to.equal(3);
+    expect(brain).to.have.property('mutationRate')
+    expect(brain.mutationRate).to.equal(0.1);
+    expect(brain).to.have.property('mutationSeverity')
+    expect(brain.mutationSeverity).to.equal(1.3);
+  })
+
+  test('it should allow customization of the default properties', () => {
+    const options = {
+      size: 10,
+      density: 1,
+      mutationRate: 0.5,
+      mutationSeverity: 0.5
+    }
+
+    const brain = new Brain(options);
+
+    expect(brain.size).to.equal(10);
+    expect(brain.density).to.equal(1);
+    expect(brain.mutationRate).to.equal(0.5);
+    expect(brain.mutationSeverity).to.equal(0.5);
   })
 
   describe('creating the array of neuron activations', () => {
@@ -150,6 +170,15 @@ describe('an agent\'s brain', () => {
       expect(brain.neurons[4]).to.equal(1);
       expect(brain.neurons[5]).to.equal(1);
       expect(brain.neurons[6]).to.equal(1);
+    })
+
+    it.skip('should set the values of the inner neurons', () => {
+      const brain = new Brain();
+      const output = brain.tick(0.25, 0.75);
+      expect(brain.neurons[7]).to.equal(1);
+      expect(brain.neurons[8]).to.equal(1);
+      expect(brain.neurons[9]).to.equal(1);
+      expect(brain.neurons[10]).to.equal(1);
     })
   })
 })
