@@ -1,3 +1,4 @@
+//go
 const Vector2D = require('./include/vector2D')
 const npg = require('./include/npgmain');
 
