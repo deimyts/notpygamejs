@@ -30,16 +30,17 @@ class Agent {
   }
 
   calculateFoodLoss() {
-    this.health -= this.foodloss;
+    return this.foodloss;
   }
 
   calculateBoostLoss() {
-    this.health -= this.boostcost * this.boost; //boost costs health
+    return this.boostcost * this.boost; //boost costs health
   }
 
   adjustHealth() {
-    this.calculateFoodLoss();
-    this.calculateBoostLoss();
+    const foodLoss = this.calculateFoodLoss();
+    const boostLoss = this.calculateBoostLoss();
+    this.health -= foodLoss + boostLoss;
   }
 
   eat() {
