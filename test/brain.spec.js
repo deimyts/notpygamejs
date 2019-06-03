@@ -181,7 +181,7 @@ describe('an agent\'s brain', () => {
       expect(brain.neurons[10]).to.equal(1);
     })
 
-    it.only('should generate the output values correctly', () => {
+    it('should generate the output values correctly', () => {
       const brain = new Brain();
       brain.weights = [ [ -0.3986550087463271, -0.33366586354612426, 0.6603439927577222 ],
       [ 0.3885910277032498,
