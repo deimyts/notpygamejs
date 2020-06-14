@@ -222,5 +222,7 @@ module.exports = {
   update,
   keyUp,
   keyDown,
-  mouseClick: Game.mouseClick
+  mouseClick: (x, y) => {
+	window.game.mouseClick(x, y)
+  }
 }

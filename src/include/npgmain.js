@@ -52,9 +52,8 @@ function eventClick(clickFn, canvas) {
       x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft; 
       y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop; 
     } 
-    x -= canvas.offsetLeft;
-    y -= canvas.offsetTop;
-
+    x -= canvas.element.offsetLeft;
+    y -= canvas.element.offsetTop;
     clickFn(x, y)
   }
 }
