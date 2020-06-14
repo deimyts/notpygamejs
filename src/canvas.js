@@ -54,17 +54,17 @@ function drawBrain(a, canvas) {
       const neuronIndex = a.brain.index[i][j];
       const angle1 = pointAngle(a.brain.size, i)
       const angle2 = pointAngle(a.brain.size, neuronIndex);
-      drawSynapse(baseCircle, angle1, angle2);
+      drawSynapse(baseCircle, angle1, angle2, canvas);
     });
   })
   a.brain.neurons.forEach((neuron, index) => {
-  setColor(neuron);
+  setColor(neuron, canvas);
     const center = findNeuronCenter(index, a.brain.size, baseCircle);
-    drawNeuron(neuron, center);
+    drawNeuron(neuron, center, canvas);
   })
 }
 
-function drawNeuron(neuron, center) {
+function drawNeuron(neuron, center, canvas) {
   canvas.drawCircle(center.x, center.y, 10);
 }
 
@@ -84,10 +84,10 @@ function setColor(neuron, canvas) {
   canvas.ctx.fillStyle = 'rgb(' + fillColor + ',' + fillColor + ',' + fillColor + ')';
 }
 
-function drawSynapse(baseCircle, angle1, angle2) {
+function drawSynapse(baseCircle, angle1, angle2, canvas) {
   const start = findPointOnCircle(baseCircle.radius, angle1, baseCircle.center);
   const end = findPointOnCircle(baseCircle.radius, angle2, baseCircle.center);
-  drawLine(start, end);
+  drawLine(start, end, canvas);
 }
 
 function findPointOnCircle(radius, angle, center) {
